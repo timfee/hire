@@ -35,14 +35,9 @@ export default function RootLayout({
           taggedEvents
         />
       </head>
-      <body className="h-full bg-cover bg-gradient-to-t from-[#e6e9f0] to-[#eef1f5]">
-        <div className="relative">
-          {/* <Header /> */}
-          {children}
-          <AnalyticsWrapper />
-
-          {/* <Footer /> */}
-        </div>
+      <body className="h-screen bg-cover bg-gradient-to-t from-slate-100 to-slate-200">
+        {children}
+        <AnalyticsWrapper />
       </body>
     </html>
   )
