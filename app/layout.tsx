@@ -32,7 +32,6 @@ export default function RootLayout({
       <head>
         <PlausibleProvider
           domain="hire.timfeeley.com"
-          trackLocalhost={true}
           taggedEvents
         />
       </head>
