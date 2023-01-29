@@ -1,3 +1,5 @@
+import PlausibleProvider from 'next-plausible'
+
 export default function Head() {
   return (
     <>
@@ -27,7 +29,8 @@ export default function Head() {
         content="Tim Feeley — Product manager. Friend."
       />
       <link rel="canonical" href={`https://hire.timfeeley.com`} />
-      <link rel="icon" href="/favicon.png" />
+      <link rel="icon" href="/favicon.svg" />
+      <PlausibleProvider domain="hire.timfeeley.com" taggedEvents />
     </>
   )
 }

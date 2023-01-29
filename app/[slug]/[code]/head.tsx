@@ -14,6 +14,7 @@ export default async function Head({
   return (
     <>
       <title>{title}</title>
+      <link rel="icon" href="/favicon.svg" />
     </>
   )
 }

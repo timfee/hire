@@ -1,7 +1,6 @@
 import '@/app/globals.css'
 
 import localFont from '@next/font/local'
-import PlausibleProvider from 'next-plausible'
 
 import { AnalyticsWrapper } from '@/app/analytics'
 
@@ -29,13 +28,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${Inter.variable} h-max`}>
-      <head>
-        <PlausibleProvider
-          domain="hire.timfeeley.com"
-          taggedEvents
-        />
-      </head>
-      <body className="h-screen bg-cover bg-gradient-to-t from-slate-100 to-slate-200">
+      <body className="h-screen bg-gradient-to-t from-slate-100 to-slate-200 bg-cover">
         {children}
         <AnalyticsWrapper />
       </body>
