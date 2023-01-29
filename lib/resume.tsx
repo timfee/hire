@@ -1,15 +1,19 @@
-import type { PDFPage, PDFPageDrawTextOptions } from 'pdf-lib'
-import { drawImage } from 'pdf-lib'
-import { Resvg } from '@resvg/resvg-js'
-
-import { PDFString } from 'pdf-lib'
-import { breakTextIntoLines } from 'pdf-lib'
-import { setCharacterSpacing, PDFDocument, rgb, PDFName } from 'pdf-lib'
-import fs from 'fs'
-import { cwd } from 'process'
-import fontkit from '@pdf-lib/fontkit'
-import { SIGNATURE_PATH } from '@/lib/resume/Signature'
 import prisma from '@/lib/prisma'
+import { SIGNATURE_PATH } from '@/lib/resume/Signature'
+import fontkit from '@pdf-lib/fontkit'
+import { Resvg } from '@resvg/resvg-js'
+import fs from 'fs'
+import {
+  breakTextIntoLines,
+  PDFDocument,
+  PDFName,
+  PDFString,
+  rgb,
+  setCharacterSpacing,
+} from 'pdf-lib'
+import { cwd } from 'process'
+
+import type { PDFPage, PDFPageDrawTextOptions } from 'pdf-lib'
 import type { Company } from '@prisma/client'
 
 const SOURCE_DIR = `${cwd()}/lib/resume/`
@@ -54,8 +58,6 @@ export async function generateResumePacket({
 }
 
 const buildLastPage = async ({
-  slug,
-  code,
   svg,
 }: Pick<Company, 'slug' | 'code' | 'svg'>) => {
   const pdfDoc = await PDFDocument.load(

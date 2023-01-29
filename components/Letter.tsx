@@ -3,6 +3,7 @@
 import ReactMarkdown from 'react-markdown'
 import type { Variants } from 'framer-motion'
 import { motion } from 'framer-motion'
+import { usePlausible } from 'next-plausible'
 
 import type { Company } from '@prisma/client'
 
@@ -49,6 +50,7 @@ export default function Letter({
       opacity: 1,
     },
   }
+  const plausible = usePlausible()
 
   return (
     <main
@@ -128,6 +130,9 @@ export default function Letter({
         style={{ backgroundImage: `url('/resume_preview.png')` }}>
         <a
           target="_blank"
+          onClick={() => {
+            plausible('resume_download')
+          }}
           href={`/api/resume/?slug=${slug}&code=${code}`}
           className="bg-black/50 text-white px-3 py-1.5 rounded-full text-sm"
           rel="noreferrer">

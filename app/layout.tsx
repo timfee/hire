@@ -1,3 +1,4 @@
+import PlausibleProvider from 'next-plausible'
 import { AnalyticsWrapper } from '@/app/analytics'
 import '@/app/globals.css'
 
@@ -27,6 +28,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${Inter.variable} h-max`}>
+      <head>
+        <PlausibleProvider
+          domain="hire.timfeeley.com"
+          trackLocalhost={true}
+          taggedEvents
+        />
+      </head>
       <body className="h-full bg-cover bg-gradient-to-t from-[#e6e9f0] to-[#eef1f5]">
         <div className="relative">
           {/* <Header /> */}

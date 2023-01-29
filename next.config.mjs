@@ -1,4 +1,5 @@
 // @ts-check
+import { withPlausibleProxy } from 'next-plausible'
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -9,4 +10,4 @@ const config = {
     appDir: true,
   },
 }
-export default config
+export default withPlausibleProxy()(config)

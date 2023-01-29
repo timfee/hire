@@ -41,6 +41,7 @@
     "classnames": "2.3.2",
     "eslint": "8.33.0",
     "next-auth": "^4.19.0",
+    "next-plausible": "^3.7.1",
     "postcss": "^8.4.21",
     "prettier": "^2.8.3",
     "prisma": "^4.9.0",
