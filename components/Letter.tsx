@@ -53,9 +53,9 @@ export default function Letter({
 
   return (
     <main
-      className="mx-4 sm:mx-auto max-w-3xl bg-white mt-3 p-5 sm:p-8 sm:mt-12 rounded-md shadow-md  border-t-4"
+      className="mx-4 mt-3 max-w-3xl rounded-md border-t-4 bg-white p-5 shadow-md sm:mx-auto sm:mt-12  sm:p-8"
       style={{ borderTopColor: color }}>
-      <section className="flex items-center justify-center space-x-4 mx-auto mt-4">
+      <section className="mx-auto mt-4 flex items-center justify-center space-x-4">
         <motion.img
           animate="visible"
           initial={{
@@ -77,12 +77,12 @@ export default function Letter({
           variants={letter}
           src="/tim_feeley_small.png"
           alt="Tim Feeley"
-          className="rounded-full sm:h-12 h-8"
+          className="h-8 rounded-full sm:h-12"
         />
       </section>
       <ReactMarkdown className="prose mt-8">{websiteMessage}</ReactMarkdown>
       <motion.svg
-        className="h-16 sm:h-24 mt-2"
+        className="mt-2 h-16 sm:h-24"
         viewBox="0 0 586 201"
         initial="hidden"
         whileInView="visible"
@@ -125,7 +125,7 @@ export default function Letter({
       </motion.svg>
 
       <div
-        className="flex bg-contain bg-no-repeat bg-center items-center justify-center h-48"
+        className="flex h-48 items-center justify-center bg-contain bg-center bg-no-repeat"
         style={{ backgroundImage: `url('/resume_preview.png')` }}>
         <a
           target="_blank"
@@ -133,7 +133,7 @@ export default function Letter({
             plausible('resume_download')
           }}
           href={`/api/resume/?slug=${slug}&code=${code}`}
-          className="bg-black/50 text-white px-3 py-1.5 rounded-full text-sm"
+          className="rounded-full bg-black/50 px-3 py-1.5 text-sm text-white"
           rel="noreferrer">
           Download Resume
         </a>

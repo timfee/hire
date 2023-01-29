@@ -13,7 +13,7 @@ export default function Page(
       <p>
         Paste this in <code>.env</code>:
       </p>
-      <pre className="w-4/5 text-xs whitespace-pre-wrap bg-slate-200 ">
+      <pre className="w-4/5 whitespace-pre-wrap bg-slate-200 text-xs ">
         GOOGLE_TOKENS=&apos;{JSON.stringify(data)}&apos;
       </pre>
     </div>
