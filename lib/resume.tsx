@@ -54,6 +54,14 @@ export async function generateResumePacket({
       packet.addPage(page)
     })
   }
+
+  packet.setAuthor('Tim Feeley')
+  packet.setTitle('Tim Feeley’s Resume')
+  packet.setLanguage('en-US')
+  packet.setKeywords(['resume', 'tim feeley', 'product manager', 'ux'])
+  packet.setCreator('hire.timfeeley.com')
+  packet.setProducer('hire.timfeeley.com')
+  packet.setSubject('A very special resume from Tim Feeley for you!')
   return await packet.save()
 }
 
