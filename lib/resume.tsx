@@ -137,7 +137,7 @@ const buildFirstPage = async ({
       size: 16,
       color: rgb(29 / 255, 78 / 255, 216 / 255),
       font: INTER_MEDIUM,
-      link: `https://timfeeley.com/`,
+      link: `https://hire.timfeeley.com/${company.slug}/${company.code}`,
     },
   ]
 
