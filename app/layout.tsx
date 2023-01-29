@@ -1,3 +1,4 @@
+import { AnalyticsWrapper } from '@/app/analytics'
 import '@/app/globals.css'
 
 import localFont from '@next/font/local'
@@ -30,6 +31,8 @@ export default function RootLayout({
         <div className="relative">
           {/* <Header /> */}
           {children}
+          <AnalyticsWrapper />
+
           {/* <Footer /> */}
         </div>
       </body>
