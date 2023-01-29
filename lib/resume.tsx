@@ -62,6 +62,7 @@ export async function generateResumePacket({
   packet.setCreator('hire.timfeeley.com')
   packet.setProducer('hire.timfeeley.com')
   packet.setSubject('A very special resume from Tim Feeley for you!')
+  
   return await packet.save()
 }
 
