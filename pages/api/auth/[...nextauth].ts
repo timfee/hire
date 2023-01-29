@@ -1,21 +1,18 @@
-import { getAccessToken } from '@/lib/google'
-import prisma from '@/lib/prisma'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import type { NextAuthOptions } from 'next-auth'
 import NextAuth from 'next-auth'
 import EmailProvider from 'next-auth/providers/email'
 import GoogleProvider from 'next-auth/providers/google'
 import nodemailer from 'nodemailer'
 
-import type { NextAuthOptions } from 'next-auth'
+import { getAccessToken } from '@/lib/google'
+import prisma from '@/lib/prisma'
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     EmailProvider({
-      async sendVerificationRequest({
-        identifier,
-        url,
-        provider: { server, from },
-      }) {
+      async sendVerificationRequest({ identifier, url, provider: { from } }) {
         const { host } = new URL(url)
         const accessToken = await getAccessToken()
 

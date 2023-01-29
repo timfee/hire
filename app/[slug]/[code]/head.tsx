@@ -1,5 +1,6 @@
-import prisma from '@/lib/prisma'
 import type { Company } from '@prisma/client'
+
+import prisma from '@/lib/prisma'
 
 export default async function Head({
   params: { slug, code },

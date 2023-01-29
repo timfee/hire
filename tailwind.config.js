@@ -7,7 +7,7 @@ module.exports = {
     './node_modules/flowbite-react/**/*.js',
   ],
   theme: {
-    typography: require('./typography.cjs'),
+    typography: require('./typography.js'),
     extend: {
       fontFamily: {
         sans: ['var(--font-inter-variable)'],

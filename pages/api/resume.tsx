@@ -1,6 +1,7 @@
-import { generateResumePacket } from '@/lib/resume'
 import type { NextApiRequest, NextApiResponse } from 'next'
+
 import prisma from '@/lib/prisma'
+import { generateResumePacket } from '@/lib/resume'
 
 export default async function handler(
   req: NextApiRequest,

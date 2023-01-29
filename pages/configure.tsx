@@ -1,9 +1,9 @@
 import '@/app/globals.css'
 
-import prisma from '@/lib/prisma'
 import { google } from 'googleapis'
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-const credentials = process.env.GOOGLE_CLIENT_ID || ''
+
+import prisma from '@/lib/prisma'
 
 export default function Page(
   data: InferGetServerSidePropsType<typeof getServerSideProps>
@@ -13,7 +13,7 @@ export default function Page(
       <p>
         Paste this in <code>.env</code>:
       </p>
-      <pre className="w-4/5 text-xs whitespace-pre-wrap bg-slate-200">
+      <pre className="w-4/5 text-xs whitespace-pre-wrap bg-slate-200 ">
         GOOGLE_TOKENS=&apos;{JSON.stringify(data)}&apos;
       </pre>
     </div>

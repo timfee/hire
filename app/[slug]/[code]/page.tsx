@@ -1,8 +1,8 @@
+import type { Company } from '@prisma/client'
 import { notFound } from 'next/navigation'
 
-import prisma from '@/lib/prisma'
 import Letter from '@/components/Letter'
-import type { Company } from '@prisma/client'
+import prisma from '@/lib/prisma'
 
 export default async function CompanyPage({
   params: { slug, code },

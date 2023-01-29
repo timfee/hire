@@ -1,8 +1,9 @@
-import PlausibleProvider from 'next-plausible'
-import { AnalyticsWrapper } from '@/app/analytics'
 import '@/app/globals.css'
 
 import localFont from '@next/font/local'
+import PlausibleProvider from 'next-plausible'
+
+import { AnalyticsWrapper } from '@/app/analytics'
 
 const Inter = localFont({
   display: 'swap',

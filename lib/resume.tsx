@@ -1,8 +1,8 @@
-import prisma from '@/lib/prisma'
-import { SIGNATURE_PATH } from '@/lib/resume/Signature'
 import fontkit from '@pdf-lib/fontkit'
+import type { Company } from '@prisma/client'
 import { Resvg } from '@resvg/resvg-js'
 import fs from 'fs'
+import type { PDFPage, PDFPageDrawTextOptions } from 'pdf-lib'
 import {
   breakTextIntoLines,
   PDFDocument,
@@ -13,8 +13,8 @@ import {
 } from 'pdf-lib'
 import { cwd } from 'process'
 
-import type { PDFPage, PDFPageDrawTextOptions } from 'pdf-lib'
-import type { Company } from '@prisma/client'
+import prisma from '@/lib/prisma'
+import { SIGNATURE_PATH } from '@/lib/resume/Signature'
 
 const SOURCE_DIR = `${cwd()}/lib/resume/`
 const FONTS_DIR = `${SOURCE_DIR}/fonts/`

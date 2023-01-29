@@ -1,11 +1,10 @@
 'use client'
 
-import ReactMarkdown from 'react-markdown'
+import type { Company } from '@prisma/client'
 import type { Variants } from 'framer-motion'
 import { motion } from 'framer-motion'
 import { usePlausible } from 'next-plausible'
-
-import type { Company } from '@prisma/client'
+import ReactMarkdown from 'react-markdown'
 
 export default function Letter({
   name,
