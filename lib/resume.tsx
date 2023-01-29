@@ -62,7 +62,7 @@ export async function generateResumePacket({
   packet.setCreator('hire.timfeeley.com')
   packet.setProducer('hire.timfeeley.com')
   packet.setSubject('A very special resume from Tim Feeley for you!')
-  
+
   return await packet.save()
 }
 
@@ -86,11 +86,11 @@ const buildLastPage = async ({
 
   const png = Buffer.from(resvg.render().asPng())
   const pngImage = await pdfDoc.embedPng(png)
-  const pngDims = pngImage.scale(0.5)
+  const pngDims = pngImage.scaleToFit(300, 200)
 
   page.drawImage(pngImage, {
     x: width / 2 - pngDims.width / 2,
-    y: 550,
+    y: 515 - pngDims.height / 2,
     width: pngDims.width,
     height: pngDims.height,
   })
