@@ -31,7 +31,7 @@ export default async function handler(
 
     // Set the content type to 'application/pdf'
     res.setHeader('Content-Type', 'application/pdf')
-
+    res.setHeader('Content-Length', resumeData.length)
     const filename = `Tim Feeley Resume - ${name}.pdf`
 
     // Set the content disposition to 'attachment', so that the browser prompts the user to save the file

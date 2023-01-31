@@ -55,9 +55,17 @@ export async function generateResumePacket({
 
   const documents = [introPage, ...(await getStaticPages()), lastPage]
 
+  console.log('Adding pages to packet at time ' + new Date().toISOString())
+
   for (const doc of documents) {
     const pages = await packet.copyPages(doc, doc.getPageIndices())
-    pages.forEach((page) => {
+    pages.forEach((page, idx) => {
+      console.log(
+        'Adding page ' +
+          idx.toString() +
+          ' to packet at time ' +
+          new Date().toISOString()
+      )
       packet.addPage(page)
     })
   }
@@ -76,6 +84,7 @@ export async function generateResumePacket({
 const buildLastPage = async ({
   svg,
 }: Pick<Company, 'slug' | 'code' | 'svg'>) => {
+  console.log('Building last page at time ' + new Date().toISOString())
   const pdfDoc = await PDFDocument.load(
     fs.readFileSync(SOURCE_DIR + LAST_PAGE_PDF)
   )
@@ -91,17 +100,18 @@ const buildLastPage = async ({
 
   const { width } = page.getSize()
 
+  console.log('Adding logo at time ' + new Date().toISOString())
   const png = Buffer.from(resvg.render().asPng())
   const pngImage = await pdfDoc.embedPng(png)
   const pngDims = pngImage.scaleToFit(300, 200)
-
+  console.log('Attaching logo at time ' + new Date().toISOString())
   page.drawImage(pngImage, {
     x: width / 2 - pngDims.width / 2,
     y: 515 - pngDims.height / 2,
     width: pngDims.width,
     height: pngDims.height,
   })
-
+  console.log('Done adding logo  at time ' + new Date().toISOString())
   return pdfDoc
 }
 
