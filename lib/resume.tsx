@@ -1,6 +1,6 @@
 import fontkit from '@pdf-lib/fontkit'
 import type { Company } from '@prisma/client'
-import { Resvg } from '@resvg/resvg-js'
+// import { Resvg } from '@resvg/resvg-js'
 import fs from 'fs'
 import type { PDFPage, PDFPageDrawTextOptions } from 'pdf-lib'
 import {
@@ -31,13 +31,6 @@ const LAST_PAGE_PDF = '4.pdf'
 const getStaticPages = async () => {
   return Promise.all(
     STATIC_PAGE_PDFS.map(async (file) => {
-      console.log(
-        'Loading static page: ' +
-          file +
-          ' at time ' +
-          new Date().toISOString() +
-          ''
-      )
       return await PDFDocument.load(fs.readFileSync(SOURCE_DIR + file))
     })
   )
@@ -55,17 +48,9 @@ export async function generateResumePacket({
 
   const documents = [introPage, ...(await getStaticPages()), lastPage]
 
-  console.log('Adding pages to packet at time ' + new Date().toISOString())
-
   for (const doc of documents) {
     const pages = await packet.copyPages(doc, doc.getPageIndices())
     pages.forEach((page, idx) => {
-      console.log(
-        'Adding page ' +
-          idx.toString() +
-          ' to packet at time ' +
-          new Date().toISOString()
-      )
       packet.addPage(page)
     })
   }
@@ -84,34 +69,33 @@ export async function generateResumePacket({
 const buildLastPage = async ({
   svg,
 }: Pick<Company, 'slug' | 'code' | 'svg'>) => {
-  console.log('Building last page at time ' + new Date().toISOString())
   const pdfDoc = await PDFDocument.load(
     fs.readFileSync(SOURCE_DIR + LAST_PAGE_PDF)
   )
 
-  const resvg = new Resvg(svg, {
-    fitTo: {
-      mode: 'width',
-      value: 300,
-    },
-  })
+  // const resvg = new Resvg(svg, {
+  //   fitTo: {
+  //     mode: 'width',
+  //     value: 300,
+  //   },
+  // })
 
-  const page = pdfDoc.getPages()[0]
+  // const page = pdfDoc.getPages()[0]
 
-  const { width } = page.getSize()
+  // const { width } = page.getSize()
 
-  console.log('Adding logo at time ' + new Date().toISOString())
-  const png = Buffer.from(resvg.render().asPng())
-  const pngImage = await pdfDoc.embedPng(png)
-  const pngDims = pngImage.scaleToFit(300, 200)
-  console.log('Attaching logo at time ' + new Date().toISOString())
-  page.drawImage(pngImage, {
-    x: width / 2 - pngDims.width / 2,
-    y: 515 - pngDims.height / 2,
-    width: pngDims.width,
-    height: pngDims.height,
-  })
-  console.log('Done adding logo  at time ' + new Date().toISOString())
+  // console.log('Adding logo at time ' + new Date().toISOString())
+  // const png = Buffer.from(resvg.render().asPng())
+  // const pngImage = await pdfDoc.embedPng(png)
+  // const pngDims = pngImage.scaleToFit(300, 200)
+  // console.log('Attaching logo at time ' + new Date().toISOString())
+  // page.drawImage(pngImage, {
+  //   x: width / 2 - pngDims.width / 2,
+  //   y: 515 - pngDims.height / 2,
+  //   width: pngDims.width,
+  //   height: pngDims.height,
+  // })
+  // console.log('Done adding logo  at time ' + new Date().toISOString())
   return pdfDoc
 }
 
@@ -119,7 +103,6 @@ const buildFirstPage = async ({
   slug,
   code,
 }: Pick<Company, 'slug' | 'code'>) => {
-  console.log('Building first page at time ' + new Date().toISOString())
   const company = await prisma.company.findFirstOrThrow({
     where: {
       AND: {
@@ -128,9 +111,7 @@ const buildFirstPage = async ({
       },
     },
   })
-  console.log(
-    'Found company: ' + company.name + ' at time ' + new Date().toISOString()
-  )
+
   const pdfDoc = await PDFDocument.load(
     fs.readFileSync(SOURCE_DIR + INTRO_PAGE_PDF)
   )
@@ -138,7 +119,6 @@ const buildFirstPage = async ({
   // of the fonts in the FONTS array to render properly.
   const [INTER_MEDIUM, INTER_BOLD] = await provideFonts(pdfDoc)
 
-  console.log('Adding text at time ' + new Date().toISOString())
   // Prepare the blocks of text we want to add to the first page.
   const message = [
     {
@@ -187,7 +167,6 @@ const buildFirstPage = async ({
   // Set letter-spacing to be a little tighter.
   page.pushOperators(setCharacterSpacing(-0.6))
 
-  console.log('Drawing text at time ' + new Date().toISOString())
   // Create the first page of text.
   message.forEach(({ text, color, font, link, size, padding }) => {
     // Draw the text, and return the width and height estimates
@@ -240,8 +219,6 @@ const buildFirstPage = async ({
     color: rgb(0, 0, 0),
     scale: 0.1,
   })
-
-  console.log('Adding signature at time ' + new Date().toISOString())
 
   return pdfDoc
 }

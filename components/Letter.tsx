@@ -13,7 +13,8 @@ export default function Letter({
   svg,
   color,
   websiteMessage,
-}: Company) {
+  resumeData,
+}: Company & { resumeData: string }) {
   const signature: Variants = {
     hidden: { pathLength: 0, opacity: 0 },
     visible: (i) => {
@@ -128,11 +129,14 @@ export default function Letter({
         className="mt-8 flex h-48 items-center justify-center bg-contain bg-center bg-no-repeat"
         style={{ backgroundImage: `url('/resume_preview.png')` }}>
         <a
-          target="_blank"
+          download={`Tim Feeley Resume - ${name}.pdf`}
           onClick={() => {
             plausible('resume_download')
           }}
-          href={`/api/resume/?slug=${slug}&code=${code}`}
+          href={
+            'data:image/application-pdf;base64,' +
+            encodeURIComponent(resumeData)
+          }
           className="rounded-full bg-black/50 px-3 py-1.5 text-sm text-white"
           rel="noreferrer">
           Download Resume

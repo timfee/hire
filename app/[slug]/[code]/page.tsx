@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 
 import Letter from '@/components/Letter'
 import prisma from '@/lib/prisma'
+import { generateResumePacket } from '@/lib/resume'
 
 export default async function CompanyPage({
   params: { slug, code },
@@ -10,10 +11,13 @@ export default async function CompanyPage({
   params: Pick<Company, 'code' | 'slug'>
 }) {
   const companyData = await getCompanyData({ slug, code })
-
+  const resumeData = await getResumeData({ slug, code, svg: companyData.svg })
   return (
     <main className="mb-12">
-      <Letter {...companyData} />
+      <Letter
+        {...companyData}
+        resumeData={Buffer.from(resumeData).toString('base64')}
+      />
     </main>
   )
 }
@@ -34,4 +38,15 @@ const getCompanyData = async ({
     .catch(() => {
       notFound()
     })
+}
+const getResumeData = async ({
+  slug,
+  code,
+  svg,
+}: Pick<Company, 'code' | 'slug' | 'svg'>) => {
+  return await generateResumePacket({
+    code,
+    slug,
+    svg,
+  })
 }
