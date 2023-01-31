@@ -8,8 +8,6 @@ import ReactMarkdown from 'react-markdown'
 
 export default function Letter({
   name,
-  slug,
-  code,
   svg,
   color,
   websiteMessage,

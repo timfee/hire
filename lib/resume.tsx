@@ -50,7 +50,7 @@ export async function generateResumePacket({
 
   for (const doc of documents) {
     const pages = await packet.copyPages(doc, doc.getPageIndices())
-    pages.forEach((page, idx) => {
+    pages.forEach((page) => {
       packet.addPage(page)
     })
   }
@@ -67,7 +67,7 @@ export async function generateResumePacket({
 }
 
 const buildLastPage = async ({
-  svg,
+  svg: _svg,
 }: Pick<Company, 'slug' | 'code' | 'svg'>) => {
   const pdfDoc = await PDFDocument.load(
     fs.readFileSync(SOURCE_DIR + LAST_PAGE_PDF)
