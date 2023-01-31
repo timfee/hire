@@ -3,16 +3,19 @@
 import type { Company } from '@prisma/client'
 import type { Variants } from 'framer-motion'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { usePlausible } from 'next-plausible'
 import ReactMarkdown from 'react-markdown'
 
+import resumeThumbnail from './resume_thumbnail.png'
+
 export default function Letter({
   name,
-  slug,
-  code,
   svg,
   color,
   websiteMessage,
+  code,
+  slug,
 }: Company) {
   const signature: Variants = {
     hidden: { pathLength: 0, opacity: 0 },
@@ -124,20 +127,22 @@ export default function Letter({
         </motion.g>
       </motion.svg>
 
-      <div
-        className="flex h-48 items-center justify-center bg-contain bg-center bg-no-repeat mt-8"
-        style={{ backgroundImage: `url('/resume_preview.png')` }}>
-        <a
-          target="_blank"
-          onClick={() => {
-            plausible('resume_download')
-          }}
-          href={`/api/resume/?slug=${slug}&code=${code}`}
-          className="rounded-full bg-black/50 px-3 py-1.5 text-sm text-white"
-          rel="noreferrer">
-          Download Resume
-        </a>
-      </div>
+      <a
+        className="group relative mx-4 mt-8  block max-w-sm border bg-gray-200 p-4 text-center sm:mx-auto sm:p-12"
+        download={`Tim Feeley Resume - ${name}.pdf`}
+        onClick={() => {
+          plausible('resume_download')
+        }}
+        href={`/api/resume?slug=${slug}&code=${code}`}
+        rel="noreferrer">
+        <Image
+          src={resumeThumbnail}
+          alt="Resume"
+          height={100}
+          className="mx-auto mb-4"
+        />
+        <span className="rounded-full bg-slate-300 py-1 px-4 text-xs text-blue-600 underline group-hover:bg-blue-600 group-hover:text-white sm:text-sm">{`Tim Feeley - ${name}.pdf`}</span>
+      </a>
     </main>
   )
 }

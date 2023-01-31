@@ -84,6 +84,7 @@ const buildLastPage = async ({
 
   const { width } = page.getSize()
 
+  // TODO: Just store a PNG
   const png = Buffer.from(resvg.render().asPng())
   const pngImage = await pdfDoc.embedPng(png)
   const pngDims = pngImage.scaleToFit(300, 200)
@@ -110,6 +111,7 @@ const buildFirstPage = async ({
       },
     },
   })
+
   const pdfDoc = await PDFDocument.load(
     fs.readFileSync(SOURCE_DIR + INTRO_PAGE_PDF)
   )
