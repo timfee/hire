@@ -1,6 +1,6 @@
 import fontkit from '@pdf-lib/fontkit'
 import type { Company } from '@prisma/client'
-// import { Resvg } from '@resvg/resvg-js'
+import { Resvg } from '@resvg/resvg-js'
 import fs from 'fs'
 import type { PDFPage, PDFPageDrawTextOptions } from 'pdf-lib'
 import {
@@ -67,35 +67,34 @@ export async function generateResumePacket({
 }
 
 const buildLastPage = async ({
-  svg: _svg,
+  svg,
 }: Pick<Company, 'slug' | 'code' | 'svg'>) => {
   const pdfDoc = await PDFDocument.load(
     fs.readFileSync(SOURCE_DIR + LAST_PAGE_PDF)
   )
 
-  // const resvg = new Resvg(svg, {
-  //   fitTo: {
-  //     mode: 'width',
-  //     value: 300,
-  //   },
-  // })
+  const resvg = new Resvg(svg, {
+    fitTo: {
+      mode: 'width',
+      value: 300,
+    },
+  })
 
-  // const page = pdfDoc.getPages()[0]
+  const page = pdfDoc.getPages()[0]
 
-  // const { width } = page.getSize()
+  const { width } = page.getSize()
 
-  // console.log('Adding logo at time ' + new Date().toISOString())
-  // const png = Buffer.from(resvg.render().asPng())
-  // const pngImage = await pdfDoc.embedPng(png)
-  // const pngDims = pngImage.scaleToFit(300, 200)
-  // console.log('Attaching logo at time ' + new Date().toISOString())
-  // page.drawImage(pngImage, {
-  //   x: width / 2 - pngDims.width / 2,
-  //   y: 515 - pngDims.height / 2,
-  //   width: pngDims.width,
-  //   height: pngDims.height,
-  // })
-  // console.log('Done adding logo  at time ' + new Date().toISOString())
+  const png = Buffer.from(resvg.render().asPng())
+  const pngImage = await pdfDoc.embedPng(png)
+  const pngDims = pngImage.scaleToFit(300, 200)
+  console.log('Attaching logo at time ' + new Date().toISOString())
+  page.drawImage(pngImage, {
+    x: width / 2 - pngDims.width / 2,
+    y: 515 - pngDims.height / 2,
+    width: pngDims.width,
+    height: pngDims.height,
+  })
+
   return pdfDoc
 }
 

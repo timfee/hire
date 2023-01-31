@@ -4,7 +4,7 @@ import { Button, Card } from 'flowbite-react'
 
 export default function Home() {
   return (
-    <main className="max-w-2xl mx-auto mt-10">
+    <main className="mx-auto mt-10 max-w-2xl">
       <Card>
         <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
           Hey, friend!
