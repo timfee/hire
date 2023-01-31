@@ -125,7 +125,7 @@ export default function Letter({
       </motion.svg>
 
       <div
-        className="flex h-48 items-center justify-center bg-contain bg-center bg-no-repeat mt-8"
+        className="mt-8 flex h-48 items-center justify-center bg-contain bg-center bg-no-repeat"
         style={{ backgroundImage: `url('/resume_preview.png')` }}>
         <a
           target="_blank"

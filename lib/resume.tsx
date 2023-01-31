@@ -31,6 +31,13 @@ const LAST_PAGE_PDF = '4.pdf'
 const getStaticPages = async () => {
   return Promise.all(
     STATIC_PAGE_PDFS.map(async (file) => {
+      console.log(
+        'Loading static page: ' +
+          file +
+          ' at time ' +
+          new Date().toISOString() +
+          ''
+      )
       return await PDFDocument.load(fs.readFileSync(SOURCE_DIR + file))
     })
   )
@@ -102,6 +109,7 @@ const buildFirstPage = async ({
   slug,
   code,
 }: Pick<Company, 'slug' | 'code'>) => {
+  console.log('Building first page at time ' + new Date().toISOString())
   const company = await prisma.company.findFirstOrThrow({
     where: {
       AND: {
@@ -110,6 +118,9 @@ const buildFirstPage = async ({
       },
     },
   })
+  console.log(
+    'Found company: ' + company.name + ' at time ' + new Date().toISOString()
+  )
   const pdfDoc = await PDFDocument.load(
     fs.readFileSync(SOURCE_DIR + INTRO_PAGE_PDF)
   )
@@ -117,6 +128,7 @@ const buildFirstPage = async ({
   // of the fonts in the FONTS array to render properly.
   const [INTER_MEDIUM, INTER_BOLD] = await provideFonts(pdfDoc)
 
+  console.log('Adding text at time ' + new Date().toISOString())
   // Prepare the blocks of text we want to add to the first page.
   const message = [
     {
@@ -165,6 +177,7 @@ const buildFirstPage = async ({
   // Set letter-spacing to be a little tighter.
   page.pushOperators(setCharacterSpacing(-0.6))
 
+  console.log('Drawing text at time ' + new Date().toISOString())
   // Create the first page of text.
   message.forEach(({ text, color, font, link, size, padding }) => {
     // Draw the text, and return the width and height estimates
@@ -218,6 +231,8 @@ const buildFirstPage = async ({
     scale: 0.1,
   })
 
+  console.log('Adding signature at time ' + new Date().toISOString())
+
   return pdfDoc
 }
 
@@ -269,8 +284,4 @@ const drawMultilineText = (
   )
 
   return { width, height }
-}
-
-export const config = {
-  runtime: 'edge',
 }
