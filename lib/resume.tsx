@@ -270,3 +270,7 @@ const drawMultilineText = (
 
   return { width, height }
 }
+
+export const config = {
+  runtime: 'edge',
+}
