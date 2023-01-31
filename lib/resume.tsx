@@ -84,10 +84,11 @@ const buildLastPage = async ({
 
   const { width } = page.getSize()
 
+  // TODO: Just store a PNG
   const png = Buffer.from(resvg.render().asPng())
   const pngImage = await pdfDoc.embedPng(png)
   const pngDims = pngImage.scaleToFit(300, 200)
-  console.log('Attaching logo at time ' + new Date().toISOString())
+
   page.drawImage(pngImage, {
     x: width / 2 - pngDims.width / 2,
     y: 515 - pngDims.height / 2,
