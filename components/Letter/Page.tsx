@@ -13,18 +13,15 @@ import { Stationery } from '@/components/Letter/Stationery'
 
 import resumeThumbnail from './resume_thumbnail.png'
 
-export default function Letter(
-  {
-    name,
-    svg,
-    color,
-    websiteMessage,
-    code,
-    slug,
-    lastUpdated,
-  }: Omit<Company, 'png' | 'resumeMessage'>,
-  logEvents = false
-) {
+export default function Letter({
+  name,
+  svg,
+  color,
+  websiteMessage,
+  code,
+  slug,
+  lastUpdated,
+}: Omit<Company, 'png' | 'resumeMessage'>) {
   const [loading, setLoading] = useState(false)
   const plausible = usePlausible()
 
@@ -38,7 +35,7 @@ export default function Letter(
       </ReactMarkdown>
       <Signature />
       <a
-        className="group relative mx-4 mt-8  block max-w-sm  rounded-lg border border-slate-300 bg-slate-100 p-4 text-center sm:mx-auto sm:p-12"
+        className="group relative mx-4 mt-8  block max-w-sm  rounded-lg border border-slate-300 bg-slate-100 p-4 text-center sm:mx-auto sm:p-8"
         download={`Tim Feeley Resume - ${name}.pdf`}
         onClick={(e) => {
           if (loading) {
@@ -49,12 +46,11 @@ export default function Letter(
           } else {
             setLoading(true)
             setTimeout(() => setLoading(false), 5000)
-            logEvents &&
-              plausible('resume_download', {
-                props: {
-                  slug,
-                },
-              })
+            plausible('resume_download', {
+              props: {
+                slug,
+              },
+            })
           }
         }}
         href={`/api/resume?slug=${slug}&code=${code}`}

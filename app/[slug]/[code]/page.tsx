@@ -11,15 +11,23 @@ export const revalidate = 60
 
 export default async function CompanyPage({
   params: { slug, code },
+  searchParams,
 }: {
   params: Pick<Company, 'code' | 'slug'>
+  searchParams?: { [key: string]: string | string[] | undefined }
 }) {
   const companyData = await getCompanyData({ slug, code })
 
+  if (searchParams && searchParams.ld) {
+    console.log('Logging disabled')
+  }
+
   return (
-    <main className="mb-12">
-      <Letter {...companyData} data-superjson />
-    </main>
+    <>
+      <main className="mb-12">
+        <Letter {...companyData} data-superjson />
+      </main>
+    </>
   )
 }
 
