@@ -1,8 +1,13 @@
+import 'server-only'
+
 import type { Company } from '@prisma/client'
 import { notFound } from 'next/navigation'
+import { cache } from 'react'
 
-import Letter from '@/components/Letter'
+import Letter from '@/components/Letter/Page'
 import prisma from '@/lib/prisma'
+
+export const revalidate = 60
 
 export default async function CompanyPage({
   params: { slug, code },
@@ -13,25 +18,43 @@ export default async function CompanyPage({
 
   return (
     <main className="mb-12">
-      <Letter {...companyData} />
+      <Letter {...companyData} data-superjson />
     </main>
   )
 }
 
-const getCompanyData = async ({
-  slug,
-  code,
-}: Pick<Company, 'code' | 'slug'>) => {
-  return await prisma.company
-    .findFirstOrThrow({
-      where: {
-        AND: {
-          slug,
-          code,
+const getCompanyData = cache(
+  async ({ slug, code }: Pick<Company, 'code' | 'slug'>) => {
+    const returnFields = await prisma.company
+      .findFirstOrThrow({
+        select: {
+          name: true,
+          svg: true,
+          color: true,
+          websiteMessage: true,
+          lastUpdated: true,
+          code: true,
+          slug: true,
         },
-      },
-    })
-    .catch(() => {
-      notFound()
-    })
+        where: {
+          AND: {
+            slug,
+            code,
+          },
+        },
+      })
+      .catch(() => {
+        notFound()
+      })
+
+    return returnFields
+  }
+)
+export async function generateStaticParams() {
+  const companies = await prisma.company.findMany()
+
+  return companies.map(({ slug, code }) => ({
+    slug,
+    code,
+  }))
 }

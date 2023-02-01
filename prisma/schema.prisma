@@ -61,10 +61,12 @@ model Company {
   code           String  @default(cuid())
   name           String
   svg            String  @db.LongText
+  png            Bytes?
   websiteMessage String  @db.LongText
   resumeMessage  String? @db.LongText
-  intro          String? @db.LongText
   color          String  @default("#dadce0")
+
+  lastUpdated DateTime @default(now())
 
   @@index([slug, code])
 }

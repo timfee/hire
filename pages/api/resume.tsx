@@ -1,4 +1,6 @@
+import type { Company } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { cache } from 'react'
 
 import prisma from '@/lib/prisma'
 import { generateResumePacket } from '@/lib/resume'
@@ -19,23 +21,16 @@ export default async function handler(
   const { code, slug } = req.query
 
   try {
-    const { name, svg } = await prisma.company.findFirstOrThrow({
-      where: {
-        AND: {
-          code,
-          slug,
-        },
-      },
-    })
-    const resumeData = await generateResumePacket({ code, slug, svg })
+    const { name, png } = await getCompanyData({ code, slug })
+    const resumeData = await generateResumePacket({ code, slug, png, name })
 
-    // Set the content type to 'application/pdf'
     res.setHeader('Content-Type', 'application/pdf')
     res.setHeader('Content-Length', resumeData.length)
-    const filename = `Tim Feeley Resume - ${name}.pdf`
 
-    // Set the content disposition to 'attachment', so that the browser prompts the user to save the file
-    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`)
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename="Tim Feeley Resume - ${name}.pdf"`
+    )
 
     // Send the PDF data to the browser
     res.end(Buffer.from(resumeData)).status(200)
@@ -43,3 +38,15 @@ export default async function handler(
     return res.status(404).end()
   }
 }
+
+const getCompanyData = cache(
+  async ({ code, slug }: Pick<Company, 'slug' | 'code'>) =>
+    await prisma.company.findFirstOrThrow({
+      where: {
+        AND: {
+          code,
+          slug,
+        },
+      },
+    })
+)

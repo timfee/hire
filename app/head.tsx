@@ -1,6 +1,12 @@
 import PlausibleProvider from 'next-plausible'
 
-export default function Head() {
+// le = loggingEnabled
+// Pass ?le=false to omit logging
+export default function Head({
+  searchParams: { le = true },
+}: {
+  searchParams: { le: boolean }
+}) {
   return (
     <>
       <meta charSet="utf-8" />
@@ -30,7 +36,11 @@ export default function Head() {
       />
       <link rel="canonical" href={`https://hire.timfeeley.com`} />
       <link rel="icon" href="/favicon.svg" />
-      <PlausibleProvider domain="hire.timfeeley.com" taggedEvents />
+      <PlausibleProvider
+        domain="hire.timfeeley.com"
+        taggedEvents
+        enabled={le}
+      />
     </>
   )
 }

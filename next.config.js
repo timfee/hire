@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { withPlausibleProxy } = require('next-plausible')
 
 /** @type {import("next").NextConfig} */
@@ -7,6 +7,7 @@ const config = {
   swcMinify: true,
 
   experimental: {
+    swcPlugins: [['next-superjson-plugin', { excluded: ['png', 'svg'] }]],
     appDir: true,
   },
 }
