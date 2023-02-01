@@ -12,7 +12,7 @@ export default async function Head({
 }) {
   const companyData = await getCompanyData({ slug, code })
   const title = `Tim Feeley ${
-    companyData ? ' & ' + companyData.name + ' = ❤️' : ''
+    companyData ? '& ' + companyData.name + ' = ❤️' : ''
   }`
 
   const description =
