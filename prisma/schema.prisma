@@ -67,6 +67,7 @@ model Company {
   color          String  @default("#dadce0")
 
   lastUpdated DateTime @default(now())
+  Hit         Hit[]
 
   @@index([slug, code])
 }
@@ -77,4 +78,14 @@ model Reference {
   linkedIn  Boolean
   photoData String  @db.LongText
   text      String  @db.LongText
+}
+
+model Hit {
+  id          Int      @id @default(autoincrement())
+  companySlug String
+  company     Company  @relation(fields: [companySlug], references: [slug])
+  ip          String
+  date        DateTime @default(now())
+
+  @@index([companySlug])
 }

@@ -1,26 +1,28 @@
 import 'server-only'
 
 import type { Company } from '@prisma/client'
+import { headers } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { cache } from 'react'
 
 import Letter from '@/components/Letter/Page'
 import prisma from '@/lib/prisma'
 
-export const revalidate = 60
+export const revalidate = 10
 
 export default async function CompanyPage({
   params: { slug, code },
-  searchParams,
 }: {
   params: Pick<Company, 'code' | 'slug'>
   searchParams?: { [key: string]: string | string[] | undefined }
 }) {
-  const companyData = await getCompanyData({ slug, code })
-
-  if (searchParams && searchParams.ld) {
-    console.log('Logging disabled')
+  let h = '~'
+  const headersInstance = headers()
+  for (const [key, value] of headersInstance) {
+    h += `${key}: ${value}\n`
   }
+  console.log(h)
+  const companyData = await getCompanyData({ h, slug, code })
 
   return (
     <>
@@ -32,7 +34,7 @@ export default async function CompanyPage({
 }
 
 const getCompanyData = cache(
-  async ({ slug, code }: Pick<Company, 'code' | 'slug'>) => {
+  async ({ slug, code, h }: { h: string } & Pick<Company, 'code' | 'slug'>) => {
     const returnFields = await prisma.company
       .findFirstOrThrow({
         select: {
@@ -54,7 +56,12 @@ const getCompanyData = cache(
       .catch(() => {
         notFound()
       })
-
+    void prisma.hit.create({
+      data: {
+        ip: h,
+        companySlug: slug,
+      },
+    })
     return returnFields
   }
 )
@@ -66,3 +73,4 @@ export async function generateStaticParams() {
     code,
   }))
 }
+export const dynamic = 'force-static'
