@@ -5,6 +5,8 @@
 body {
   @apply subpixel-antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
   font-feature-settings: 'cv05', 'cv11';
 }
 @font-face {
