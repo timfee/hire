@@ -21,6 +21,9 @@ export default async function Head({
   const NEXT_SEO_DEFAULT: NextSeoProps = {
     title,
     description,
+    themeColor: companyData.color,
+    useAppDir: true,
+
     openGraph: {
       type: 'website',
       locale: 'en_US',
@@ -33,7 +36,7 @@ export default async function Head({
           width: 1200,
           height: 630,
           alt: 'Download Tim Feeley’s Resume',
-          type: 'image/jpeg',
+          type: 'image/png',
           secureUrl: 'https://hire.timfeeley.com/opengraph.png',
         },
       ],
