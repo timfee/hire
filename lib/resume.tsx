@@ -1,6 +1,5 @@
 import fontkit from '@pdf-lib/fontkit'
 import type { Company } from '@prisma/client'
-import { Resvg } from '@resvg/resvg-js'
 import fs from 'fs'
 import type { PDFPage, PDFPageDrawTextOptions } from 'pdf-lib'
 import {
@@ -12,6 +11,7 @@ import {
   setCharacterSpacing,
 } from 'pdf-lib'
 import { cwd } from 'process'
+import { cache } from 'react'
 
 import prisma from '@/lib/prisma'
 import { SIGNATURE_PATH } from '@/lib/resume/Signature'
@@ -36,65 +36,64 @@ const getStaticPages = async () => {
   )
 }
 
-export async function generateResumePacket({
-  slug,
-  code,
-  svg,
-}: Pick<Company, 'slug' | 'code' | 'svg'>) {
-  const introPage = await buildFirstPage({ slug, code })
-  const lastPage = await buildLastPage({ slug, code, svg })
+export const generateResumePacket = cache(
+  async ({
+    slug,
+    code,
+    name,
+    png,
+  }: Pick<Company, 'slug' | 'name' | 'code' | 'png'>) => {
+    const introPage = await buildFirstPage({ slug, code })
+    const packet = await PDFDocument.create()
 
-  const packet = await PDFDocument.create()
+    const documents = [
+      introPage,
+      ...(await getStaticPages()),
+      // Only add the last page if we have a PNG
+    ]
+    if (png) {
+      documents.push(await buildLastPage({ png }))
+    }
 
-  const documents = [introPage, ...(await getStaticPages()), lastPage]
+    for (const doc of documents) {
+      const pages = await packet.copyPages(doc, doc.getPageIndices())
+      pages.forEach((page) => {
+        packet.addPage(page)
+      })
+    }
 
-  for (const doc of documents) {
-    const pages = await packet.copyPages(doc, doc.getPageIndices())
-    pages.forEach((page) => {
-      packet.addPage(page)
-    })
+    packet.setAuthor('Tim Feeley')
+    packet.setTitle('Tim Feeley’s Resume for ' + name)
+    packet.setLanguage('en-US')
+    packet.setKeywords(['resume', 'tim feeley', 'product manager', 'ux'])
+    packet.setCreator('hire.timfeeley.com')
+    packet.setProducer('hire.timfeeley.com')
+    packet.setSubject('A very special resume from Tim Feeley for ' + name + '!')
+
+    return await packet.save()
   }
+)
 
-  packet.setAuthor('Tim Feeley')
-  packet.setTitle('Tim Feeley’s Resume')
-  packet.setLanguage('en-US')
-  packet.setKeywords(['resume', 'tim feeley', 'product manager', 'ux'])
-  packet.setCreator('hire.timfeeley.com')
-  packet.setProducer('hire.timfeeley.com')
-  packet.setSubject('A very special resume from Tim Feeley for you!')
-
-  return await packet.save()
-}
-
-const buildLastPage = async ({
-  svg,
-}: Pick<Company, 'slug' | 'code' | 'svg'>) => {
+const buildLastPage = async ({ png }: Required<Pick<Company, 'png'>>) => {
   const pdfDoc = await PDFDocument.load(
     fs.readFileSync(SOURCE_DIR + LAST_PAGE_PDF)
   )
 
-  const resvg = new Resvg(svg, {
-    fitTo: {
-      mode: 'width',
-      value: 300,
-    },
-  })
+  if (png) {
+    const page = pdfDoc.getPages()[0]
 
-  const page = pdfDoc.getPages()[0]
+    const { width } = page.getSize()
 
-  const { width } = page.getSize()
+    const pngImage = await pdfDoc.embedPng(Buffer.from(png))
+    const pngDims = pngImage.scaleToFit(300, 200)
 
-  // TODO: Just store a PNG
-  const png = Buffer.from(resvg.render().asPng())
-  const pngImage = await pdfDoc.embedPng(png)
-  const pngDims = pngImage.scaleToFit(300, 200)
-
-  page.drawImage(pngImage, {
-    x: width / 2 - pngDims.width / 2,
-    y: 515 - pngDims.height / 2,
-    width: pngDims.width,
-    height: pngDims.height,
-  })
+    page.drawImage(pngImage, {
+      x: width / 2 - pngDims.width / 2,
+      y: 515 - pngDims.height / 2,
+      width: pngDims.width,
+      height: pngDims.height,
+    })
+  }
 
   return pdfDoc
 }
@@ -131,6 +130,7 @@ const buildFirstPage = async ({
     {
       text: 'I’m a PM & UX leader with two decades of experience developing high-performing teams and delivering impactful products used by billions of people.',
       size: 16,
+      padding: 16,
       color: rgb(71 / 255, 85 / 255, 105 / 255),
       font: INTER_MEDIUM,
     },

@@ -27,8 +27,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${Inter.variable} h-max`}>
-      <body className="h-full bg-gradient-to-t from-slate-100 to-slate-200 bg-cover">
+    <html lang="en" className={`${Inter.variable} h-full`}>
+      <body className="h-screen bg-gradient-to-t from-slate-100 to-slate-200 bg-cover">
         {children}
         <AnalyticsWrapper />
       </body>

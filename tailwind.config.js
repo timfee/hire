@@ -10,6 +10,7 @@ module.exports = {
     typography: require('./typography.js'),
     extend: {
       fontFamily: {
+        serif: 'Tiempos',
         sans: ['var(--font-inter-variable)'],
       },
     },
