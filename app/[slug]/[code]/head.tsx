@@ -27,10 +27,12 @@ export default async function Head({
     openGraph: {
       type: 'website',
       locale: 'en_US',
+      article: {
+        publishedTime: companyData.lastUpdated.toISOString(),
+      },
       url: `https://hire.timfeeley.com/${slug}/${code}`,
       title,
       description,
-
       images: [
         {
           url: 'https://hire.timfeeley.com/opengraph.png',
@@ -41,7 +43,6 @@ export default async function Head({
           secureUrl: 'https://hire.timfeeley.com/opengraph.png',
         },
       ],
-
       siteName: 'Tim Feeley',
     },
     twitter: {
