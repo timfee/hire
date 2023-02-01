@@ -45,7 +45,7 @@ export default function Letter({
             )
           } else {
             setLoading(true)
-            setTimeout(() => setLoading(false), 5000)
+            setTimeout(() => setLoading(false), 9000)
             plausible('resume_download', {
               props: {
                 slug,
