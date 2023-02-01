@@ -32,7 +32,7 @@ export const Stationery = ({
 }: Pick<Company, 'svg' | 'name' | 'lastUpdated' | 'color'>) => (
   <>
     <div
-      className="mb-6 text-center text-sm sm:-mt-4 sm:mb-0 sm:text-right"
+      className="mb-6 text-center text-xs opacity-50 sm:-mt-4 sm:mb-0 sm:text-right sm:text-sm"
       style={{ color }}>
       {new Date(lastUpdated).toLocaleDateString(undefined, {
         month: 'long',
