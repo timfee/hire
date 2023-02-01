@@ -26,11 +26,14 @@ const letter: Variants = {
 
 export const Stationery = ({
   svg,
+  name,
   color,
   lastUpdated,
-}: Pick<Company, 'svg' | 'lastUpdated' | 'color'>) => (
+}: Pick<Company, 'svg' | 'name' | 'lastUpdated' | 'color'>) => (
   <>
-    <div className="-mt-4 text-right text-sm" style={{ color }}>
+    <div
+      className="mb-6 text-center text-sm sm:-mt-4 sm:mb-0 sm:text-right"
+      style={{ color }}>
       {new Date(lastUpdated).toLocaleDateString(undefined, {
         month: 'long',
         day: 'numeric',
@@ -47,8 +50,8 @@ export const Stationery = ({
         }}
         variants={letter}>
         <img
-          alt={'${name} logo'}
-          className="max-h-12 max-w-[6rem] sm:h-16 sm:max-w-[8rem]"
+          alt={`${name} logo`}
+          className=" h-12 max-w-[6rem] sm:h-16 sm:max-w-[8rem]"
           src={`data:image/svg+xml;utf8,${encodeURIComponent(svg)}`}
         />
       </motion.div>

@@ -33,6 +33,7 @@ specifiers:
   next: 13.1.6
   next-auth: 4.19.1
   next-plausible: 3.7.1
+  next-seo: ^5.15.0
   next-superjson-plugin: ^0.5.4
   nodemailer: 6.9.1
   pdf-lib: 1.17.1
@@ -63,6 +64,7 @@ dependencies:
   framer-motion: 8.5.5_biqbaboplfbrettd7655fr4n2y
   googleapis: 110.0.0
   next: 13.1.6_biqbaboplfbrettd7655fr4n2y
+  next-seo: 5.15.0_3vryta7zmbcsw4rrqf4axjqggm
   nodemailer: 6.9.1
   pdf-lib: 1.17.1
   react: 18.2.0
@@ -2842,6 +2844,18 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     dev: true
+
+  /next-seo/5.15.0_3vryta7zmbcsw4rrqf4axjqggm:
+    resolution: {integrity: sha512-LGbcY91yDKGMb7YI+28n3g+RuChUkt6pXNpa8FkfKkEmNiJkeRDEXTnnjVtwT9FmMhG6NH8qwHTelGrlYm9rgg==}
+    peerDependencies:
+      next: ^8.1.1-canary.54 || >=9.0.0
+      react: '>=16.0.0'
+      react-dom: '>=16.0.0'
+    dependencies:
+      next: 13.1.6_biqbaboplfbrettd7655fr4n2y
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
 
   /next-superjson-plugin/0.5.4_6hb7bebdisxcpyppymkqpiq3a4:
     resolution: {integrity: sha512-AUAqdL+yv/jqnkd583jffimRYbfbztkKkNf7qv0WhOVUGW0cIFYdtQHbOEseeCHK95hcPy7rDZY94nujjjRseQ==}

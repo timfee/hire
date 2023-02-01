@@ -29,8 +29,8 @@ export default function Letter({
     <main
       className="relative mx-4 mt-3 max-w-3xl rounded-md border-t-4 bg-white p-4 shadow-md sm:mx-auto sm:mt-12 sm:p-8"
       style={{ borderTopColor: color }}>
-      <Stationery {...{ svg, color, lastUpdated }} />
-      <ReactMarkdown className="prose mt-12 font-serif">
+      <Stationery {...{ svg, name, color, lastUpdated }} />
+      <ReactMarkdown className="prose mt-6 font-serif sm:mt-12">
         {websiteMessage}
       </ReactMarkdown>
       <Signature />
