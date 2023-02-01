@@ -74,9 +74,9 @@ export default function Letter({
         )}
         <span
           className={clsx(
-            'rounded-full bg-slate-200 py-1 px-4 text-xs text-blue-600 underline transition-opacity duration-500 ease-in-out group-hover:bg-blue-600 group-hover:text-white sm:text-sm',
+            'rounded-full bg-slate-200 py-1 px-4 text-xs text-blue-600 underline transition-all duration-500 ease-in-out group-hover:bg-blue-600 group-hover:text-white sm:text-sm',
             {
-              'bg-opacity-25': loading,
+              'bg-blue-300': loading,
               'opacity-100': !loading,
             }
           )}>{`Tim Feeley - ${name}.pdf`}</span>
