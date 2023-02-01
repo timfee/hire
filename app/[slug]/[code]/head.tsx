@@ -17,24 +17,28 @@ export default async function Head({
       <title>{title}</title>
       <link rel="icon" href="/favicon.svg" />
       <meta charSet="utf-8" />
+      <meta name="author" content="Tim Feeley" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta
         name="description"
-        content={`Hi, ${companyData.name}, I’m Tim Feeley, a people-centric Product Manager from San Francisco.`}
+        content={`Hi, ${companyData.name}, I’m Tim Feeley. I’m a PM & UX leader with two decades of experience developing high-performing teams and delivering impactful products used by billions of people.`}
       />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:site" content="@timfee" />
       <meta name="twitter:creator" content="@timfee" />
       <meta
+        name="description"
         property="og:description"
-        content={`Hi, ${companyData.name}, I’m Tim Feeley, a people-centric Product Manager from San Francisco.`}
+        content={`Hi, ${companyData.name}, I’m Tim Feeley. I’m a PM & UX leader with two decades of experience developing high-performing teams and delivering impactful products used by billions of people.`}
       />
       <meta
+        name="url"
         property="og:url"
         content={`https://hire.timfeeley.com/${slug}/${code}`}
       />
       <meta name="type" property="og:type" content="website" />
+
       <meta
         name="image"
         property="og:image"
