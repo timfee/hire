@@ -23,16 +23,17 @@ export default async function Head({
     description,
     themeColor: companyData.color,
     useAppDir: true,
-
+    canonical: `https://hire.timfeeley.com/${slug}/${code}`,
     openGraph: {
       type: 'website',
       locale: 'en_US',
       url: `https://hire.timfeeley.com/${slug}/${code}`,
       title,
       description,
+
       images: [
         {
-          url: 'http://hire.timfeeley.com/opengraph.png',
+          url: 'https://hire.timfeeley.com/opengraph.png',
           width: 1200,
           height: 630,
           alt: 'Download Tim Feeley’s Resume',
@@ -40,6 +41,7 @@ export default async function Head({
           secureUrl: 'https://hire.timfeeley.com/opengraph.png',
         },
       ],
+
       siteName: 'Tim Feeley',
     },
     twitter: {
@@ -55,10 +57,7 @@ export default async function Head({
       <meta name="viewport" content="width=device-width" />
       <meta name="robots" content="index,follow" />
       <meta name="theme-color" content={companyData.color} />
-      <link
-        rel="canonical"
-        href={`https://hire.timfeeley.com/${slug}/${code}`}
-      />
+
       <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
       <link rel="icon" type="image/png" href="/favicon.png" />
       <NextSeo {...NEXT_SEO_DEFAULT} useAppDir={true} />
