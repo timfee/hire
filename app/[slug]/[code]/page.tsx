@@ -1,7 +1,4 @@
-import 'server-only'
-
 import type { Company } from '@prisma/client'
-import { headers } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { cache } from 'react'
 
@@ -16,13 +13,7 @@ export default async function CompanyPage({
   params: Pick<Company, 'code' | 'slug'>
   searchParams?: { [key: string]: string | string[] | undefined }
 }) {
-  let h = '~'
-  const headersInstance = headers()
-  for (const [key, value] of headersInstance) {
-    h += `${key}: ${value}\n`
-  }
-  console.log(h)
-  const companyData = await getCompanyData({ h, slug, code })
+  const companyData = await getCompanyData({ slug, code })
 
   return (
     <>
@@ -34,7 +25,7 @@ export default async function CompanyPage({
 }
 
 const getCompanyData = cache(
-  async ({ slug, code, h }: { h: string } & Pick<Company, 'code' | 'slug'>) => {
+  async ({ slug, code }: Pick<Company, 'code' | 'slug'>) => {
     const returnFields = await prisma.company
       .findFirstOrThrow({
         select: {
@@ -56,12 +47,7 @@ const getCompanyData = cache(
       .catch(() => {
         notFound()
       })
-    await prisma.hit.create({
-      data: {
-        ip: h,
-        companySlug: slug,
-      },
-    })
+
     return returnFields
   }
 )

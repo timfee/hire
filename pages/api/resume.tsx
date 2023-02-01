@@ -32,6 +32,12 @@ export default async function handler(
       `attachment; filename="Tim Feeley Resume - ${name}.pdf"`
     )
 
+    await prisma.hit.create({
+      data: {
+        ip: req.headers['x-forwarded-for']?.toString() || 'unk',
+        companySlug: slug,
+      },
+    })
     // Send the PDF data to the browser
     res.end(Buffer.from(resumeData)).status(200)
   } catch {
