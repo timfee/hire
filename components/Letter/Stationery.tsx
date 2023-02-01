@@ -64,12 +64,7 @@ export const Stationery = ({
           x: -100,
         }}
         variants={letter}>
-        <Image
-          src={timThumbnail}
-          alt="Tim Feeley"
-          priority
-          className="rounded-full"
-        />
+        <Image src={timThumbnail} alt="Tim Feeley" className="rounded-full" />
       </motion.div>
     </section>
   </>
