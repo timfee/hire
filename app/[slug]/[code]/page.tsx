@@ -56,7 +56,7 @@ const getCompanyData = cache(
       .catch(() => {
         notFound()
       })
-    void prisma.hit.create({
+    await prisma.hit.create({
       data: {
         ip: h,
         companySlug: slug,
