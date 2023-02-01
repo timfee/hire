@@ -130,6 +130,7 @@ const buildFirstPage = async ({
     {
       text: 'I’m a PM & UX leader with two decades of experience developing high-performing teams and delivering impactful products used by billions of people.',
       size: 16,
+      padding: 16,
       color: rgb(71 / 255, 85 / 255, 105 / 255),
       font: INTER_MEDIUM,
     },
