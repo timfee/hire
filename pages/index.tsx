@@ -1,5 +1,3 @@
-'use client'
-
 import { Button, Card } from 'flowbite-react'
 
 export default function Home() {

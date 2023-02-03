@@ -1,16 +1,24 @@
 import type { Company } from '@prisma/client'
+import type {
+  GetStaticPaths,
+  GetStaticProps,
+  InferGetStaticPropsType,
+  NextPage,
+} from 'next'
+import Head from 'next/head'
 import type { NextSeoProps } from 'next-seo'
 import { NextSeo } from 'next-seo'
-import { cache } from 'react'
 
+import Letter from '@/components/Letter/Page'
 import prisma from '@/lib/prisma'
 
-export default async function Head({
-  params: { slug, code },
-}: {
-  params: Pick<Company, 'code' | 'slug'>
-}) {
-  const companyData = await getCompanyData({ slug, code })
+type PageParams = Pick<Company, 'code' | 'slug'>
+
+const CompanyPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (
+  companyData
+) => {
+  const { slug, code } = companyData
+  console.log(companyData)
   const title = `Tim Feeley ${
     companyData ? '& ' + companyData.name + ' = ❤️' : ''
   }`
@@ -18,7 +26,7 @@ export default async function Head({
   const description =
     'I’m a PM & UX leader with two decades of experience developing high-performing teams and delivering impactful products used by billions of people.'
 
-  const NEXT_SEO_DEFAULT: NextSeoProps = {
+  const SEO_PARAMS: NextSeoProps = {
     title,
     description,
     themeColor: companyData.color,
@@ -27,9 +35,6 @@ export default async function Head({
     openGraph: {
       type: 'website',
       locale: 'en_US',
-      article: {
-        publishedTime: companyData.lastUpdated.toISOString(),
-      },
       url: `https://hire.timfeeley.com/${slug}/${code}`,
       title,
       description,
@@ -54,20 +59,31 @@ export default async function Head({
 
   return (
     <>
-      <meta charSet="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta name="robots" content="index,follow" />
-      <meta name="theme-color" content={companyData.color} />
+      <Head>
+        <meta name="theme-color" content={companyData.color} />
+        <NextSeo {...SEO_PARAMS} />
+      </Head>
 
-      <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-      <link rel="icon" type="image/png" href="/favicon.png" />
-      <NextSeo {...NEXT_SEO_DEFAULT} useAppDir={true} />
+      <main className="mb-12">
+        <Letter {...companyData} />
+      </main>
     </>
   )
 }
 
-const getCompanyData = cache(
-  async ({ slug, code }: Pick<Company, 'code' | 'slug'>) => {
+export const getStaticProps: GetStaticProps<
+  Omit<Company, 'png' | 'resumeMessage'>,
+  PageParams
+> = async ({ params }) => {
+  if (!params) {
+    return {
+      notFound: true,
+      revalidate: 60,
+    }
+  }
+
+  const { slug, code } = params
+  try {
     const returnFields = await prisma.company.findFirstOrThrow({
       select: {
         name: true,
@@ -79,13 +95,35 @@ const getCompanyData = cache(
         slug: true,
       },
       where: {
-        AND: {
-          slug,
-          code,
-        },
+        slug,
+        code,
       },
     })
 
-    return returnFields
+    return {
+      props: { ...returnFields },
+      redirect: 60,
+    }
+  } catch {
+    return {
+      notFound: true,
+      revalidate: 60,
+    }
   }
-)
+}
+
+export const getStaticPaths: GetStaticPaths<PageParams> = async () => {
+  const companies = await prisma.company.findMany()
+
+  return {
+    paths: companies.map(({ slug, code }) => ({
+      params: {
+        slug,
+        code,
+      },
+    })),
+    fallback: true,
+  }
+}
+
+export default CompanyPage

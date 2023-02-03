@@ -11,7 +11,6 @@ import {
   setCharacterSpacing,
 } from 'pdf-lib'
 import { cwd } from 'process'
-import { cache } from 'react'
 
 import prisma from '@/lib/prisma'
 import { SIGNATURE_PATH } from '@/lib/resume/Signature'
@@ -36,43 +35,41 @@ const getStaticPages = async () => {
   )
 }
 
-export const generateResumePacket = cache(
-  async ({
-    slug,
-    code,
-    name,
-    png,
-  }: Pick<Company, 'slug' | 'name' | 'code' | 'png'>) => {
-    const introPage = await buildFirstPage({ slug, code })
-    const packet = await PDFDocument.create()
+export const generateResumePacket = async ({
+  slug,
+  code,
+  name,
+  png,
+}: Pick<Company, 'slug' | 'name' | 'code' | 'png'>) => {
+  const introPage = await buildFirstPage({ slug, code })
+  const packet = await PDFDocument.create()
 
-    const documents = [
-      introPage,
-      ...(await getStaticPages()),
-      // Only add the last page if we have a PNG
-    ]
-    if (png) {
-      documents.push(await buildLastPage({ png }))
-    }
-
-    for (const doc of documents) {
-      const pages = await packet.copyPages(doc, doc.getPageIndices())
-      pages.forEach((page) => {
-        packet.addPage(page)
-      })
-    }
-
-    packet.setAuthor('Tim Feeley')
-    packet.setTitle('Tim Feeley’s Resume for ' + name)
-    packet.setLanguage('en-US')
-    packet.setKeywords(['resume', 'tim feeley', 'product manager', 'ux'])
-    packet.setCreator('hire.timfeeley.com')
-    packet.setProducer('hire.timfeeley.com')
-    packet.setSubject('A very special resume from Tim Feeley for ' + name + '!')
-
-    return await packet.save()
+  const documents = [
+    introPage,
+    ...(await getStaticPages()),
+    // Only add the last page if we have a PNG
+  ]
+  if (png) {
+    documents.push(await buildLastPage({ png }))
   }
-)
+
+  for (const doc of documents) {
+    const pages = await packet.copyPages(doc, doc.getPageIndices())
+    pages.forEach((page) => {
+      packet.addPage(page)
+    })
+  }
+
+  packet.setAuthor('Tim Feeley')
+  packet.setTitle('Tim Feeley’s Resume for ' + name)
+  packet.setLanguage('en-US')
+  packet.setKeywords(['resume', 'tim feeley', 'product manager', 'ux'])
+  packet.setCreator('hire.timfeeley.com')
+  packet.setProducer('hire.timfeeley.com')
+  packet.setSubject('A very special resume from Tim Feeley for ' + name + '!')
+
+  return await packet.save()
+}
 
 const buildLastPage = async ({ png }: Required<Pick<Company, 'png'>>) => {
   const pdfDoc = await PDFDocument.load(

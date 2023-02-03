@@ -5,10 +5,8 @@ const { withPlausibleProxy } = require('next-plausible')
 const config = {
   reactStrictMode: true,
   swcMinify: true,
-
   experimental: {
     swcPlugins: [['next-superjson-plugin', { excluded: ['png', 'svg'] }]],
-    appDir: true,
   },
 }
 module.exports = withPlausibleProxy()(config)

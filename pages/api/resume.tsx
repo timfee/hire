@@ -1,6 +1,5 @@
 import type { Company } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { cache } from 'react'
 
 import prisma from '@/lib/prisma'
 import { generateResumePacket } from '@/lib/resume'
@@ -45,14 +44,12 @@ export default async function handler(
   }
 }
 
-const getCompanyData = cache(
-  async ({ code, slug }: Pick<Company, 'slug' | 'code'>) =>
-    await prisma.company.findFirstOrThrow({
-      where: {
-        AND: {
-          code,
-          slug,
-        },
+const getCompanyData = async ({ code, slug }: Pick<Company, 'slug' | 'code'>) =>
+  await prisma.company.findFirstOrThrow({
+    where: {
+      AND: {
+        code,
+        slug,
       },
-    })
-)
+    },
+  })
