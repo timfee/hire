@@ -2,6 +2,7 @@ import '@/styles/global.css'
 
 import { Analytics } from '@vercel/analytics/react'
 import type { AppProps } from 'next/app'
+import Head from 'next/head'
 import PlausibleProvider from 'next-plausible'
 
 import { Inter as Soehne, Tiempos } from '@/lib/fonts'
@@ -12,6 +13,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       domain="hire.timfeeley.com"
       trackFileDownloads
       trackOutboundLinks>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
       <Component {...pageProps} />
       <Analytics />
       <style jsx global>{`

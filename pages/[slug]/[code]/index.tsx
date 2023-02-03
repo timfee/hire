@@ -11,6 +11,7 @@ import { NextSeo } from 'next-seo'
 
 import Letter from '@/components/Letter/Page'
 import prisma from '@/lib/prisma'
+import { generateResumePacket } from '@/lib/resume'
 
 type PageParams = Pick<Company, 'code' | 'slug'>
 
@@ -18,7 +19,7 @@ const CompanyPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (
   companyData
 ) => {
   const { slug, code } = companyData
-  console.log(companyData)
+
   const title = `Tim Feeley ${
     companyData ? '& ' + companyData.name + ' = ❤️' : ''
   }`
@@ -72,7 +73,7 @@ const CompanyPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (
 }
 
 export const getStaticProps: GetStaticProps<
-  Omit<Company, 'png' | 'resumeMessage'>,
+  Omit<Company, 'png' | 'resumeMessage' | 'resumeData'>,
   PageParams
 > = async ({ params }) => {
   if (!params) {
@@ -93,6 +94,8 @@ export const getStaticProps: GetStaticProps<
         lastUpdated: true,
         code: true,
         slug: true,
+        created: true,
+        resumeLastGenerated: true,
       },
       where: {
         slug,
@@ -113,7 +116,40 @@ export const getStaticProps: GetStaticProps<
 }
 
 export const getStaticPaths: GetStaticPaths<PageParams> = async () => {
-  const companies = await prisma.company.findMany()
+  const companies = await prisma.company.findMany({
+    select: {
+      code: true,
+      slug: true,
+      resumeLastGenerated: true,
+      lastUpdated: true,
+      name: true,
+    },
+  })
+
+  // generate resume data at build time.
+  console.info(`${new Date().toString()} Generating resume data for companies`)
+  for (const company of companies) {
+    console.info(`${new Date().toString()} ** Starting ${company.name} **`)
+    if (
+      !company.resumeLastGenerated ||
+      company.resumeLastGenerated < company.lastUpdated
+    ) {
+      const { slug, name } = company
+      console.info(
+        `${new Date().toString()} ** !!!  ${
+          company.name
+        } is stale - updating **`
+      )
+      await prisma.company.update({
+        where: { slug },
+        data: {
+          resumeLastGenerated: new Date(),
+          resumeData: Buffer.from(await generateResumePacket({ slug })),
+        },
+      })
+      console.info(`${new Date().toString()} ** Finished ${name} **`)
+    }
+  }
 
   return {
     paths: companies.map(({ slug, code }) => ({

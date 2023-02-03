@@ -35,13 +35,14 @@ const getStaticPages = async () => {
   )
 }
 
-export const generateResumePacket = async ({
-  slug,
-  code,
-  name,
-  png,
-}: Pick<Company, 'slug' | 'name' | 'code' | 'png'>) => {
-  const introPage = await buildFirstPage({ slug, code })
+export const generateResumePacket = async ({ slug }: Pick<Company, 'slug'>) => {
+  const { png, name, resumeMessage, code } =
+    await prisma.company.findFirstOrThrow({
+      where: {
+        slug,
+      },
+    })
+  const introPage = await buildFirstPage({ slug, name, resumeMessage, code })
   const packet = await PDFDocument.create()
 
   const documents = [
@@ -96,18 +97,11 @@ const buildLastPage = async ({ png }: Required<Pick<Company, 'png'>>) => {
 }
 
 const buildFirstPage = async ({
+  name,
+  resumeMessage,
   slug,
   code,
-}: Pick<Company, 'slug' | 'code'>) => {
-  const company = await prisma.company.findFirstOrThrow({
-    where: {
-      AND: {
-        slug,
-        code,
-      },
-    },
-  })
-
+}: Pick<Company, 'name' | 'resumeMessage' | 'slug' | 'code'>) => {
   const pdfDoc = await PDFDocument.load(
     fs.readFileSync(SOURCE_DIR + INTRO_PAGE_PDF)
   )
@@ -118,7 +112,7 @@ const buildFirstPage = async ({
   // Prepare the blocks of text we want to add to the first page.
   const message = [
     {
-      text: `Hello ${company.name},`,
+      text: `Hello ${name},`,
       size: 20,
       padding: 20,
       color: rgb(71 / 255, 85 / 255, 105 / 255),
@@ -131,8 +125,8 @@ const buildFirstPage = async ({
       color: rgb(71 / 255, 85 / 255, 105 / 255),
       font: INTER_MEDIUM,
     },
-    ...(company.resumeMessage
-      ? company.resumeMessage.split('\n').map((paragraph) => {
+    ...(resumeMessage
+      ? resumeMessage.split('\n').map((paragraph) => {
           return {
             text: paragraph,
             size: 16,
@@ -143,11 +137,11 @@ const buildFirstPage = async ({
         })
       : []),
     {
-      text: `https://hire.timfeeley.com/${company.slug}/${company.code}`,
+      text: `https://hire.timfeeley.com/${slug}/${code}`,
       size: 16,
       color: rgb(29 / 255, 78 / 255, 216 / 255),
       font: INTER_MEDIUM,
-      link: `https://hire.timfeeley.com/${company.slug}/${company.code}`,
+      link: `https://hire.timfeeley.com/${slug}/${code}`,
     },
   ]
 
