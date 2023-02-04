@@ -57,19 +57,23 @@ model VerificationToken {
 }
 
 model Company {
-  slug                String    @id
-  code                String    @default(cuid())
-  name                String
-  svg                 String    @db.LongText
-  websiteMessage      String    @db.LongText
-  resumeMessage       String?   @db.LongText
-  color               String    @default("#dadce0")
-  lastUpdated         DateTime  @default(now()) @updatedAt @db.DateTime(0)
-  png                 Bytes?
-  resumeData          Bytes?
+  id   Int    @id @default(autoincrement())
+  slug String @unique
+  code String @default(cuid())
+  name String
+
+  svg            String  @db.LongText
+  websiteMessage String  @db.LongText
+  resumeMessage  String? @db.LongText
+  color          String  @default("#dadce0")
+  png            Bytes?
+
+  resumeUrl           String?
   resumeLastGenerated DateTime? @db.DateTime(0)
-  created             DateTime  @default(now()) @db.DateTime(0)
-  Hit                 Hit[]
+
+  created     DateTime @default(now()) @db.DateTime(0)
+  lastUpdated DateTime @default(now()) @updatedAt @db.DateTime(0)
+  Hit         Hit[]
 
   @@index([slug, code])
 }
@@ -83,11 +87,13 @@ model Reference {
 }
 
 model Hit {
-  id          Int      @id @default(autoincrement())
+  id Int @id @default(autoincrement())
+
   companySlug String
-  ip          String
-  date        DateTime @default(now())
-  company     Company  @relation(fields: [companySlug], references: [slug])
+
+  ip      String
+  date    DateTime @default(now())
+  company Company  @relation(fields: [companySlug], references: [slug])
 
   @@index([companySlug])
 }

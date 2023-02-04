@@ -10,8 +10,8 @@ import type { NextSeoProps } from 'next-seo'
 import { NextSeo } from 'next-seo'
 
 import Letter from '@/components/Letter/Page'
+import { getLatestResume } from '@/lib/amazon'
 import prisma from '@/lib/prisma'
-import { generateResumePacket } from '@/lib/resume'
 
 type PageParams = Pick<Company, 'code' | 'slug'>
 
@@ -73,30 +73,21 @@ const CompanyPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (
 }
 
 export const getStaticProps: GetStaticProps<
-  Omit<Company, 'png' | 'resumeMessage' | 'resumeData'>,
+  Omit<Company, 'png' | 'resumeMessage'>,
   PageParams
 > = async ({ params }) => {
   if (!params) {
     return {
       notFound: true,
-      revalidate: 60,
+      revalidate: 10,
     }
   }
 
   const { slug, code } = params
   try {
-    const returnFields = await prisma.company.findFirstOrThrow({
-      select: {
-        name: true,
-        svg: true,
-        color: true,
-        websiteMessage: true,
-        lastUpdated: true,
-        code: true,
-        slug: true,
-        created: true,
-        resumeLastGenerated: true,
-      },
+    // Next doesn't like it when you try to return a binary field
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { png, ...returnFields } = await prisma.company.findFirstOrThrow({
       where: {
         slug,
         code,
@@ -105,12 +96,12 @@ export const getStaticProps: GetStaticProps<
 
     return {
       props: { ...returnFields },
-      redirect: 60,
+      revalidate: 60,
     }
   } catch {
     return {
       notFound: true,
-      revalidate: 60,
+      revalidate: 10,
     }
   }
 }
@@ -126,29 +117,9 @@ export const getStaticPaths: GetStaticPaths<PageParams> = async () => {
     },
   })
 
-  // generate resume data at build time.
-  console.info(`${new Date().toString()} Generating resume data for companies`)
+  // Generate resume data at build time.
   for (const company of companies) {
-    console.info(`${new Date().toString()} ** Starting ${company.name} **`)
-    if (
-      !company.resumeLastGenerated ||
-      company.resumeLastGenerated < company.lastUpdated
-    ) {
-      const { slug, name } = company
-      console.info(
-        `${new Date().toString()} ** !!!  ${
-          company.name
-        } is stale - updating **`
-      )
-      await prisma.company.update({
-        where: { slug },
-        data: {
-          resumeLastGenerated: new Date(),
-          resumeData: Buffer.from(await generateResumePacket({ slug })),
-        },
-      })
-      console.info(`${new Date().toString()} ** Finished ${name} **`)
-    }
+    await getLatestResume({ ...company })
   }
 
   return {
