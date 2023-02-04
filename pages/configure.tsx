@@ -1,5 +1,3 @@
-import '@/app/globals.css'
-
 import { google } from 'googleapis'
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 

@@ -21,7 +21,7 @@ export default function Letter({
   code,
   slug,
   lastUpdated,
-}: Omit<Company, 'png' | 'resumeMessage'>) {
+}: Omit<Company, 'png' | 'resumeMessage' | 'resumeData'>) {
   const [loading, setLoading] = useState(false)
   const plausible = usePlausible()
 

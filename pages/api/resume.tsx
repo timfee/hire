@@ -1,6 +1,4 @@
-import type { Company } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { cache } from 'react'
 
 import prisma from '@/lib/prisma'
 import { generateResumePacket } from '@/lib/resume'
@@ -21,8 +19,52 @@ export default async function handler(
   const { code, slug } = req.query
 
   try {
-    const { name, png } = await getCompanyData({ code, slug })
-    const resumeData = await generateResumePacket({ code, slug, png, name })
+    const { name, lastUpdated, resumeLastGenerated } =
+      await prisma.company.findFirstOrThrow({
+        select: { name: true, lastUpdated: true, resumeLastGenerated: true },
+        where: {
+          AND: {
+            code,
+            slug,
+          },
+        },
+      })
+
+    let resumeData: Buffer | null = null
+    if (!resumeLastGenerated || resumeLastGenerated < lastUpdated) {
+      console.info(
+        `** Regenerating resume for ${name} -- data last update: ${lastUpdated.toString()} -- resume last update: ${
+          resumeLastGenerated ? resumeLastGenerated.toString() : '<NULL>'
+        } **`
+      )
+      resumeData = Buffer.from(await generateResumePacket({ slug }))
+
+      await prisma.company.update({
+        where: { slug },
+        data: {
+          resumeLastGenerated: new Date(),
+          resumeData: Buffer.from(resumeData),
+        },
+      })
+    } else {
+      resumeData = (
+        await prisma.company.findFirstOrThrow({
+          select: {
+            resumeData: true,
+          },
+          where: {
+            AND: {
+              code,
+              slug,
+            },
+          },
+        })
+      ).resumeData
+    }
+
+    if (!resumeData) {
+      return res.status(400).end()
+    }
 
     res.setHeader('Content-Type', 'application/pdf')
     res.setHeader('Content-Length', resumeData.length)
@@ -39,20 +81,8 @@ export default async function handler(
       },
     })
     // Send the PDF data to the browser
-    res.end(Buffer.from(resumeData)).status(200)
+    res.end(resumeData).status(200)
   } catch {
     return res.status(404).end()
   }
 }
-
-const getCompanyData = cache(
-  async ({ code, slug }: Pick<Company, 'slug' | 'code'>) =>
-    await prisma.company.findFirstOrThrow({
-      where: {
-        AND: {
-          code,
-          slug,
-        },
-      },
-    })
-)
