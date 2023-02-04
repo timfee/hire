@@ -3,10 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgres"
   url      = env("DATABASE_URL")
-
-  relationMode = "prisma"
 }
 
 model Account {
@@ -62,19 +60,19 @@ model Company {
   code String @default(cuid())
   slug String @unique
 
-  name String
+  name String @default("")
 
-  svg            String  @db.LongText
-  websiteMessage String  @db.LongText
-  resumeMessage  String? @db.LongText
-  color          String  @default("#dadce0")
-  png            Bytes
+  svg            String @default("") @db.Text
+  websiteMessage String @default("") @db.Text
+  resumeMessage  String @default("") @db.Text
+  color          String @default("#dadce0")
+  png            Bytes  @default("")
 
   resumeUrl           String?
-  resumeLastGenerated DateTime? @db.DateTime(0)
+  resumeLastGenerated DateTime?
 
-  created     DateTime @default(now()) @db.DateTime(0)
-  lastUpdated DateTime @default(now()) @updatedAt @db.DateTime(0)
+  created     DateTime @default(now())
+  lastUpdated DateTime @default(now()) @updatedAt
 
   @@index([slug, code])
 }
@@ -83,6 +81,6 @@ model Reference {
   id        String  @id @default(cuid())
   name      String?
   linkedIn  Boolean
-  photoData String  @db.LongText
-  text      String  @db.LongText
+  photoData String  @db.Text
+  text      String  @db.Text
 }
