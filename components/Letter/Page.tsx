@@ -36,7 +36,7 @@ export default function Letter({
       <Signature />
       <a
         className="group relative mx-4 mt-8  block max-w-sm  rounded-lg border border-slate-300 bg-slate-100 p-4 text-center sm:mx-auto sm:p-8"
-        download={`Tim Feeley Resume - ${name}.pdf`}
+        download
         onClick={(e) => {
           if (loading) {
             e.preventDefault()
