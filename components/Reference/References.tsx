@@ -4,7 +4,17 @@ import clsx from 'clsx'
 import { Reference } from '@/components/Reference/Reference'
 
 export const References = ({ references }: { references: ReferenceType[] }) => {
-  const allReferences = chunkify<ReferenceType>(references, 3, true)
+  const allReferences = references.reduce((acc, reference) => {
+    const columnIndex = Number.parseInt(reference.order.toString().charAt(0))
+
+    if (!acc[columnIndex]) {
+      acc[columnIndex] = []
+    }
+
+    acc[columnIndex].push(reference)
+
+    return acc
+  }, [] as ReferenceType[][])
 
   return (
     <ul
@@ -36,36 +46,4 @@ export const References = ({ references }: { references: ReferenceType[] }) => {
       ))}
     </ul>
   )
-}
-
-function chunkify<T>(a: T[], n: number, balanced: boolean): T[][] {
-  if (n < 2) return [a]
-
-  const len = a.length,
-    out = []
-
-  let i = 0,
-    size
-
-  if (len % n === 0) {
-    size = Math.floor(len / n)
-    while (i < len) {
-      out.push(a.slice(i, (i += size)))
-    }
-  } else if (balanced) {
-    while (i < len) {
-      size = Math.ceil((len - i) / n--)
-      out.push(a.slice(i, (i += size)))
-    }
-  } else {
-    n--
-    size = Math.floor(len / n)
-    if (len % size === 0) size--
-    while (i < size * n) {
-      out.push(a.slice(i, (i += size)))
-    }
-    out.push(a.slice(size * n))
-  }
-
-  return out
 }
