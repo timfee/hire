@@ -23,7 +23,7 @@ module.exports = ({ theme }) => ({
         marginBottom: '0.5em',
         textAlign: 'center',
         fontSize: '1.3em',
-        fontWeight: 600,
+        fontWeight: 500,
         fontStyle: 'italic',
         lineHeight: '1.5em',
         letterSpacing: '-0.025em',
