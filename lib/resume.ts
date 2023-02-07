@@ -17,7 +17,7 @@ import { SIGNATURE_PATH } from '@/lib/resume/Signature'
 
 const SOURCE_DIR = `${cwd()}/lib/resume/`
 const FONTS_DIR = `${SOURCE_DIR}/fonts/`
-const FONTS = ['Inter-Medium.woff2', 'Inter-Bold.woff2']
+const FONTS = ['Inter-Medium.otf', 'Inter-Bold.otf']
 
 const INTRO_PAGE_PDF = '1.pdf'
 const INTRO_PAGE_LEFT_MARGIN = 106
@@ -219,14 +219,13 @@ const provideFonts = async (pdfDoc: PDFDocument) => {
   pdfDoc.registerFontkit(fontkit)
 
   return Promise.all(
-    FONTS.map(
-      async (font) =>
-        await pdfDoc.embedFont(fs.readFileSync(`${FONTS_DIR}${font}`), {
-          features: {
-            cv05: true /* single story a */,
-            cv11: true /* curved l */,
-          },
-        })
+    FONTS.map(async (font) =>
+      pdfDoc.embedFont(fs.readFileSync(`${FONTS_DIR}${font}`), {
+        features: {
+          cv05: true /* single story a */,
+          cv11: true /* curved l */,
+        },
+      })
     )
   )
 }
