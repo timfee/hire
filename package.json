@@ -15,7 +15,7 @@
     "@vercel/analytics": "0.1.8",
     "framer-motion": "9.0.1",
     "googleapis": "110.0.0",
-    "next": "13.1.6",
+    "next": "13.1.7-canary.7",
     "nodemailer": "6.9.1",
     "pdf-lib": "1.17.1",
     "react": "18.2.0",

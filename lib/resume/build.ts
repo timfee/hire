@@ -17,7 +17,7 @@ import { SIGNATURE_PATH } from '@/lib/resume/Signature'
 
 const SOURCE_DIR = `${cwd()}/lib/resume/`
 const FONTS_DIR = `${SOURCE_DIR}/fonts/`
-const FONTS = ['Inter-Medium.woff2', 'Inter-Bold.woff2']
+const FONTS = ['Inter-Medium.otf', 'Inter-Bold.otf']
 
 const INTRO_PAGE_PDF = '1.pdf'
 const INTRO_PAGE_LEFT_MARGIN = 106

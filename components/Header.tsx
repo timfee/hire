@@ -1,18 +1,21 @@
 /* eslint-disable @next/next/no-img-element */
-import type { Company } from '@prisma/client'
 import clsx from 'clsx'
 import type { Variants } from 'framer-motion'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 
+import { useData } from '@/context/DataContext'
+
 import timThumbnail from '../public/tim_feeley_small.png'
 
-export default function Header({
-  svg,
-  name,
-  color,
-  className,
-}: Pick<Company, 'svg' | 'name' | 'color'> & { className?: string }) {
+export default function Header({ className = '' }) {
+  const data = useData()
+  if (!data) return null
+
+  const {
+    company: { name, color, svg },
+  } = data
+
   const letter: Variants = {
     hidden: {
       opacity: 0,
@@ -44,7 +47,10 @@ export default function Header({
           src={`data:image/svg+xml;utf8,${encodeURIComponent(svg)}`}
         />
       </motion.div>
-      <div className="h-12 w-px sm:h-16" style={{ backgroundColor: color }} />
+      <div
+        className="h-12 w-px sm:h-16"
+        style={{ backgroundColor: color }}
+      />
       <motion.div
         className="relative h-12 w-12 sm:h-16 sm:w-16"
         animate="visible"
@@ -53,7 +59,11 @@ export default function Header({
           x: -100,
         }}
         variants={letter}>
-        <Image src={timThumbnail} alt="Tim Feeley" className="rounded-full" />
+        <Image
+          src={timThumbnail}
+          alt="Tim Feeley"
+          className="rounded-full"
+        />
       </motion.div>
     </section>
   )

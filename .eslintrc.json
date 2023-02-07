@@ -9,7 +9,6 @@
         "plugin:tailwindcss/recommended"
       ],
       "rules": {
-        "prettier/prettier": "error",
         "import/first": "error",
         "import/newline-after-import": "error",
         "import/no-duplicates": "error",
@@ -34,15 +33,13 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "plugins": ["@typescript-eslint", "prettier"],
+  "plugins": ["@typescript-eslint"],
   "extends": [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
-    "plugin:tailwindcss/recommended",
-    "prettier/prettier"
+    "plugin:tailwindcss/recommended"
   ],
   "rules": {
-    "prettier/prettier": "error",
     "@typescript-eslint/consistent-type-imports": "warn"
   }
 }

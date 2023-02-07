@@ -6,7 +6,7 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    typography: require('./typography.js'),
+    typography: require('./tailwind.typography.config.cjs'),
     extend: {
       fontFamily: {
         sans: 'var(--inter-v-font)',

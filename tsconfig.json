@@ -31,11 +31,11 @@
     ".next/types/**/*.ts",
     "**/*.cjs",
     "**/*.mjs",
-    "tailwind.config.js",
-    "prettier.config.js",
-    "next.config.js",
-    "typography.js",
-    "postcss.config.js"
+    "tailwind.config.cjs",
+    "prettier.config.cjs",
+    "next.config.mjs",
+    "tailwind.typography.config.cjs",
+    "postcss.config.cjs"
   ],
   "exclude": ["node_modules"]
 }

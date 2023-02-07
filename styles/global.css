@@ -9,49 +9,19 @@ body {
   scroll-behavior: smooth;
   font-feature-settings: 'cv05', 'cv11';
 }
-@font-face {
-  font-family: 'Tiempos';
-  src: url('/tiempos-text-web-regular.woff2') format('woff2');
-  font-weight: 400;
-}
-@font-face {
-  font-family: 'Tiempos';
-  src: url('/tiempos-text-web-regular-italic.woff2') format('woff2');
-  font-weight: 400;
-  font-style: italic;
-}
-@font-face {
-  font-family: 'Tiempos';
-  src: url('/tiempos-text-web-bold.woff2') format('woff2');
-  font-weight: 700;
-}
-@font-face {
-  font-family: 'Tiempos';
-  src: url('/tiempos-text-web-bold-italic.woff2') format('woff2');
-  font-weight: 700;
-  font-style: italic;
+
+.download-card {
+  background: rgb(255, 255, 255);
+  border-radius: 0.4em;
+  box-shadow: 0.3em 0.3em 0.7em #00000015;
+  transition: border 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: rgb(250, 250, 250) 0.2em solid;
 }
 
-@font-face {
-  font-family: 'Tiempos';
-  src: url('/tiempos-text-web-medium.woff2') format('woff2');
-  font-weight: 500;
+.download-card:hover {
+  border: #006fff 0.2em solid;
 }
 
-@font-face {
-  font-family: 'Tiempos';
-  src: url('/tiempos-text-web-medium-italic.woff2') format('woff2');
-  font-weight: 500;
-  font-style: italic;
-}
-@font-face {
-  font-family: 'Tiempos';
-  src: url('/tiempos-text-web-semibold.woff2') format('woff2');
-  font-weight: 600;
-}
-@font-face {
-  font-family: 'Tiempos';
-  src: url('/tiempos-text-web-semibold-italic.woff2') format('woff2');
-  font-weight: 600;
-  font-style: italic;
+.download-card span {
+  @apply rounded-full bg-slate-100 py-1 px-4 text-xs font-medium text-blue-700 underline transition-all duration-300 ease-in-out group-hover:bg-blue-600 group-hover:text-white sm:text-sm;
 }
