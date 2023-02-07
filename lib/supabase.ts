@@ -2,7 +2,7 @@ import type { Company } from '@prisma/client'
 import { createClient } from '@supabase/supabase-js'
 
 import prisma from '@/lib/prisma'
-import { generateResumePacket } from '@/lib/resume'
+import { generateResumePacket } from '@/lib/resume/build'
 
 export const uploadFile = async ({
   file,

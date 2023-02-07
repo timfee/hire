@@ -1,5 +1,4 @@
 import type { Company } from '@prisma/client'
-import clsx from 'clsx'
 import type {
   GetStaticPaths,
   GetStaticPropsContext,
@@ -7,44 +6,41 @@ import type {
   NextPage,
 } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
-import { NextSeo } from 'next-seo'
 import type { CSSProperties } from 'react'
 import ReactMarkdown from 'react-markdown'
 
-import { styles } from '@/components/Container'
-import resumeThumbnail from '@/components/Letter/resume_thumbnail.png'
-import { Signature } from '@/components/Letter/Signature'
-import { Stationery } from '@/components/Letter/Stationery'
-import { References } from '@/components/Reference/References'
+import Container from '@/components/Container'
+import DownloadLink from '@/components/DownloadLink'
+import Header from '@/components/Header'
+import Metadata from '@/components/Metadata'
+import References from '@/components/References'
+import { Signature } from '@/components/Signature'
+import CompanyContext from '@/context/CompanyContext'
 import prisma from '@/lib/prisma'
-import seoPropsForPage from '@/lib/seo'
 import { getLatestResume } from '@/lib/supabase'
 
 type PageParams = Pick<Company, 'code' | 'slug'>
 
 const CompanyPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
-  company: { code, color, resumeUrl, created, name, slug, svg, websiteMessage },
+  company,
   references,
 }) => {
-  const title = `Tim Feeley + ${name} = ❤️`
+  if (!company) {
+    return <>Loading...</>
+  }
+  const { color, resumeUrl, created, name, svg, websiteMessage } = company
 
   return (
     <>
       <Head>
-        <title>{title}</title>
-        <meta name="theme-color" content={color} />
-        <NextSeo {...seoPropsForPage({ color, code, slug, name })} />
+        <Metadata />
       </Head>
 
-      <main
-        className={clsx('prose mt-6 font-serif', styles.sm)}
+      <Container
+        as="main"
+        className="prose mt-6 font-serif sm:mt-8"
         style={{ '--brand-color': color } as CSSProperties}>
-        <Stationery
-          className="not-prose mt-4 sm:mt-8"
-          {...{ svg, name, color }}
-        />
-
+        <Header className="not-prose mt-6 sm:mt-8" {...{ svg, name, color }} />
         <p className="font-sans text-sm">
           {new Date(created).toLocaleDateString(undefined, {
             month: 'long',
@@ -52,27 +48,12 @@ const CompanyPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
             year: 'numeric',
           })}
         </p>
+
         <ReactMarkdown>{websiteMessage}</ReactMarkdown>
 
-        {resumeUrl && (
-          <figure className="my-6 text-center sm:text-left">
-            <a
-              className="group mx-auto inline-flex flex-col rounded-lg border border-slate-400 bg-white px-3 py-6 font-sans sm:mx-0"
-              download
-              target="blank"
-              href={resumeUrl}
-              rel="noreferrer">
-              <Image
-                src={resumeThumbnail}
-                alt="Resume"
-                height={100}
-                className="mx-auto mb-4 transition-opacity duration-300 ease-in-out"
-              />
-              <span className="rounded-full bg-slate-200 py-1 px-4 text-xs font-medium text-blue-600 underline transition-all duration-300 ease-in-out group-hover:bg-blue-600 group-hover:text-white sm:text-sm">{`Tim Feeley’s ${name} Resume.pdf`}</span>
-            </a>
-          </figure>
-        )}
+        {resumeUrl && <DownloadLink resumeUrl={resumeUrl} />}
 
+        <p>I look forward to learning more. Please reach out anytime.</p>
         <p>Thanks,</p>
         <Signature />
 
@@ -87,7 +68,7 @@ const CompanyPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
           amazing people who have taken the time to share their thoughts about
           working together:
         </section>
-      </main>
+      </Container>
       <References references={references} />
       <footer className="mt-32 pb-64 text-center italic text-slate-500">
         Hand coded with
@@ -109,6 +90,18 @@ const CompanyPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
     </>
   )
 }
+
+const Resume: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (
+  props
+) => {
+  return (
+    <CompanyContext.Provider value={props ? props.company : null}>
+      <CompanyPage {...props} />
+    </CompanyContext.Provider>
+  )
+}
+
+export default Resume
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   if (!params) {
@@ -173,5 +166,3 @@ export const getStaticPaths: GetStaticPaths<PageParams> = async () => {
     fallback: 'blocking',
   }
 }
-
-export default CompanyPage
