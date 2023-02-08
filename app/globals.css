@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply subpixel-antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  font-feature-settings: 'cv05', 'cv11';
+}
+
+.download-card {
+  background: rgb(255, 255, 255);
+  border-radius: 0.4em;
+  box-shadow: 0.3em 0.3em 0.7em #00000015;
+  transition: border 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: rgb(250, 250, 250) 0.2em solid;
+}
+
+.download-card:hover {
+  border: #006fff 0.2em solid;
+}
+
+.download-card span {
+  @apply rounded-full bg-slate-100 py-1 px-4 text-xs font-medium text-blue-700 underline transition-all duration-300 ease-in-out group-hover:bg-blue-600 group-hover:text-white sm:text-sm;
+}

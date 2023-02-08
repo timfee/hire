@@ -9,8 +9,8 @@ module.exports = {
     typography: require('./tailwind.typography.config.cjs'),
     extend: {
       fontFamily: {
-        sans: 'var(--inter-v-font)',
-        serif: 'var(--tiempos-font)',
+        sans: 'var(--font-soehne)',
+        serif: 'var(--font-tiempos)',
       },
     },
   },

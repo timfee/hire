@@ -1,18 +1,12 @@
+'use client'
+import type { Company } from '@prisma/client'
 import Image from 'next/image'
-
-import { useData } from '@/context/DataContext'
 
 import resumeThumbnail from '../public/resume_thumbnail.png'
 
-export default function DownloadLink() {
-  const data = useData()
-  if (!data) return null
-
-  const {
-    company: { name, resumeUrl },
-  } = data
+type DownloadLinkProps = Pick<Company, 'name' | 'resumeUrl'>
+export default function DownloadLink({ name, resumeUrl }: DownloadLinkProps) {
   if (!resumeUrl) return null
-
   return (
     <figure className="my-6 text-center sm:text-left">
       <a

@@ -35,7 +35,8 @@
     "prettier.config.cjs",
     "next.config.mjs",
     "tailwind.typography.config.cjs",
-    "postcss.config.cjs"
+    "postcss.config.cjs",
+    "app/z/[dynamic1]"
   ],
   "exclude": ["node_modules"]
 }

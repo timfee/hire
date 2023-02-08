@@ -9,6 +9,7 @@ const config = {
     domains: [process.env.NEXT_PUBLIC_SUPABASE_URL.replace('https://', '')],
   },
   experimental: {
+    appDir: true,
     swcPlugins: [['next-superjson-plugin', { excluded: ['png', 'svg'] }]],
   },
 }
