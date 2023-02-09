@@ -15,7 +15,7 @@ import { getLatestResume } from '@/lib/resume/upload'
 
 type ResumePageParams = Pick<Company, 'code' | 'slug'>
 
-export const revalidate = 3600 // revalidate every hour
+export const revalidate = 60 // revalidate every minute
 
 export async function generateMetadata({
   params: { code, slug },
