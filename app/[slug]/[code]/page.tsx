@@ -1,4 +1,4 @@
-import type { Company } from '@prisma/client'
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import type { CSSProperties } from 'react'
 import ReactMarkdown from 'react-markdown'
@@ -10,8 +10,9 @@ import {
   References,
   Signoff,
 } from '@/components'
-import prisma from '@/lib/prisma'
 import { getLatestResume } from '@/lib/resume/upload'
+import { createClient } from '@/lib/supabase-browser'
+import type { Company } from '@/types/database'
 
 type ResumePageParams = Pick<Company, 'code' | 'slug'>
 
@@ -21,7 +22,7 @@ export async function generateMetadata({
   params: { code, slug },
 }: {
   params: ResumePageParams
-}) {
+}): Promise<Metadata> {
   const data = await GetData({ code, slug })
 
   if (!data.company) {
@@ -41,12 +42,19 @@ export async function generateMetadata({
     title,
     description,
     themeColor: color,
-    canonical: url,
+    viewport: 'width=device-width, initial-scale=1',
+    icons: [
+      {
+        url: '/favicon.svg',
+        type: 'image/svg+xml',
+      },
+    ],
+
     openGraph: {
       type: 'website',
       locale: 'en_US',
       url,
-      title,
+      title: { absolute: title },
       description,
       images: [
         {
@@ -61,9 +69,9 @@ export async function generateMetadata({
       siteName: 'Tim Feeley',
     },
     twitter: {
-      handle: '@timfee',
+      card: 'summary_large_image',
+      creator: '@timfee',
       site: '@timfee',
-      cardType: 'summary_large_image',
     },
   }
 }
@@ -75,7 +83,7 @@ export default async function ResumePage({
 }) {
   const data = await GetData({ code, slug })
   if (!data.company) {
-    redirect('/404')
+    redirect('/')
   }
   const {
     company: { color, name, logoUrl, websiteMessage, resumeUrl },
@@ -95,7 +103,7 @@ export default async function ResumePage({
         <Signoff />
       </Container>
 
-      <References references={references} />
+      {references && <References references={references} />}
 
       <footer className="mt-32 pb-64 text-center italic text-slate-500">
         Hand coded with
@@ -111,18 +119,18 @@ export default async function ResumePage({
 }
 
 async function GetData({ slug = '', code = '' }) {
-  const company = await prisma.company.findFirst({
-    where: {
-      slug,
-      code,
-    },
-  })
+  const supabase = createClient()
+  const { data: company } = await supabase
+    .from('Company')
+    .select()
+    .eq('slug', slug)
+    .eq('code', code)
+    .single()
 
-  const references = await prisma.reference.findMany({
-    orderBy: {
-      order: 'asc',
-    },
-  })
+  const { data: references } = await supabase
+    .from('Reference')
+    .select()
+    .order('order', { ascending: true })
 
   return {
     company,
@@ -131,16 +139,11 @@ async function GetData({ slug = '', code = '' }) {
 }
 
 export async function generateStaticParams() {
-  const companies = await prisma.company.findMany({
-    select: {
-      name: true,
-      code: true,
-      slug: true,
-      resumeLastGenerated: true,
-      lastUpdated: true,
-    },
-  })
-
+  const supabase = createClient()
+  const { data: companies } = await supabase.from('Company').select()
+  if (!companies) {
+    return
+  }
   await Promise.all(companies.map((company) => getLatestResume({ ...company })))
 
   return companies.map(({ slug, code }) => ({

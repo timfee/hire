@@ -1,7 +1,8 @@
-import type { Reference as ReferenceType } from '@prisma/client'
 import clsx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
+
+import type { Reference as ReferenceType } from '@/types/database'
 
 export default function References({
   references,

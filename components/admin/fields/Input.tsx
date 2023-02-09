@@ -1,8 +1,8 @@
-import type { Company } from '@prisma/client'
 import clsx from 'clsx'
 import type { DetailedHTMLProps, InputHTMLAttributes } from 'react'
 
 import { useEditorContext } from '@/components/admin/EditorContext'
+import type { Company } from '@/types/database'
 
 type InputProps = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,

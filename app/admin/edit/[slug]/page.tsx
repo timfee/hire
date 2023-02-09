@@ -1,7 +1,6 @@
-import type { Company } from '@prisma/client'
-
 import Editor from '@/components/admin/Editor'
-import prisma from '@/lib/prisma'
+import { createClient } from '@/lib/supabase-server'
+import type { Company } from '@/types/database'
 
 type AdminPageParams = Pick<Company, 'slug'>
 
@@ -15,9 +14,12 @@ export default async function AdminPage({
 }
 
 async function getCompany({ slug }: AdminPageParams) {
-  return await prisma.company.findFirstOrThrow({
-    where: {
-      slug,
-    },
-  })
+  const supabase = createClient()
+  const { data } = await supabase
+    .from('Company')
+    .select()
+    .eq('slug', slug)
+    .single()
+
+  return data
 }

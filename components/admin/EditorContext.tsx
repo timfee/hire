@@ -1,8 +1,8 @@
-import type { Company } from '@prisma/client'
 import type { Dispatch, PropsWithChildren } from 'react'
 import { createContext, useContext, useReducer } from 'react'
 
 import type { Color, Logo } from '@/types/brand'
+import type { Company } from '@/types/database'
 
 type State = {
   step: number

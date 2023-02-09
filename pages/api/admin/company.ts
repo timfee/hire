@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import prisma from '@/lib/prisma'
+import type { Database } from '@/types/supabase'
 
 export default async function handler(
   req: NextApiRequest,
@@ -21,7 +21,8 @@ export default async function handler(
       'color' in body &&
       'logoUrl' in body &&
       'resumeMessage' in body &&
-      'websiteMessage' in body
+      'websiteMessage' in body &&
+      'prevSlug' in body
     ) {
       const {
         name,
@@ -31,6 +32,7 @@ export default async function handler(
         logoUrl,
         resumeMessage,
         websiteMessage,
+        prevSlug,
       } = body
 
       const publicUrl =
@@ -38,18 +40,27 @@ export default async function handler(
           ? await getOrCreateLocalUrl(logoUrl, `${slug}/${code}/`)
           : ''
 
-      const result = await prisma.company.update({
-        where: { slug },
-        data: {
+      const supabase = createClient<Database>(
+        process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+        process.env.SUPABASE_SERVICE_ROLE_KEY || ''
+      )
+
+      const { status } = await supabase
+        .from('Company')
+        .update({
+          slug,
           name,
           code,
           color,
           logoUrl: publicUrl,
           resumeMessage,
           websiteMessage,
-        },
-      })
-      return res.status(200).json({ success: true, ...result })
+        })
+        .eq('slug', prevSlug)
+
+      return res.status(status).end()
+    } else {
+      return res.status(400).json({ error: 'missing fields' })
     }
   } else if (req.method === 'POST') {
     const body = req.body as Record<string, string>
@@ -75,22 +86,24 @@ export default async function handler(
 
       const publicUrl = await getOrCreateLocalUrl(logoUrl, `${slug}/${code}/`)
 
-      await prisma.company.create({
-        data: {
-          slug,
-          name,
-          code,
-          color,
-          logoUrl: publicUrl,
-          resumeMessage,
-          websiteMessage,
-        },
+      const supabase = createClient<Database>(
+        process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+        process.env.SUPABASE_SERVICE_ROLE_KEY || ''
+      )
+      const { status } = await supabase.from('Company').insert({
+        slug,
+        name,
+        code,
+        color,
+        logoUrl: publicUrl,
+        resumeMessage,
+        websiteMessage,
       })
 
-      res.status(200).json({ success: true, data: name })
+      return res.status(status).end()
     }
   } else {
-    res.status(400).json({ success: false })
+    return res.status(400).json({ error: 'missing fields' })
   }
 }
 

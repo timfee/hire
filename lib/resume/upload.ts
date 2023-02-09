@@ -1,8 +1,6 @@
-import type { Company } from '@prisma/client'
-import { createClient } from '@supabase/supabase-js'
-
-import prisma from '@/lib/prisma'
 import { generateResumePacket } from '@/lib/resume/build'
+import { createStandardClientWithRoleAccount } from '@/lib/supabase-server'
+import type { Company } from '@/types/database'
 
 export const uploadFile = async ({
   file,
@@ -21,12 +19,9 @@ export const uploadFile = async ({
 
   const key = `${slug}/${code}/Tim Feeley's ${name} Resume.pdf`
 
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-    process.env.SUPABASE_SERVICE_ROLE_KEY || ''
-  )
+  const supabase = createStandardClientWithRoleAccount()
 
-  const { data } = await supabase.storage
+  const { data, error } = await supabase.storage
     .from('hire-timfeeley')
     .upload(key, file, {
       cacheControl: 'no-cache',
@@ -35,6 +30,7 @@ export const uploadFile = async ({
     })
 
   if (!data) {
+    console.error(data, error)
     throw new Error('missing data')
   }
 
@@ -50,23 +46,25 @@ export const getLatestResume = async ({
   name,
   resumeLastGenerated,
   lastUpdated,
-}: Pick<
-  Company,
-  'code' | 'lastUpdated' | 'name' | 'resumeLastGenerated' | 'slug'
->) => {
-  if (!resumeLastGenerated || resumeLastGenerated < lastUpdated) {
-    return await prisma.company.update({
-      data: {
-        resumeLastGenerated: new Date(),
+}: Company) => {
+  if (
+    !resumeLastGenerated ||
+    Date.parse(resumeLastGenerated) < Date.parse(lastUpdated)
+  ) {
+    const supabase = createStandardClientWithRoleAccount()
+
+    await supabase
+      .from('Company')
+      .update({
+        resumeLastGenerated: new Date().toISOString(),
         resumeUrl: await uploadFile({
           code,
           file: Buffer.from(await generateResumePacket({ slug })),
           name,
           slug,
         }),
-      },
-      where: { slug },
-    })
+      })
+      .eq('slug', slug)
   }
 
   return `${process.env

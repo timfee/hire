@@ -1,5 +1,4 @@
 import fontkit from '@pdf-lib/fontkit'
-import type { Company } from '@prisma/client'
 import fs from 'fs'
 import type { PDFPage, PDFPageDrawTextOptions } from 'pdf-lib'
 import {
@@ -12,8 +11,9 @@ import {
 } from 'pdf-lib'
 import { cwd } from 'process'
 
-import prisma from '@/lib/prisma'
 import { SIGNATURE_PATH } from '@/lib/resume/Signature'
+import { createStandardClientWithRoleAccount } from '@/lib/supabase-server'
+import type { Company } from '@/types/database'
 
 const SOURCE_DIR = `${cwd()}/lib/resume/`
 const FONTS_DIR = `${SOURCE_DIR}/fonts/`
@@ -36,12 +36,19 @@ const getStaticPages = async () => {
 }
 
 export const generateResumePacket = async ({ slug }: Pick<Company, 'slug'>) => {
-  const { logoUrl, name, resumeMessage, code } =
-    await prisma.company.findFirstOrThrow({
-      where: {
-        slug,
-      },
-    })
+  const supabase = createStandardClientWithRoleAccount()
+
+  const { data } = await supabase
+    .from('Company')
+    .select()
+    .eq('slug', slug)
+    .single()
+
+  if (!data) {
+    throw new Error('missing company ' + slug)
+  }
+  const { logoUrl, name, resumeMessage, code } = data
+
   const introPage = await buildFirstPage({ slug, name, resumeMessage, code })
   const packet = await PDFDocument.create()
 

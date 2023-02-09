@@ -1,6 +1,8 @@
 'use client'
-import type { Company } from '@prisma/client'
+
 import Image from 'next/image'
+
+import type { Company } from '@/types/database'
 
 import resumeThumbnail from '../public/resume_thumbnail.png'
 

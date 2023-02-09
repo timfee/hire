@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 
-import type { Company } from '@prisma/client'
 import { useEffect } from 'react'
 
 import {
@@ -18,6 +17,7 @@ import {
 import BigSubmit from '@/components/admin/fields/BigSubmit'
 import Container from '@/components/Container'
 import { getJSON } from '@/lib/functions'
+import type { Company } from '@/types/database'
 
 function Editor({ company }: { company?: Company }) {
   const { state, dispatch } = useEditorContext()

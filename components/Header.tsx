@@ -1,12 +1,12 @@
 'use client'
 
 /* eslint-disable @next/next/no-img-element */
-
-import type { Company } from '@prisma/client'
 import clsx from 'clsx'
 import type { Variants } from 'framer-motion'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+
+import type { Company } from '@/types/database'
 
 import timThumbnail from '../public/tim_feeley_small.png'
 
