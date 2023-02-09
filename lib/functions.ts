@@ -6,5 +6,7 @@ export async function getJSON<T>(
   input: RequestInfo | URL,
   init?: RequestInit | undefined
 ): Promise<T> {
-  return fetch(input, init).then<T>((response) => response.json())
+  return fetch(input, init).then<T>((response) => {
+    return response.json()
+  })
 }

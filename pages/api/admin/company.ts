@@ -55,10 +55,11 @@ export default async function handler(
           logoUrl: publicUrl,
           resumeMessage,
           websiteMessage,
+          lastUpdated: new Date().toISOString(),
         })
         .eq('slug', prevSlug)
 
-      return res.status(status).end()
+      return res.status(status).json({ success: true })
     } else {
       return res.status(400).json({ error: 'missing fields' })
     }
@@ -100,7 +101,7 @@ export default async function handler(
         websiteMessage,
       })
 
-      return res.status(status).end()
+      return res.status(status).json({ success: true })
     }
   } else {
     return res.status(400).json({ error: 'missing fields' })
