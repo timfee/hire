@@ -37,7 +37,7 @@ export default async function handler(
         logoUrl !== ''
           ? await getOrCreateLocalUrl(logoUrl, `${slug}/${code}/`)
           : ''
-      console.log(body, publicUrl)
+
       const result = await prisma.company.update({
         where: { slug },
         data: {

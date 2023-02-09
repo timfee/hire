@@ -26,7 +26,6 @@ export const uploadFile = async ({
     process.env.SUPABASE_SERVICE_ROLE_KEY || ''
   )
 
-  console.log(file)
   const { data } = await supabase.storage
     .from('hire-timfeeley')
     .upload(key, file, {
