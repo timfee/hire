@@ -6,13 +6,13 @@ export const Inter = localFont({
   src: [
     {
       path: '../styles/fonts/Inter-roman.var.woff2',
-      weight: '100 900',
       style: 'normal',
+      weight: '100 900',
     },
     {
       path: '../styles/fonts/Inter-italic.var.woff2',
-      weight: '100 900',
       style: 'italic',
+      weight: '100 900',
     },
   ],
 })
@@ -23,23 +23,23 @@ export const Tiempos = localFont({
   src: [
     {
       path: '../styles/fonts/tiempos-text-web-regular.woff2',
-      weight: '400',
       style: 'normal',
+      weight: '400',
     },
     {
       path: '../styles/fonts/tiempos-text-web-regular-italic.woff2',
-      weight: '400',
       style: 'italic',
+      weight: '400',
     },
     {
       path: '../styles/fonts/tiempos-text-web-medium.woff2',
-      weight: '500',
       style: 'normal',
+      weight: '500',
     },
     {
       path: '../styles/fonts/tiempos-text-web-medium-italic.woff2',
-      weight: '500',
       style: 'italic',
+      weight: '500',
     },
   ],
 })
@@ -50,43 +50,43 @@ export const Soehne = localFont({
   src: [
     {
       path: '../styles/fonts/soehne-buch.woff2',
-      weight: '400',
       style: 'normal',
+      weight: '400',
     },
     {
       path: '../styles/fonts/soehne-buch-kursiv.woff2',
-      weight: '400',
       style: 'italic',
+      weight: '400',
     },
     {
       path: '../styles/fonts/soehne-kraftig.woff2',
-      weight: '500',
       style: 'normal',
+      weight: '500',
     },
     {
       path: '../styles/fonts/soehne-kraftig-kursiv.woff2',
-      weight: '500',
       style: 'italic',
+      weight: '500',
     },
     {
       path: '../styles/fonts/soehne-halbfett.woff2',
-      weight: '600',
       style: 'normal',
+      weight: '600',
     },
     {
       path: '../styles/fonts/soehne-halbfett-kursiv.woff2',
-      weight: '600',
       style: 'italic',
+      weight: '600',
     },
     {
       path: '../styles/fonts/soehne-dreiviertelfett.woff2',
-      weight: '700',
       style: 'normal',
+      weight: '700',
     },
     {
       path: '../styles/fonts/soehne-dreiviertelfett-kursiv.woff2',
-      weight: '700',
       style: 'italic',
+      weight: '700',
     },
   ],
 })

@@ -6,16 +6,16 @@ export const authOptions: NextAuthOptions = {
   debug: true,
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || '',
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
       authorization: {
         params: {
-          prompt: 'consent',
           access_type: 'offline',
+          prompt: 'consent',
           response_type: 'code',
           scope: 'openid profile email',
         },
       },
+      clientId: process.env.GOOGLE_CLIENT_ID ?? '',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
     }),
   ],
 }

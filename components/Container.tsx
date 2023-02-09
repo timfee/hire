@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
 import clsx from 'clsx'
-import type { ElementType } from 'react'
+import type { ElementType, JSXElementConstructor, ReactNode } from 'react'
+import type { ComponentPropsWithoutRef } from 'react-markdown/lib/ast-to-react'
 
 export type PropsOf<
-  C extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>
-> = JSX.LibraryManagedAttributes<C, React.ComponentPropsWithoutRef<C>>
+  C extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>
+> = JSX.LibraryManagedAttributes<C, ComponentPropsWithoutRef<C>>
 
-type AsProp<C extends React.ElementType> = {
+type AsProp<C extends ElementType> = {
   as?: C
 }
 
@@ -15,19 +16,19 @@ type ExtendableProps<ExtendedProps = {}, OverrideProps = {}> = OverrideProps &
   Omit<ExtendedProps, keyof OverrideProps>
 
 type InheritableElementProps<
-  C extends React.ElementType,
+  C extends ElementType,
   Props = {}
 > = ExtendableProps<PropsOf<C>, Props>
 
 type PolymorphicComponentProps<
-  C extends React.ElementType,
+  C extends ElementType,
   Props = {}
 > = InheritableElementProps<C, Props & AsProp<C>>
 
 type ContainerProps<C extends ElementType> = PolymorphicComponentProps<C, Props>
 
 type Props = {
-  children: React.ReactNode
+  children: ReactNode
   size?: 'xs' | 'sm' | 'md' | 'lg'
 }
 

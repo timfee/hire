@@ -16,25 +16,29 @@ export const uploadFile = async ({
   slug: string
 }) => {
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
-    throw Error('missing supabase url')
+    throw new Error('missing supabase url')
   }
-  const key = `${slug}/${code}/Tim Feeley Resume - ${name}.pdf`
+
+  const key = `${slug}/${code}/Tim Feeley's ${name} Resume.pdf`
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL || '',
     process.env.SUPABASE_SERVICE_ROLE_KEY || ''
   )
+
+  console.log(file)
   const { data } = await supabase.storage
     .from('hire-timfeeley')
     .upload(key, file, {
-      contentType: 'application/pdf',
       cacheControl: 'no-cache',
+      contentType: 'application/pdf',
       upsert: true,
     })
 
   if (!data) {
-    throw Error('missing data')
+    throw new Error('missing data')
   }
+
   return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/hire-timfeeley/${data.path}`.replace(
     /\s/g,
     '%20'
@@ -49,26 +53,26 @@ export const getLatestResume = async ({
   lastUpdated,
 }: Pick<
   Company,
-  'slug' | 'code' | 'name' | 'resumeLastGenerated' | 'lastUpdated'
+  'code' | 'lastUpdated' | 'name' | 'resumeLastGenerated' | 'slug'
 >) => {
   if (!resumeLastGenerated || resumeLastGenerated < lastUpdated) {
     return await prisma.company.update({
-      where: { slug },
       data: {
         resumeLastGenerated: new Date(),
         resumeUrl: await uploadFile({
           code,
+          file: Buffer.from(await generateResumePacket({ slug })),
           name,
           slug,
-          file: Buffer.from(await generateResumePacket({ slug })),
         }),
       },
+      where: { slug },
     })
-  } else {
-    return `${process.env
-      .NEXT_PUBLIC_SUPABASE_URL!}/storage/v1/object/public/hire-timfeeley/Tim Feeley Resume - ${name}.pdf`.replace(
-      /\s/g,
-      '%20'
-    )
   }
+
+  return `${process.env
+    .NEXT_PUBLIC_SUPABASE_URL!}/storage/v1/object/public/hire-timfeeley/Tim Feeley's ${name} Resume.pdf`.replace(
+    /\s/g,
+    '%20'
+  )
 }

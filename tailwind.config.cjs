@@ -5,14 +5,14 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
   ],
+  plugins: [require('@tailwindcss/typography'), require('@tailwindcss/forms')],
   theme: {
-    typography: require('./tailwind.typography.config.cjs'),
     extend: {
       fontFamily: {
         sans: 'var(--font-soehne)',
         serif: 'var(--font-tiempos)',
       },
     },
+    typography: require('./tailwind.typography.config.cjs'),
   },
-  plugins: [require('@tailwindcss/typography'), require('@tailwindcss/forms')],
 }
