@@ -11,7 +11,7 @@ import {
   Signoff,
 } from '@/components'
 import prisma from '@/lib/prisma'
-import { getLatestResume } from '@/lib/supabase'
+import { getLatestResume } from '@/lib/resume/upload'
 
 type ResumePageParams = Pick<Company, 'code' | 'slug'>
 

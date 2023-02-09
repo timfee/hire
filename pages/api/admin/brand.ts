@@ -37,7 +37,7 @@ const handler: NextApiHandler = async (req, res) => {
     )
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const jsonResponse = await response.json()
-    console.log(jsonResponse)
+
     return res.status(200).json(jsonResponse)
   }
 }
