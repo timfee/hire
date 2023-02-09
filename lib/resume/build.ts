@@ -36,7 +36,7 @@ const getStaticPages = async () => {
 }
 
 export const generateResumePacket = async ({ slug }: Pick<Company, 'slug'>) => {
-  const { png, name, resumeMessage, code } =
+  const { logoUrl, name, resumeMessage, code } =
     await prisma.company.findFirstOrThrow({
       where: {
         slug,
@@ -50,8 +50,8 @@ export const generateResumePacket = async ({ slug }: Pick<Company, 'slug'>) => {
     ...(await getStaticPages()),
     // Only add the last page if we have a PNG
   ]
-  if (png) {
-    documents.push(await buildLastPage({ png }))
+  if (logoUrl) {
+    documents.push(await buildLastPage({ logoUrl }))
   }
 
   for (const doc of documents) {
@@ -72,18 +72,24 @@ export const generateResumePacket = async ({ slug }: Pick<Company, 'slug'>) => {
   return await packet.save()
 }
 
-const buildLastPage = async ({ png }: Required<Pick<Company, 'png'>>) => {
+const buildLastPage = async ({
+  logoUrl,
+}: Required<Pick<Company, 'logoUrl'>>) => {
   const pdfDoc = await PDFDocument.load(
     fs.readFileSync(SOURCE_DIR + LAST_PAGE_PDF)
   )
+  if (!logoUrl) {
+    throw Error('Missing logoUrl')
+  }
+  const png = await fetch(logoUrl).then((res) => res.arrayBuffer())
 
   if (png) {
     const page = pdfDoc.getPages()[0]
 
     const { width } = page.getSize()
 
-    const pngImage = await pdfDoc.embedPng(Buffer.from(png))
-    const pngDims = pngImage.scaleToFit(300, 200)
+    const pngImage = await pdfDoc.embedPng(png)
+    const pngDims = pngImage.scaleToFit(150, 150)
 
     page.drawImage(pngImage, {
       x: width / 2 - pngDims.width / 2,

@@ -10,7 +10,7 @@ import {
   References,
   Signoff,
 } from '@/components'
-import prisma, { exclude } from '@/lib/prisma'
+import prisma from '@/lib/prisma'
 import { getLatestResume } from '@/lib/supabase'
 
 type ResumePageParams = Pick<Company, 'code' | 'slug'>
@@ -78,14 +78,17 @@ export default async function ResumePage({
     redirect('/404')
   }
   const {
-    company: { color, name, svg, websiteMessage, resumeUrl },
+    company: { color, name, logoUrl, websiteMessage, resumeUrl },
     references,
   } = data
 
   return (
     <main style={{ '--brand-color': color } as CSSProperties}>
       <Container as="section" className="prose mt-6 sm:mt-8">
-        <Header className="not-prose mt-6 sm:mt-8" {...{ svg, name, color }} />
+        <Header
+          className="not-prose mt-6 sm:mt-8"
+          {...{ logoUrl, name, color }}
+        />
 
         <ReactMarkdown>{websiteMessage}</ReactMarkdown>
         <DownloadLink name={name} resumeUrl={resumeUrl} />
@@ -122,9 +125,7 @@ async function GetData({ slug = '', code = '' }) {
   })
 
   return {
-    ...(company
-      ? { company: exclude(company, ['png', 'resumeMessage']) }
-      : { company }),
+    company,
     references,
   }
 }

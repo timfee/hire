@@ -8,19 +8,16 @@ datasource db {
 }
 
 model Company {
-  id Int @id @default(autoincrement())
-
-  code String @default(cuid())
+  code String @id @default(cuid())
   slug String @unique
 
   name String @default("")
 
-  svg            String @default("") @db.Text
   websiteMessage String @default("") @db.Text
   resumeMessage  String @default("") @db.Text
   color          String @default("#dadce0")
-  png            Bytes  @default("")
 
+  logoUrl             String?   @default("")
   resumeUrl           String?
   resumeLastGenerated DateTime? @db.Timestamptz(0)
 
