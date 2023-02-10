@@ -31,6 +31,9 @@ export default function Input({
         <input
           {...props}
           value={value}
+          autoComplete="off"
+          autoCapitalize="off"
+          autoCorrect="off"
           onChange={(e) => {
             dispatch({
               type: 'update_company',

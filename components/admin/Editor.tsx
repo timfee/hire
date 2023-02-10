@@ -30,7 +30,7 @@ function Editor({ company }: { company?: Company }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
-    <Container size="xs">
+    <Container size="xs" className="mt-6">
       {state.step === 1 && (
         <>
           <Domain create={company ? false : true} />
