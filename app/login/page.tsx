@@ -10,13 +10,21 @@ export default function Login() {
   return (
     <>
       {session && session.user ? (
-        <button
-          className="mx-auto mt-10 rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-700"
-          onClick={async () => {
-            await supabase.auth.signOut()
-          }}>
-          sign out
-        </button>
+        <>
+          <a
+            className="mx-auto mt-10 rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-700"
+            href="/admin">
+            access admin
+          </a>
+
+          <button
+            className="mx-auto mt-10 rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-700"
+            onClick={async () => {
+              await supabase.auth.signOut()
+            }}>
+            sign out
+          </button>
+        </>
       ) : (
         <button
           className="mx-auto mt-10 rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-700"
