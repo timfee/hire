@@ -16,7 +16,7 @@ import { createClient } from '@/lib/supabase-browser'
 type ResumePageParams = { company: string[] }
 
 export const revalidate = 0
-export const dynamic = "force-dynamic"
+export const dynamic = 'force-dynamic'
 
 export default async function ResumePage({
   params: { company },
@@ -75,24 +75,26 @@ async function GetData({ slug = '', code = '' }) {
     .select()
     .order('order', { ascending: true })
 
+  await getLatestResume({ ...company })
+
   return {
     company,
     references,
   }
 }
 
-export async function generateStaticParams() {
-  const supabase = createClient()
-  const { data: companies } = await supabase.from('Company').select()
-  if (!companies) {
-    return
-  }
-  await Promise.all(companies.map((company) => getLatestResume({ ...company })))
+// export async function generateStaticParams() {
+//   const supabase = createClient()
+//   const { data: companies } = await supabase.from('Company').select()
+//   if (!companies) {
+//     return
+//   }
+//   await Promise.all(companies.map((company) => getLatestResume({ ...company })))
 
-  return companies.map(({ slug, code }) => ({
-    company: [slug, code],
-  }))
-}
+//   return companies.map(({ slug, code }) => ({
+//     company: [slug, code],
+//   }))
+// }
 
 function Love() {
   return (

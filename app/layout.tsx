@@ -4,6 +4,9 @@ import localFont from '@next/font/local'
 import clsx from 'clsx'
 import PlausibleProvider from 'next-plausible'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 const tiempos = localFont({
   display: 'swap',
   variable: '--font-tiempos',

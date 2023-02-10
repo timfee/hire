@@ -46,9 +46,28 @@ export const getLatestResume = async ({
   name,
   resumeLastGenerated,
   lastUpdated,
-}: Company) => {
+}: Partial<
+  Pick<
+    Company,
+    'slug' | 'code' | 'name' | 'resumeLastGenerated' | 'lastUpdated'
+  >
+>) => {
+  if (
+    !code ||
+    !name ||
+    !slug ||
+    typeof code !== 'string' ||
+    typeof name !== 'string' ||
+    typeof slug !== 'string'
+  ) {
+    throw new Error('missing code, name, or slug')
+  }
+
   if (
     !resumeLastGenerated ||
+    !lastUpdated ||
+    typeof resumeLastGenerated !== 'string' ||
+    typeof lastUpdated !== 'string' ||
     Date.parse(resumeLastGenerated) < Date.parse(lastUpdated)
   ) {
     const supabase = createStandardClientWithRoleAccount()
