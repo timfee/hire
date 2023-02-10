@@ -15,7 +15,8 @@ import { createClient } from '@/lib/supabase-browser'
 
 type ResumePageParams = { company: string[] }
 
-export const revalidate = 60 // revalidate every minute
+export const revalidate = 0
+export const dynamic = "force-dynamic"
 
 export default async function ResumePage({
   params: { company },
