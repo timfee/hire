@@ -48,14 +48,14 @@ export default async function handler(
       const { status } = await supabase
         .from('Company')
         .update({
-          slug,
-          name,
           code,
           color,
-          logoUrl: publicUrl,
-          resumeMessage,
-          websiteMessage,
           lastUpdated: new Date().toISOString(),
+          logoUrl: publicUrl,
+          name,
+          resumeMessage,
+          slug,
+          websiteMessage,
         })
         .eq('slug', prevSlug)
 
@@ -92,12 +92,12 @@ export default async function handler(
         process.env.SUPABASE_SERVICE_ROLE_KEY || ''
       )
       const { status } = await supabase.from('Company').insert({
-        slug,
-        name,
         code,
         color,
         logoUrl: publicUrl,
+        name,
         resumeMessage,
+        slug,
         websiteMessage,
       })
 

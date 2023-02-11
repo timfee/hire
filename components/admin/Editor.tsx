@@ -24,8 +24,8 @@ function Editor({ company }: { company?: Company }) {
   const router = useRouter()
   useEffect(() => {
     if (company) {
-      dispatch({ type: 'update_company', payload: company })
-      dispatch({ type: 'update_step', payload: 2 })
+      dispatch({ payload: company, type: 'update_company' })
+      dispatch({ payload: 2, type: 'update_step' })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -38,7 +38,7 @@ function Editor({ company }: { company?: Company }) {
             className="my-6 border border-transparent"
             onSubmit={(e) => {
               e.preventDefault()
-              dispatch({ type: 'update_step', payload: 2 })
+              dispatch({ payload: 2, type: 'update_step' })
             }}>
             <LogoPicker />
             <ColorPicker />
@@ -53,10 +53,6 @@ function Editor({ company }: { company?: Company }) {
             e.preventDefault()
 
             fetch('/api/admin/company', {
-              method: company ? 'PATCH' : 'POST',
-              headers: {
-                'Content-Type': 'application/json; charset=utf8',
-              },
               body: JSON.stringify({
                 ...state.company,
                 ...(company
@@ -65,6 +61,10 @@ function Editor({ company }: { company?: Company }) {
                     }
                   : {}),
               }),
+              headers: {
+                'Content-Type': 'application/json; charset=utf8',
+              },
+              method: company ? 'PATCH' : 'POST',
             })
               .then((data) => {
                 if (data.status === 204) {
@@ -76,7 +76,7 @@ function Editor({ company }: { company?: Company }) {
                 console.error(err)
               })
           }}>
-          <button onClick={() => dispatch({ type: 'update_step', payload: 1 })}>
+          <button onClick={() => dispatch({ payload: 1, type: 'update_step' })}>
             Lookup
           </button>
           <div className="my-4 flex justify-items-stretch space-x-4">

@@ -8,10 +8,10 @@ import type { Database } from '@/types/supabase'
 
 export const createClient = () =>
   createServerComponentSupabaseClient<Database>({
-    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-    supabaseKey: process.env.SUPABASE_SERVICE_ROLE_KEY || '',
-    headers,
     cookies,
+    headers,
+    supabaseKey: process.env.SUPABASE_SERVICE_ROLE_KEY || '',
+    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL || '',
   })
 
 export const createStandardClientWithRoleAccount = () =>

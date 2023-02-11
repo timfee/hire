@@ -23,23 +23,23 @@ export default function Domain({ create = true }) {
           getJSON<Brand>(`/api/admin/brand?domain=${state.lookup.domain}`)
             .then(({ name, description, domain, colors, logos }) => {
               dispatch({
-                type: 'update_lookup',
                 payload: {
-                  name,
-                  mission: description,
-                  domain,
                   colors,
+                  domain,
                   logos,
+                  mission: description,
+                  name,
                 },
+                type: 'update_lookup',
               })
               create &&
                 dispatch({
-                  type: 'update_company',
                   payload: {
+                    code: (Math.random() + 1).toString(36).substring(9),
                     name: name ?? '',
                     slug: name?.toLowerCase().replace(/ /g, '-') ?? '',
-                    code: (Math.random() + 1).toString(36).substring(9),
                   },
+                  type: 'update_company',
                 })
             })
             .catch((e) => {
@@ -57,8 +57,8 @@ export default function Domain({ create = true }) {
             value={state.lookup?.domain ?? ''}
             onChange={(e) => {
               dispatch({
-                type: 'update_lookup',
                 payload: { domain: e.target.value },
+                type: 'update_lookup',
               })
             }}
             className="block w-full min-w-0 flex-1 rounded-none rounded-r-md border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"

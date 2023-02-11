@@ -24,7 +24,7 @@ export default async function ResumePage({
   params: ResumePageParams
 }) {
   const [slug, code] = company
-  const data = await GetData({ code, slug })
+  const data = await getData({ code, slug })
   if (!data.company) {
     redirect('/')
   }
@@ -38,7 +38,7 @@ export default async function ResumePage({
       <Container as="section" className="prose mt-6 sm:mt-8">
         <Header
           className="not-prose mt-6 sm:mt-8"
-          {...{ logoUrl, name, color }}
+          {...{ color, logoUrl, name }}
         />
 
         <ReactMarkdown>{websiteMessage}</ReactMarkdown>
@@ -61,7 +61,7 @@ export default async function ResumePage({
   )
 }
 
-async function GetData({ slug = '', code = '' }) {
+async function getData({ slug = '', code = '' }) {
   const supabase = createClient()
   const { data: company } = await supabase
     .from('Company')
@@ -83,19 +83,6 @@ async function GetData({ slug = '', code = '' }) {
   }
 }
 
-// export async function generateStaticParams() {
-//   const supabase = createClient()
-//   const { data: companies } = await supabase.from('Company').select()
-//   if (!companies) {
-//     return
-//   }
-//   await Promise.all(companies.map((company) => getLatestResume({ ...company })))
-
-//   return companies.map(({ slug, code }) => ({
-//     company: [slug, code],
-//   }))
-// }
-
 function Love() {
   return (
     <svg
@@ -114,7 +101,7 @@ export async function generateMetadata({
   params: ResumePageParams
 }): Promise<Metadata> {
   const [slug, code] = company
-  const data = await GetData({ code, slug })
+  const data = await getData({ code, slug })
 
   if (!data.company) {
     return {}
@@ -130,39 +117,39 @@ export async function generateMetadata({
   const ogUrl = 'https://hire.timfeeley.com/opengraph.png'
 
   return {
-    title,
     description,
-    themeColor: color,
-    viewport: 'width=device-width, initial-scale=1',
     icons: [
       {
-        url: '/favicon.svg',
         type: 'image/svg+xml',
+        url: '/favicon.svg',
       },
     ],
-
     openGraph: {
-      type: 'website',
-      locale: 'en_US',
-      url,
-      title: { absolute: title },
       description,
       images: [
         {
+          alt: 'Download Tim Feeley’s Resume',
+          height: 630,
+          secureUrl: ogUrl,
+          type: 'image/png',
           url: ogUrl,
           width: 1200,
-          height: 630,
-          alt: 'Download Tim Feeley’s Resume',
-          type: 'image/png',
-          secureUrl: ogUrl,
         },
       ],
+      locale: 'en_US',
       siteName: 'Tim Feeley',
+      title: { absolute: title },
+      type: 'website',
+      url,
     },
+    themeColor: color,
+    title,
+
     twitter: {
       card: 'summary_large_image',
       creator: '@timfee',
       site: '@timfee',
     },
+    viewport: 'width=device-width, initial-scale=1',
   }
 }

@@ -33,10 +33,10 @@ type Props = {
 }
 
 const styles = {
-  xs: 'mx-auto px-4 sm:px-6 md:max-w-xl md:px-2 lg:px-1',
-  sm: 'mx-auto px-4 sm:px-6 md:max-w-2xl md:px-4 lg:px-2',
-  md: 'mx-auto px-4 sm:px-6 md:max-w-2xl md:px-4 lg:max-w-4xl lg:px-12',
   lg: 'mx-auto px-4 sm:px-6 md:max-w-2xl md:px-4 lg:max-w-5xl lg:px-8',
+  md: 'mx-auto px-4 sm:px-6 md:max-w-2xl md:px-4 lg:max-w-4xl lg:px-12',
+  sm: 'mx-auto px-4 sm:px-6 md:max-w-2xl md:px-4 lg:px-2',
+  xs: 'mx-auto px-4 sm:px-6 md:max-w-xl md:px-2 lg:px-1',
 }
 
 export default function Container<C extends ElementType = 'div'>({

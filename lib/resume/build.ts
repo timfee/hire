@@ -49,7 +49,7 @@ export const generateResumePacket = async ({ slug }: Pick<Company, 'slug'>) => {
   }
   const { logoUrl, name, resumeMessage, code } = data
 
-  const introPage = await buildFirstPage({ slug, name, resumeMessage, code })
+  const introPage = await buildFirstPage({ code, name, resumeMessage, slug })
   const packet = await PDFDocument.create()
 
   const documents = [
@@ -99,10 +99,10 @@ const buildLastPage = async ({
     const pngDims = pngImage.scaleToFit(150, 150)
 
     page.drawImage(pngImage, {
+      height: pngDims.height,
+      width: pngDims.width,
       x: width / 2 - pngDims.width / 2,
       y: 515 - pngDims.height / 2,
-      width: pngDims.width,
-      height: pngDims.height,
     })
   }
 
@@ -125,36 +125,36 @@ const buildFirstPage = async ({
   // Prepare the blocks of text we want to add to the first page.
   const message = [
     {
-      text: `Hello ${name},`,
-      size: 20,
-      padding: 20,
       color: rgb(71 / 255, 85 / 255, 105 / 255),
       font: INTER_BOLD,
+      padding: 20,
+      size: 20,
+      text: `Hello ${name},`,
     },
     {
-      text: 'I’m a PM & UX leader with two decades of experience developing high-performing teams and delivering impactful products used by billions of people.',
-      size: 16,
-      padding: 16,
       color: rgb(71 / 255, 85 / 255, 105 / 255),
       font: INTER_MEDIUM,
+      padding: 16,
+      size: 16,
+      text: 'I’m a PM & UX leader with two decades of experience developing high-performing teams and delivering impactful products used by billions of people.',
     },
     ...(resumeMessage
       ? resumeMessage.split('\n').map((paragraph) => {
           return {
-            text: paragraph,
-            size: 16,
-            padding: 12,
             color: rgb(71 / 255, 85 / 255, 105 / 255),
             font: INTER_MEDIUM,
+            padding: 12,
+            size: 16,
+            text: paragraph,
           }
         })
       : []),
     {
-      text: `https://hire.timfeeley.com/${slug}/${code}`,
-      size: 16,
       color: rgb(29 / 255, 78 / 255, 216 / 255),
       font: INTER_MEDIUM,
       link: `https://hire.timfeeley.com/${slug}/${code}`,
+      size: 16,
+      text: `https://hire.timfeeley.com/${slug}/${code}`,
     },
   ]
 
@@ -176,20 +176,22 @@ const buildFirstPage = async ({
     // Draw the text, and return the width and height estimates
     // of the bounding box.
     const { height } = drawMultilineText(page, text, {
-      size,
-      font,
       color,
+      font,
       lineHeight: font.heightAtSize(size),
       maxWidth: 420,
+      size,
     })
 
     // If we're rendering a link, add the link annotation.
     if (link) {
       const linkContext = pdfDoc.context.register(
         pdfDoc.context.obj({
-          Type: 'Annot',
-          Subtype: 'Link',
-
+          A: {
+            S: 'URI',
+            Type: 'Action',
+            URI: PDFString.of(link),
+          },
           Rect: [
             INTRO_PAGE_LEFT_MARGIN /* Lower left X */,
             page.getY() +
@@ -205,11 +207,9 @@ const buildFirstPage = async ({
               }) /* Upper right Y */,
           ],
 
-          A: {
-            Type: 'Action',
-            S: 'URI',
-            URI: PDFString.of(link),
-          },
+          Subtype: 'Link',
+
+          Type: 'Annot',
         })
       )
       page.node.set(PDFName.of('Annots'), pdfDoc.context.obj([linkContext]))
@@ -265,7 +265,7 @@ const drawMultilineText = (
 
   // Famous last words: "this should never happen"
   if (lines.length === 0) {
-    return { width: 0, height: 0 }
+    return { height: 0, width: 0 }
   }
 
   const lineCount = lines.length
@@ -274,5 +274,5 @@ const drawMultilineText = (
     ...lines.map((l) => opts.font.widthOfTextAtSize(l, opts.size))
   )
 
-  return { width, height }
+  return { height, width }
 }

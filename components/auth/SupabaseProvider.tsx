@@ -23,7 +23,7 @@ export default function SupabaseProvider({
   const [supabase] = useState(() => createClient())
 
   return (
-    <Context.Provider value={{ supabase, session }}>
+    <Context.Provider value={{ session, supabase }}>
       <>{children}</>
     </Context.Provider>
   )

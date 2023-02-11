@@ -57,10 +57,10 @@ You don't need to list every single job I've worked at, just a summary  of whatâ
 
   await openai
     .createCompletion({
-      model: 'text-davinci-003',
-      prompt,
-      presence_penalty: 1.5,
       max_tokens: 300,
+      model: 'text-davinci-003',
+      presence_penalty: 1.5,
+      prompt,
       temperature: 0.85,
     })
     .then((response) => {

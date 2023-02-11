@@ -30,12 +30,12 @@ export default function Header({
       overflowX: 'hidden',
     },
     visible: {
+      opacity: 1,
       transition: {
         duration: 0.75,
         ease: 'backInOut',
       },
       x: 0,
-      opacity: 1,
     },
   }
 

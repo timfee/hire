@@ -18,10 +18,10 @@ export default function ColorPicker() {
         value={state.company.color}
         onChange={(value: string) => {
           dispatch({
-            type: 'update_company',
             payload: {
               color: value,
             },
+            type: 'update_company',
           })
         }}>
         <div className="mt-4 flex items-center space-x-3">

@@ -36,8 +36,8 @@ export default function Input({
           autoCorrect="off"
           onChange={(e) => {
             dispatch({
-              type: 'update_company',
               payload: { [field]: e.target.value },
+              type: 'update_company',
             })
           }}
           className={clsx(

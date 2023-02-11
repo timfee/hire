@@ -6,20 +6,20 @@ import type { PropsWithChildren } from 'react'
 
 export default function Signoff({ children }: PropsWithChildren) {
   const signature: Variants = {
-    hidden: { pathLength: 0, opacity: 0 },
+    hidden: { opacity: 0, pathLength: 0 },
     visible: (i) => {
       const delay = 0.3 + i * 0.5
       return {
-        pathLength: 1,
         opacity: 1,
+        pathLength: 1,
         transition: {
-          pathLength: {
-            delay,
-            type: 'spring',
-            duration: 1,
-            bounce: 0,
-          },
           opacity: { delay, duration: 0.01 },
+          pathLength: {
+            bounce: 0,
+            delay,
+            duration: 1,
+            type: 'spring',
+          },
         },
       }
     },
@@ -43,7 +43,7 @@ export default function Signoff({ children }: PropsWithChildren) {
           viewBox="0 0 586 201"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 'all' }}>
+          viewport={{ amount: 'all', once: true }}>
           <title>—Tim Feeley</title>
           <motion.g
             variants={signature}

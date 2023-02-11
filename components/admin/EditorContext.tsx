@@ -36,17 +36,17 @@ type Action =
     }
 
 const INITIAL_STATE: State = {
-  step: 1,
-  status: 'ready',
   company: {},
+  status: 'ready',
+  step: 1,
 }
 
 const EditorContext = createContext<{
   state: State
   dispatch: Dispatch<Action>
 }>({
-  state: INITIAL_STATE,
   dispatch: () => null,
+  state: INITIAL_STATE,
 })
 
 export function EditorProvider({ children }: PropsWithChildren) {
@@ -86,7 +86,7 @@ export function EditorProvider({ children }: PropsWithChildren) {
   }
 
   return (
-    <EditorContext.Provider value={{ state, dispatch }}>
+    <EditorContext.Provider value={{ dispatch, state }}>
       {children}
     </EditorContext.Provider>
   )

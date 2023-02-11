@@ -19,8 +19,8 @@ export default function LogoPicker() {
         value={state.company.logoUrl}
         onChange={(value: string) => {
           dispatch({
-            type: 'update_company',
             payload: { logoUrl: value },
+            type: 'update_company',
           })
         }}>
         <div className="space-y-4">
@@ -104,12 +104,12 @@ function singleArrayOfLogos(logos: Logo[]) {
         const newFormat = logo.formats
           .filter((logo) => logo.format === 'png')
           .map(({ src, format, height, width, size }) => ({
-            src,
             format,
             height,
-            width,
-            theme,
             size: size ? Math.round(size / 1000) : undefined,
+            src,
+            theme,
+            width,
           }))
         return acc.concat(newFormat)
       } else {

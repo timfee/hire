@@ -36,8 +36,8 @@ export default function Textarea({
           name={field}
           onChange={(e) => {
             dispatch({
-              type: 'update_company',
               payload: { [field]: e.target.value },
+              type: 'update_company',
             })
           }}
           className={clsx(
@@ -53,7 +53,7 @@ export default function Textarea({
         disabled={state.status === 'busy'}
         onClick={() => {
           if (state.status === 'busy') return
-          dispatch({ type: 'update_status', payload: 'busy' })
+          dispatch({ payload: 'busy', type: 'update_status' })
           fetch(
             '/api/admin/ai?field=' +
               field +
@@ -65,22 +65,22 @@ export default function Textarea({
                 .text()
                 .then((data) => {
                   dispatch({
-                    type: 'update_company',
                     payload: { [field]: data },
+                    type: 'update_company',
                   })
                 })
                 .catch(() => {
                   alert("Couldn't generate message")
                 })
                 .finally(() => {
-                  dispatch({ type: 'update_status', payload: 'ready' })
+                  dispatch({ payload: 'ready', type: 'update_status' })
                 })
             })
             .catch(() => {
               alert("Couldn't contact API")
             })
             .finally(() => {
-              dispatch({ type: 'update_status', payload: 'ready' })
+              dispatch({ payload: 'ready', type: 'update_status' })
             })
         }}
         className="inline-flex items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-20">
