@@ -60,7 +60,7 @@ export const getLatestResume = async ({
     typeof name !== 'string' ||
     typeof slug !== 'string'
   ) {
-    throw new Error('missing code, name, or slug')
+    throw new Error(`missing code: ${code} name: ${name} slug: ${slug}`)
   }
 
   if (

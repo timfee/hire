@@ -62,6 +62,9 @@ export default async function ResumePage({
 }
 
 async function getData({ slug = '', code = '' }) {
+  if (slug === '' || code === '') {
+    return {}
+  }
   const supabase = createClient()
   const { data: company } = await supabase
     .from('Company')
