@@ -51,14 +51,18 @@ export const generateResumePacket = async ({ slug }: Pick<Company, 'slug'>) => {
   }
   const { logoUrl, name, resumeMessage, code } = data
 
+  fs.readdir(SOURCE_DIR, (err, files) => {
+    files.forEach((file) => {
+      console.log(file)
+    })
+  })
+
   const introPage = await buildFirstPage({ code, name, resumeMessage, slug })
   const packet = await PDFDocument.create()
 
-  const documents = [
-    introPage,
-    ...(await getStaticPages()),
-    // Only add the last page if we have a PNG
-  ]
+  const staticPages = await getStaticPages()
+  const documents = [introPage, staticPages]
+  // Only add the last page if we have a PNG
   if (logoUrl) {
     documents.push(await buildLastPage({ logoUrl }))
   }
@@ -118,7 +122,7 @@ const buildFirstPage = async ({
   code,
 }: Pick<Company, 'name' | 'resumeMessage' | 'slug' | 'code'>) => {
   const pdfDoc = await PDFDocument.load(
-    fs.readFileSync(`${cwd()}/lib/resume/` + INTRO_PAGE_PDF)
+    fs.readFileSync(SOURCE_DIR + INTRO_PAGE_PDF)
   )
   // These order of these font names must match the order
   // of the fonts in the FONTS array to render properly.

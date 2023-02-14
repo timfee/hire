@@ -11,6 +11,8 @@ const config = {
   },
   reactStrictMode: true,
   swcMinify: true,
+  
+
 }
 
 export default withPlausibleProxy()(config)
