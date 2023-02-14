@@ -30,7 +30,9 @@ const LAST_PAGE_PDF = '4.pdf'
 const getStaticPages = async () => {
   return Promise.all(
     STATIC_PAGE_PDFS.map(async (file) => {
-      return await PDFDocument.load(fs.readFileSync(SOURCE_DIR + file))
+      return await PDFDocument.load(
+        fs.readFileSync(`${cwd()}/lib/resume/` + file)
+      )
     })
   )
 }
@@ -83,7 +85,7 @@ const buildLastPage = async ({
   logoUrl,
 }: Required<Pick<Company, 'logoUrl'>>) => {
   const pdfDoc = await PDFDocument.load(
-    fs.readFileSync(SOURCE_DIR + LAST_PAGE_PDF)
+    fs.readFileSync(`${cwd()}/lib/resume/` + LAST_PAGE_PDF)
   )
   if (!logoUrl) {
     throw Error('Missing logoUrl')
@@ -116,7 +118,7 @@ const buildFirstPage = async ({
   code,
 }: Pick<Company, 'name' | 'resumeMessage' | 'slug' | 'code'>) => {
   const pdfDoc = await PDFDocument.load(
-    fs.readFileSync(SOURCE_DIR + INTRO_PAGE_PDF)
+    fs.readFileSync(`${cwd()}/lib/resume/` + INTRO_PAGE_PDF)
   )
   // These order of these font names must match the order
   // of the fonts in the FONTS array to render properly.
