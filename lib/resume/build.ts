@@ -23,19 +23,7 @@ const INTRO_PAGE_PDF = '1.pdf'
 const INTRO_PAGE_LEFT_MARGIN = 106
 const INTRO_PAGE_TOP_MARGIN = 269
 
-const STATIC_PAGE_PDFS = ['2.pdf', '3.pdf']
-
 const LAST_PAGE_PDF = '4.pdf'
-
-const getStaticPages = async () => {
-  return Promise.all(
-    STATIC_PAGE_PDFS.map(async (file) => {
-      return await PDFDocument.load(
-        fs.readFileSync(`${cwd()}/lib/resume/` + file)
-      )
-    })
-  )
-}
 
 export const generateResumePacket = async ({ slug }: Pick<Company, 'slug'>) => {
   const supabase = createStandardClientWithRoleAccount()
@@ -60,8 +48,11 @@ export const generateResumePacket = async ({ slug }: Pick<Company, 'slug'>) => {
   const introPage = await buildFirstPage({ code, name, resumeMessage, slug })
   const packet = await PDFDocument.create()
 
-  const staticPages = await getStaticPages()
-  const documents = [introPage, ...staticPages]
+  const documents = [
+    introPage,
+    await PDFDocument.load(fs.readFileSync(`${cwd()}/lib/resume/2.pdf`)),
+    await PDFDocument.load(fs.readFileSync(`${cwd()}/lib/resume/3.pdf`)),
+  ]
   // Only add the last page if we have a PNG
   if (logoUrl) {
     documents.push(await buildLastPage({ logoUrl }))
