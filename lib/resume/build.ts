@@ -61,7 +61,7 @@ export const generateResumePacket = async ({ slug }: Pick<Company, 'slug'>) => {
   const packet = await PDFDocument.create()
 
   const staticPages = await getStaticPages()
-  const documents = [introPage, staticPages]
+  const documents = [introPage, ...staticPages]
   // Only add the last page if we have a PNG
   if (logoUrl) {
     documents.push(await buildLastPage({ logoUrl }))
