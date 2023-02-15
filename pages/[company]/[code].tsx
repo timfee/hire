@@ -241,6 +241,10 @@ export const getStaticPaths: GetStaticPaths<
     return { fallback: 'blocking', paths: [] }
   }
 
+  await Promise.all(
+    data.map(async (company) => await refreshResumeUrl(company))
+  )
+
   const paths = data.map((company) => {
     return {
       params: {

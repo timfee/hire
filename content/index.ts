@@ -17,12 +17,11 @@ import { type Company, createSupabaseServerClient } from '@/utils/supabase'
 
 const SOURCE_DIR = `${cwd()}/content/`
 const FONTS_DIR = `${cwd()}/styles/fonts/`
-const FONTS = ['Inter-Medium.otf', 'Inter-Bold.otf']
 
 const INTRO_PAGE_PDF = '1.pdf'
-const INTRO_PAGE_LEFT_MARGIN = 106
-const INTRO_PAGE_TOP_MARGIN = 269
-
+const INTRO_PAGE_LEFT_MARGIN = 89
+const INTRO_PAGE_TOP_MARGIN = 306
+const INTRO_PAGE_TEXT_WIDTH = 400
 const LAST_PAGE_PDF = '4.pdf'
 
 const generateResumePacket = async ({ company }: { company: Company }) => {
@@ -83,7 +82,7 @@ const buildFirstPage = async ({
       font: INTER_BOLD,
       padding: 20,
       size: 20,
-      text: `Hello ${name},`,
+      text: `Hi ${name}!`,
     },
     ...(resumeMessage
       ? resumeMessage.split('\n').map((paragraph) => {
@@ -97,11 +96,25 @@ const buildFirstPage = async ({
         })
       : []),
     {
+      color: rgb(71 / 255, 85 / 255, 105 / 255),
+      font: INTER_MEDIUM,
+      padding: 12,
+      size: 16,
+      text: `I’ve put together a dedicated portal with links to my resume, references and more.`,
+    },
+    {
       color: rgb(29 / 255, 78 / 255, 216 / 255),
       font: INTER_MEDIUM,
       link: `https://hire.timfeeley.com/${slug}/${code}`,
       size: 16,
+      padding: 20,
       text: `https://hire.timfeeley.com/${slug}/${code}`,
+    },
+    {
+      color: rgb(71 / 255, 85 / 255, 105 / 255),
+      font: INTER_MEDIUM,
+      size: 16,
+      text: `Thanks for your consideration!`,
     },
   ]
 
@@ -128,7 +141,7 @@ const buildFirstPage = async ({
       color,
       font,
       lineHeight: font.heightAtSize(size),
-      maxWidth: 420,
+      maxWidth: INTRO_PAGE_TEXT_WIDTH,
       size,
     })
 
@@ -207,20 +220,12 @@ const buildLastPage = async ({
 }
 
 const provideFonts = async (pdfDoc: PDFDocument) => {
-  // We must register fontkit before using non-standard fonts
   pdfDoc.registerFontkit(fontkit)
 
-  return Promise.all(
-    FONTS.map(
-      async (font) =>
-        await pdfDoc.embedFont(fs.readFileSync(`${FONTS_DIR}${font}`), {
-          features: {
-            cv05: true /* single story a */,
-            cv11: true /* curved l */,
-          },
-        })
-    )
-  )
+  return await Promise.all([
+    await pdfDoc.embedFont(fs.readFileSync(`${FONTS_DIR}/Sohne-Kraftig.ttf`)),
+    await pdfDoc.embedFont(fs.readFileSync(`${FONTS_DIR}/Sohne-Halbfett.ttf`)),
+  ])
 }
 
 const drawMultilineText = (
