@@ -5,7 +5,7 @@ import { type Brand } from '@/types/brand'
 
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 
-const MOCK = true
+const MOCK = false
 
 export const brandRouter = createTRPCRouter({
   get: protectedProcedure
