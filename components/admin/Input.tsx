@@ -1,12 +1,13 @@
+import type { ElementType, ReactNode } from 'react'
+
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client'
 import clsx from 'clsx'
-import type { ElementType, ReactNode } from 'react'
 import superjson from 'superjson'
 
 import { type AppRouter } from '@/server/api/root'
 import { type ContainerProps, type NestedKeyOf } from '@/utils/dynamic'
 
-import { useEditorContext, type State } from '../../contexts/EditorContext'
+import { useEditorContext, type State } from './EditorContext'
 
 type Props = {
   children?: ReactNode
@@ -102,7 +103,7 @@ const Input = <C extends ElementType = 'div'>({
                 })
                 .catch((e) => {
                   alert('error generating AI, check console')
-                  console.log(e)
+                  console.error("Couldn't generate AI", e)
                 })
                 .finally(() => {
                   dispatch({ payload: 'ready', type: 'update_status' })

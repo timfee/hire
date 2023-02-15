@@ -1,9 +1,10 @@
+import { type ParsedUrlQuery } from 'querystring'
+
+import { type InferGetServerSidePropsType, type GetServerSideProps } from 'next'
+import Link from 'next/link'
+
 import Container from '@/components/Container'
 import { type Company, createSupabaseServerClient } from '@/utils/supabase'
-import { type InferGetServerSidePropsType, type GetServerSideProps } from 'next'
-
-import Link from 'next/link'
-import { type ParsedUrlQuery } from 'querystring'
 
 export default function AdminLander({
   companies,
@@ -44,7 +45,7 @@ export const getServerSideProps: GetServerSideProps<
     data: company,
     error: companyError,
     status: companyStatus,
-  } = await supabase.from('Company').select()
+  } = await supabase.from('Company').select().order('name', { ascending: true })
 
   if (companyError || !company) {
     console.error(

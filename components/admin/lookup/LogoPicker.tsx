@@ -1,7 +1,7 @@
 import { RadioGroup } from '@headlessui/react'
 import clsx from 'clsx'
 
-import { useEditorContext } from '@/contexts/EditorContext'
+import { useEditorContext } from '@/components/admin/EditorContext'
 import type { Logo } from '@/types/brand'
 
 export default function LogoPicker() {

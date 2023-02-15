@@ -1,10 +1,10 @@
 import type { Dispatch, FC, PropsWithChildren } from 'react'
 import { createContext, useContext, useReducer } from 'react'
 
+import { type EditorProps } from '@/pages/admin/editor'
 import { type Color, type Logo } from '@/types/brand'
 import { type NestedKeyOf } from '@/utils/dynamic'
 import { type Company } from '@/utils/supabase'
-import { type EditorProps } from '@/pages/admin/editor'
 
 export type State = {
   step: number

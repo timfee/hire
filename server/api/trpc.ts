@@ -2,6 +2,7 @@ import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { initTRPC, TRPCError } from '@trpc/server'
 import { type CreateNextContextOptions } from '@trpc/server/adapters/next'
 import superjson from 'superjson'
+
 import { type Database } from 'types/supabase'
 
 export const createTRPCContext = async (opts: CreateNextContextOptions) => {

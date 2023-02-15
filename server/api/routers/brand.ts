@@ -69,7 +69,6 @@ export const brandRouter = createTRPCRouter({
             },
           }
         )
-        console.log(response)
 
         const { colors, logos, description, name } =
           (await response.json()) as Brand

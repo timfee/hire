@@ -1,13 +1,14 @@
 import '@/styles/globals.css'
 
+import { useState } from 'react'
+
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { type Session } from '@supabase/auth-helpers-react'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
 import type { AppType } from 'next/app'
-import { useState } from 'react'
-import type { Database } from 'types/supabase'
 
 import { Soehne, Tiempos } from '@/utils/fonts'
+import type { Database } from 'types/supabase'
 
 import { api } from '../utils/api'
 

@@ -1,7 +1,7 @@
 import { RadioGroup } from '@headlessui/react'
 import clsx from 'clsx'
 
-import { useEditorContext } from '@/contexts/EditorContext'
+import { useEditorContext } from '@/components/admin/EditorContext'
 
 export default function ColorPicker() {
   const { state, dispatch } = useEditorContext()

@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import { type CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
-import clsx from 'clsx'
 
-import pdfPreview from '@/lib/resume_thumbnail.png'
-import Image from 'next/image'
 import { ArrowDownCircleIcon } from '@heroicons/react/24/outline'
+import clsx from 'clsx'
 import {
   useScroll,
   useInView,
   motion,
   useAnimationControls,
 } from 'framer-motion'
+import Image from 'next/image'
+
+import pdfPreview from '@/public/resume_thumbnail.png'
 
 export default function HoverButton({
   resumeUrl,
@@ -132,7 +133,7 @@ export default function HoverButton({
               />
               <span
                 style={{ color }}
-                className="text ml-2 font-medium text-indigo-600 underline">
+                className="ml-2 text-xs font-medium leading-snug text-indigo-600 underline sm:text-sm md:text-base">
                 Tim Feeley’s {name} Resume.pdf
               </span>
               <div className="h-fit flex-grow"></div>
@@ -143,8 +144,8 @@ export default function HoverButton({
                     '--tw-ring-color': color,
                   } as CSSProperties
                 }
-                className="flex items-center rounded-full border border-transparent px-3 py-1.5 text-xs font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                <ArrowDownCircleIcon className="mr-2 h-5 w-5" />
+                className="flex items-center rounded-full border border-transparent py-1.5 pr-2 pl-1.5 text-xs font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                <ArrowDownCircleIcon className="mr-1 h-5 w-5" />
                 <span>Download</span>
               </button>
             </a>

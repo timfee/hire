@@ -1,7 +1,9 @@
-import { refreshResumeUrl } from '@/lib/resume'
+import { z } from 'zod'
+
+import { refreshResumeUrl } from '@/content'
 import { getRemoteImage, trimWhitespace } from '@/utils/images'
 import { createSupabaseServerClient } from '@/utils/supabase'
-import { z } from 'zod'
+
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 
 export const companyRouter = createTRPCRouter({

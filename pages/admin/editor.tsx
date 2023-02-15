@@ -1,16 +1,21 @@
+import { type ParsedUrlQuery } from 'querystring'
+
+import { type FC, useEffect, useState } from 'react'
+
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client'
 import { type GetServerSideProps } from 'next'
-import { type ParsedUrlQuery } from 'querystring'
-import { type FC, useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import superjson from 'superjson'
 
+import {
+  useEditorContext,
+  withEditorContext,
+} from '@/components/admin/EditorContext'
 import Input from '@/components/admin/Input'
 import BrandLookup from '@/components/admin/lookup'
 import Container from '@/components/Container'
-import { useEditorContext, withEditorContext } from '@/contexts/EditorContext'
 import { type AppRouter } from '@/server/api/root'
 import { type Company, createSupabaseServerClient } from '@/utils/supabase'
-import { useRouter } from 'next/router'
 
 export type EditorProps = { company?: Company }
 
@@ -143,9 +148,6 @@ const Editor: FC<EditorProps> = ({ company: originalCompany }) => {
                   .then(() => {
                     router
                       .push('/admin/editor?slug=' + originalCompany.slug)
-                      .then((data) => {
-                        console.log('done ', data)
-                      })
                       .catch((error) => {
                         console.error(error)
                       })

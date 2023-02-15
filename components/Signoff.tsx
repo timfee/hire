@@ -1,6 +1,7 @@
+import type { PropsWithChildren } from 'react'
+
 import type { Variants } from 'framer-motion'
 import { motion } from 'framer-motion'
-import type { PropsWithChildren } from 'react'
 
 export default function Signoff({ children }: PropsWithChildren) {
   const signature: Variants = {

@@ -2,7 +2,7 @@ import { Configuration, OpenAIApi } from 'openai'
 import { z } from 'zod'
 
 import { env } from '@/env.mjs'
-import { prompts } from '@/lib/ai'
+import { prompts } from '@/utils/ai'
 
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 

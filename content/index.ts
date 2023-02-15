@@ -1,5 +1,7 @@
-import fontkit from '@pdf-lib/fontkit'
 import fs from 'fs'
+import { cwd } from 'process'
+
+import fontkit from '@pdf-lib/fontkit'
 import type { PDFPage, PDFPageDrawTextOptions } from 'pdf-lib'
 import {
   breakTextIntoLines,
@@ -9,12 +11,11 @@ import {
   rgb,
   setCharacterSpacing,
 } from 'pdf-lib'
-import { cwd } from 'process'
 
 import { env } from '@/env.mjs'
 import { type Company, createSupabaseServerClient } from '@/utils/supabase'
 
-const SOURCE_DIR = `${cwd()}/lib/resume/`
+const SOURCE_DIR = `${cwd()}/content/`
 const FONTS_DIR = `${cwd()}/styles/fonts/`
 const FONTS = ['Inter-Medium.otf', 'Inter-Bold.otf']
 
@@ -34,8 +35,8 @@ const generateResumePacket = async ({ company }: { company: Company }) => {
     // Custom introduction page
     buildFirstPage({ code, name, resumeMessage, slug }),
     // Static pages
-    await PDFDocument.load(fs.readFileSync(SOURCE_DIR + '2.png')),
-    await PDFDocument.load(fs.readFileSync(SOURCE_DIR + '3.png')),
+    await PDFDocument.load(fs.readFileSync(SOURCE_DIR + '2.pdf')),
+    await PDFDocument.load(fs.readFileSync(SOURCE_DIR + '3.pdf')),
     // If we have a logo, generate a custom last page
     buildLastPage({ logoUrl }),
   ])

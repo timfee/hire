@@ -1,3 +1,7 @@
+import { type ParsedUrlQuery } from 'querystring'
+
+import { type CSSProperties } from 'react'
+
 import {
   type GetStaticPaths,
   type GetStaticProps,
@@ -5,20 +9,17 @@ import {
   type NextPage,
 } from 'next'
 import Head from 'next/head'
-import { type ParsedUrlQuery } from 'querystring'
-import { type CSSProperties } from 'react'
 import ReactMarkdown from 'react-markdown'
 
-import { refreshResumeUrl } from '@/lib/resume'
-import { type Database } from '@/types/supabase'
-import { createSupabaseServerClient, type Reference } from '@/utils/supabase'
+import { Contact } from '@/components/Contact'
 import Container from '@/components/Container'
-import Signoff from '@/components/Signoff'
 import HoverButton from '@/components/HoverButton'
 import References from '@/components/References'
-import { Contact } from '@/components/Contact'
-
+import Signoff from '@/components/Signoff'
 import SmartImage from '@/components/SmartImage'
+import { refreshResumeUrl } from '@/content'
+import { type Database } from '@/types/supabase'
+import { createSupabaseServerClient, type Reference } from '@/utils/supabase'
 
 type CompanyData = Database['public']['Tables']['Company']['Row']
 type PageData = { company: CompanyData; references: Reference[] }

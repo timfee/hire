@@ -1,15 +1,16 @@
+import { type FormEventHandler } from 'react'
+
 import { Disclosure } from '@headlessui/react'
 import { ArrowDownCircleIcon, XCircleIcon } from '@heroicons/react/24/outline'
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client'
-import { type FormEventHandler } from 'react'
 import superjson from 'superjson'
 
 import { type AppRouter } from '@/server/api/root'
 
-import { useEditorContext } from '../../../contexts/EditorContext'
-import Input from '../Input'
 import ColorPicker from './ColorPicker'
 import LogoPicker from './LogoPicker'
+import { useEditorContext } from '../EditorContext'
+import Input from '../Input'
 
 const BrandLookup = () => {
   const { dispatch, state } = useEditorContext()

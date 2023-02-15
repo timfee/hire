@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
-import { env } from 'env.mjs'
 
 import { type Database } from '@/types/supabase'
+import { env } from 'env.mjs'
 
 export const createSupabaseServerClient = () =>
   createClient<Database>(

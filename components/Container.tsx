@@ -1,5 +1,6 @@
-import clsx from 'clsx'
 import type { ElementType, ReactNode } from 'react'
+
+import clsx from 'clsx'
 
 import { type ContainerProps } from '@/utils/dynamic'
 
