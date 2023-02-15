@@ -106,10 +106,19 @@ const Editor: FC<EditorProps> = ({ company: originalCompany }) => {
         {originalCompany && (
           <div>
             <span>
+              <a
+                href={`/${originalCompany.slug}/${originalCompany.code}`}
+                target="_blank"
+                className="text-blue-500 underline"
+                rel="noreferrer">
+                View site
+              </a>{' '}
+              •{' '}
               {(originalCompany.resumeUrl && (
                 <a
                   target="_blank"
                   href={originalCompany.resumeUrl}
+                  className="text-blue-500 underline"
                   rel="noreferrer">
                   Resume{' '}
                 </a>
