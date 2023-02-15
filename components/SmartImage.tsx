@@ -1,7 +1,6 @@
-import Image from 'next/image'
-import type { HTMLProps } from 'react'
+import Image, { type ImageProps } from 'next/image'
 
-type SmartImageProps = HTMLProps<HTMLImageElement> & {
+type SmartImageProps = ImageProps & {
   originalWidth: number
   originalHeight: number
 }
@@ -11,7 +10,8 @@ export default function SmartImage({
   originalHeight,
   originalWidth,
   src,
-  className,
+  alt,
+  ...imageProps
 }: SmartImageProps) {
   const ASPECT_RATIO = originalWidth / originalHeight
 
@@ -28,16 +28,13 @@ export default function SmartImage({
   }
 
   return (
-    <figure
-      className={className}
-      style={{ width, height }}>
-      <Image
-        priority
-        height={height}
-        width={width}
-        src={src}
-        alt="Tim Feeley"
-      />
-    </figure>
+    <Image
+      priority
+      height={height}
+      width={width}
+      src={src}
+      alt={alt}
+      {...imageProps}
+    />
   )
 }

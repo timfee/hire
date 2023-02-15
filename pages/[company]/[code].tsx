@@ -130,17 +130,17 @@ const Company: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
       </Head>
       <main>
         <BrandStrip color={color} />
-
         <Container
           as="section"
           className="prose prose-indigo mx-auto mt-4 py-4 px-4 sm:px-0 md:max-w-2xl"
           style={{ '--tw-prose-headings': color } as CSSProperties}>
           <SmartImage
             src={logoUrl}
-            height={50}
+            height={40}
             alt={`${name} logo`}
             originalHeight={logoHeight}
             originalWidth={logoWidth}
+            className="mb-0"
           />
           <ReactMarkdown>{websiteMessage}</ReactMarkdown>
           <Signoff />
@@ -152,7 +152,7 @@ const Company: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
               name={name}
             />
           )}
-          <p className="mt-8 font-medium  leading-snug">
+          <p className="mt-8 font-medium leading-snug">
             PS: I’ve worked with some amazing colleagues over the years; here’s
             what they think of working together:
           </p>

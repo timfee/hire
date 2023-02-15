@@ -9,9 +9,6 @@ module.exports = {
   ],
   theme: {
     extend: {
-      objectPosition: {
-        'prose-fit': '4rem center',
-      },
       fontFamily: {
         sans: ['var(--sans-serif)', ...defaultTheme.fontFamily.sans],
         serif: ['var(--serif)', ...defaultTheme.fontFamily.serif],
@@ -19,6 +16,9 @@ module.exports = {
       typography: (theme) => ({
         DEFAULT: {
           css: {
+            h2: {
+              marginTop: theme('spacing.8'),
+            },
             p: {
               fontFamily: theme('fontFamily.serif')[0],
             },
