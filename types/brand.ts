@@ -13,7 +13,7 @@ export type Brand = {
 export type Color = {
   hex?: string
   type?: string
-  brightness?: number
+  brightness?: number | undefined
 }
 
 export type Font = {
@@ -21,7 +21,7 @@ export type Font = {
   type?: string
   origin?: string
   originId?: string
-  weights?: any[]
+  weights?: string[]
 }
 
 export type Image = {
@@ -33,9 +33,9 @@ export type Format = {
   src?: string
   background?: string | null
   format?: string
-  height?: number
-  width?: number
-  size?: number
+  height?: number | null
+  width?: number | null
+  size?: number | null
 }
 
 export type Link = {
@@ -44,7 +44,16 @@ export type Link = {
 }
 
 export type Logo = {
-  type?: string
-  theme?: null
+  type?: string | null
+  theme?: string | null
   formats?: Format[]
+}
+
+export type SingleArrayOfLogos = {
+  src?: string
+  format?: string
+  height?: number
+  width?: number
+  theme?: string
+  size?: number
 }

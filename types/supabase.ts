@@ -36,12 +36,13 @@ export interface Database {
     Tables: {
       Company: {
         Row: {
-          active: boolean
           code: string
           color: string
           created: string
           lastUpdated: string
-          logoUrl: string | null
+          logoHeight: number
+          logoUrl: string
+          logoWidth: number
           name: string
           resumeLastGenerated: string | null
           resumeMessage: string
@@ -50,12 +51,13 @@ export interface Database {
           websiteMessage: string
         }
         Insert: {
-          active?: boolean
           code: string
           color?: string
           created?: string
           lastUpdated?: string
-          logoUrl?: string | null
+          logoHeight: number
+          logoUrl?: string
+          logoWidth: number
           name?: string
           resumeLastGenerated?: string | null
           resumeMessage?: string
@@ -64,12 +66,13 @@ export interface Database {
           websiteMessage?: string
         }
         Update: {
-          active?: boolean
           code?: string
           color?: string
           created?: string
           lastUpdated?: string
-          logoUrl?: string | null
+          logoHeight?: number
+          logoUrl?: string
+          logoWidth?: number
           name?: string
           resumeLastGenerated?: string | null
           resumeMessage?: string

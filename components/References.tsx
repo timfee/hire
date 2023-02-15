@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import type { Reference as ReferenceType } from '@/types/database'
+import type { Reference as ReferenceType } from '@/utils/supabase'
 
 export default function References({
   references,
@@ -28,7 +28,9 @@ export default function References({
       {allReferences
         .map((column) => column[0])
         .map((reference, referenceIndex) => (
-          <li key={referenceIndex} className="lg:hidden">
+          <li
+            key={referenceIndex}
+            className="lg:hidden">
             <Reference {...reference} />
           </li>
         ))}
@@ -84,7 +86,10 @@ export function Reference({
         </div>
         <div className="ml-4">
           {linkedIn && (
-            <Link href={linkedIn} target="_blank" rel="noreferrer">
+            <Link
+              href={linkedIn}
+              target="_blank"
+              rel="noreferrer">
               <div className="flex items-baseline text-base font-medium text-[#0077B5] underline">
                 <p className="font-semibold">{name}</p>
                 <svg

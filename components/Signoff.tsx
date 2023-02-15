@@ -1,5 +1,3 @@
-'use client'
-
 import type { Variants } from 'framer-motion'
 import { motion } from 'framer-motion'
 import type { PropsWithChildren } from 'react'
@@ -37,7 +35,7 @@ export default function Signoff({ children }: PropsWithChildren) {
           <p>Thanks!</p>
         </>
       )}
-      <figure className="not-prose mt-2 sm:-ml-6">
+      <figure className="not-prose mt-2 mb-0 sm:-ml-6">
         <motion.svg
           className="h-16 sm:h-24"
           viewBox="0 0 586 201"
@@ -81,9 +79,6 @@ export default function Signoff({ children }: PropsWithChildren) {
           </motion.g>
         </motion.svg>
       </figure>
-      <p className="mt-2 font-serif">
-        <a href="mailto:tim@timfeeley.com">tim@timfeeley.com</a>
-      </p>
     </>
   )
 }
