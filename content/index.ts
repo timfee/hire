@@ -223,8 +223,8 @@ const provideFonts = async (pdfDoc: PDFDocument) => {
   pdfDoc.registerFontkit(fontkit)
 
   return await Promise.all([
-    await pdfDoc.embedFont(fs.readFileSync(`${FONTS_DIR}/Sohne-Kraftig.ttf`)),
-    await pdfDoc.embedFont(fs.readFileSync(`${FONTS_DIR}/Sohne-Halbfett.ttf`)),
+    await pdfDoc.embedFont(fs.readFileSync(FONTS_DIR + 'sohne-kraftig.ttf')),
+    await pdfDoc.embedFont(fs.readFileSync(FONTS_DIR + 'sohne-halbfett.ttf')),
   ])
 }
 
