@@ -17,10 +17,12 @@ export default function HoverButton({
   resumeUrl,
   color,
   name,
+  contrastRatio = 10,
 }: {
   resumeUrl: string
   name: string
   color: string
+  contrastRatio?: number
 }) {
   const stickyRef = useRef<HTMLDivElement>(null),
     unstickyRef = useRef<HTMLDivElement>(null)
@@ -132,7 +134,7 @@ export default function HoverButton({
                 alt="Resume"
               />
               <span
-                style={{ color }}
+                style={{ color: contrastRatio > 3.5 ? color : 'black' }}
                 className="ml-2 text-xs font-medium leading-snug text-indigo-600 underline sm:text-sm md:text-base">
                 Tim Feeley’s {name} Resume.pdf
               </span>
@@ -140,11 +142,12 @@ export default function HoverButton({
               <button
                 style={
                   {
+                    color: contrastRatio > 3.5 ? 'white' : 'black',
                     backgroundColor: color,
                     '--tw-ring-color': color,
                   } as CSSProperties
                 }
-                className="flex items-center rounded-full border border-transparent py-1.5 pr-2 pl-1.5 text-xs font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                className="flex items-center rounded-full border border-transparent py-1.5 pr-2 pl-1.5 text-xs font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                 <ArrowDownCircleIcon className="mr-1 h-5 w-5" />
                 <span>Download</span>
               </button>

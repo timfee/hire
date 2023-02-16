@@ -2,6 +2,7 @@ import { type ParsedUrlQuery } from 'querystring'
 
 import { type CSSProperties } from 'react'
 
+import ColorContrastChecker from 'color-contrast-checker'
 import {
   type GetStaticPaths,
   type GetStaticProps,
@@ -20,7 +21,6 @@ import SmartImage from '@/components/SmartImage'
 import { refreshResumeUrl } from '@/content'
 import { type Database } from '@/types/supabase'
 import { createSupabaseServerClient, type Reference } from '@/utils/supabase'
-
 type CompanyData = Database['public']['Tables']['Company']['Row']
 type PageData = { company: CompanyData; references: Reference[] }
 
@@ -46,6 +46,14 @@ const Company: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   const url = `https://hire.timfeeley.com/${slug}/${code}`
   const ogUrl = 'https://hire.timfeeley.com/opengraph.png'
 
+  const contrast = new ColorContrastChecker().getContrastRatio(
+    new ColorContrastChecker().hexToLuminance(color),
+    new ColorContrastChecker().hexToLuminance('#FFFFFF')
+  )
+  let textColor = color
+  if (contrast < 3.5) {
+    textColor = '#000000'
+  }
   return (
     <>
       <Head>
@@ -134,7 +142,7 @@ const Company: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
         <Container
           as="section"
           className="prose prose-indigo mx-auto mt-4 py-4 px-4 sm:px-0 md:max-w-2xl"
-          style={{ '--tw-prose-headings': color } as CSSProperties}>
+          style={{ '--tw-prose-headings': textColor } as CSSProperties}>
           <SmartImage
             src={logoUrl}
             height={40}
@@ -149,6 +157,7 @@ const Company: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
           {resumeUrl && (
             <HoverButton
               color={color}
+              contrastRatio={contrast}
               resumeUrl={resumeUrl}
               name={name}
             />

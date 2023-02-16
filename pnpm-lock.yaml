@@ -1,13 +1,13 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@headlessui/react': ^1.7.10
+  '@headlessui/react': ^1.7.11
   '@heroicons/react': ^2.0.15
   '@next/font': ^13.1.6
   '@pdf-lib/fontkit': ^1.1.1
   '@supabase/auth-helpers-nextjs': ^0.5.4
   '@supabase/auth-helpers-react': ^0.3.1
-  '@supabase/supabase-js': ^2.7.1
+  '@supabase/supabase-js': ^2.8.0
   '@tailwindcss/forms': ^0.5.3
   '@tailwindcss/typography': ^0.5.9
   '@tanstack/react-query': ^4.24.6
@@ -24,6 +24,7 @@ specifiers:
   '@typescript-eslint/parser': ^5.52.0
   autoprefixer: ^10.4.13
   clsx: ^1.2.1
+  color-contrast-checker: ^2.1.0
   eslint: ^8.34.0
   eslint-config-next: 13.1.6
   eslint-config-prettier: 8.6.0
@@ -31,14 +32,14 @@ specifiers:
   eslint-plugin-simple-import-sort: ^10.0.0
   eslint-plugin-sort-keys-fix: ^1.1.2
   eslint-plugin-unused-imports: 2.0.0
-  framer-motion: ^9.0.2
+  framer-motion: ^9.0.3
   next: 13.1.6
   next-plausible: ^3.7.2
   openai: ^3.1.0
   pdf-lib: ^1.17.1
   postcss: ^8.4.21
   prettier: ^2.8.4
-  prettier-plugin-tailwindcss: ^0.2.2
+  prettier-plugin-tailwindcss: ^0.2.3
   react: 18.2.0
   react-dom: 18.2.0
   react-markdown: ^8.0.5
@@ -56,7 +57,8 @@ dependencies:
   '@trpc/next': 10.11.1_ck2pp32np6ey6osxngwuwfgwei
   '@trpc/react-query': 10.11.1_2pugaexxlcekgcbbhj75jqmiqi
   '@trpc/server': 10.11.1
-  framer-motion: 9.0.2_biqbaboplfbrettd7655fr4n2y
+  color-contrast-checker: 2.1.0
+  framer-motion: 9.0.3_biqbaboplfbrettd7655fr4n2y
   next: 13.1.6_biqbaboplfbrettd7655fr4n2y
   next-plausible: 3.7.2_3vryta7zmbcsw4rrqf4axjqggm
   openai: 3.1.0
@@ -70,12 +72,12 @@ dependencies:
   zustand: 4.3.3_react@18.2.0
 
 devDependencies:
-  '@headlessui/react': 1.7.10_biqbaboplfbrettd7655fr4n2y
+  '@headlessui/react': 1.7.11_biqbaboplfbrettd7655fr4n2y
   '@heroicons/react': 2.0.15_react@18.2.0
   '@next/font': 13.1.6
-  '@supabase/auth-helpers-nextjs': 0.5.4_wwkefq4crizglppdxtjqhrdudm
-  '@supabase/auth-helpers-react': 0.3.1_wwkefq4crizglppdxtjqhrdudm
-  '@supabase/supabase-js': 2.7.1
+  '@supabase/auth-helpers-nextjs': 0.5.4_h4fmw4dd6b3xkulak4k3c7hqqu
+  '@supabase/auth-helpers-react': 0.3.1_h4fmw4dd6b3xkulak4k3c7hqqu
+  '@supabase/supabase-js': 2.8.0
   '@tailwindcss/forms': 0.5.3_tailwindcss@3.2.6
   '@tailwindcss/typography': 0.5.9_tailwindcss@3.2.6
   '@types/node': 18.13.0
@@ -96,7 +98,7 @@ devDependencies:
   eslint-plugin-unused-imports: 2.0.0_vqeavzxdzk2atb75l6fx3anzpi
   postcss: 8.4.21
   prettier: 2.8.4
-  prettier-plugin-tailwindcss: 0.2.2_prettier@2.8.4
+  prettier-plugin-tailwindcss: 0.2.3_prettier@2.8.4
   tailwindcss: 3.2.6_postcss@8.4.21
   typescript: 4.9.5
 
@@ -139,8 +141,8 @@ packages:
       - supports-color
     dev: true
 
-  /@headlessui/react/1.7.10_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-1m66h/5eayTEZVT2PI13/2PG3EVC7a9XalmUtVSC8X76pcyKYMuyX1XAL2RUtCr8WhoMa/KrDEyoeU5v+kSQOw==}
+  /@headlessui/react/1.7.11_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-EaDbVgcyiylhtskZZf4Qb/JiiByY7cYbd0qgZ9xm2pm2X7hKojG0P4TaQYKgPOV3vojPhd/pZyQh3nmRkkcSyw==}
     engines: {node: '>=10'}
     peerDependencies:
       react: ^16 || ^17 || ^18
@@ -412,29 +414,29 @@ packages:
     resolution: {integrity: sha512-sXo/qW2/pAcmT43VoRKOJbDOfV3cYpq3szSVfIThQXNt+E4DfKj361vaAt3c88U5tPUxzEswam7GW48PJqtKAg==}
     dev: true
 
-  /@supabase/auth-helpers-nextjs/0.5.4_wwkefq4crizglppdxtjqhrdudm:
+  /@supabase/auth-helpers-nextjs/0.5.4_h4fmw4dd6b3xkulak4k3c7hqqu:
     resolution: {integrity: sha512-Xm3BMDOYPbNyuh8UXDRgBDc3JkeM5S2PfuC1jFJ73CCay4YiH1YxTz06Cvtp+vLH432qdjnqH+49ehVvUehPnQ==}
     peerDependencies:
       '@supabase/supabase-js': ^2.0.4
     dependencies:
-      '@supabase/auth-helpers-shared': 0.2.4_wwkefq4crizglppdxtjqhrdudm
-      '@supabase/supabase-js': 2.7.1
+      '@supabase/auth-helpers-shared': 0.2.4_h4fmw4dd6b3xkulak4k3c7hqqu
+      '@supabase/supabase-js': 2.8.0
     dev: true
 
-  /@supabase/auth-helpers-react/0.3.1_wwkefq4crizglppdxtjqhrdudm:
+  /@supabase/auth-helpers-react/0.3.1_h4fmw4dd6b3xkulak4k3c7hqqu:
     resolution: {integrity: sha512-g3SFv08Dz9FapNif/ZY1b7qKGlMJDyTLSayHBz3kb3FuYxg7aLWgQtydDhm5AGbc0XtvpIBuhGTIOVevwpdosA==}
     peerDependencies:
       '@supabase/supabase-js': ^2.0.4
     dependencies:
-      '@supabase/supabase-js': 2.7.1
+      '@supabase/supabase-js': 2.8.0
     dev: true
 
-  /@supabase/auth-helpers-shared/0.2.4_wwkefq4crizglppdxtjqhrdudm:
+  /@supabase/auth-helpers-shared/0.2.4_h4fmw4dd6b3xkulak4k3c7hqqu:
     resolution: {integrity: sha512-c+hi3N6DhjPTzjXGOokre4gmMZOqt0f1ORrwZwi2s07pk3cbkmn77DwwVtlYMNi3oZNYRQqAfxJu83UzpJrrmg==}
     peerDependencies:
       '@supabase/supabase-js': ^2.0.4
     dependencies:
-      '@supabase/supabase-js': 2.7.1
+      '@supabase/supabase-js': 2.8.0
     dev: true
 
   /@supabase/functions-js/2.0.0:
@@ -445,8 +447,8 @@ packages:
       - encoding
     dev: true
 
-  /@supabase/gotrue-js/2.11.0:
-    resolution: {integrity: sha512-yo3yExoTqpJH4YpdI5PDjZ1YLOj3wURppimfsV0ep5uxDY/lE1uOhiMCPnhy59DbFAKG7bjnhJ1L7sk+B2os3w==}
+  /@supabase/gotrue-js/2.12.0:
+    resolution: {integrity: sha512-sx9YbCf2wjdYww7j3bkpPHSQ6Ur79xSlxBw0Kq6chWqCeG8vst1dUCPeHZZWfu++nblCRnCajhryZ3Xt5XVj8g==}
     dependencies:
       cross-fetch: 3.1.5
     transitivePeerDependencies:
@@ -478,11 +480,11 @@ packages:
       - encoding
     dev: true
 
-  /@supabase/supabase-js/2.7.1:
-    resolution: {integrity: sha512-Q/e+JAluZEvy7D4ul3aAs3aOiKkGvHlZULy6wjchWQyU9YlJKZLr6VPYcwUeitcnRKZi4al5iTS55LgdJFfqIA==}
+  /@supabase/supabase-js/2.8.0:
+    resolution: {integrity: sha512-uzf4J+qAKdUMhB2tnJl6BrQRUQBinwjJ2eWo2ZsDw9EUUP5JcHsxTamiq6p91DpqzmTIRg3xRAT+bItTzbfa0w==}
     dependencies:
       '@supabase/functions-js': 2.0.0
-      '@supabase/gotrue-js': 2.11.0
+      '@supabase/gotrue-js': 2.12.0
       '@supabase/postgrest-js': 1.4.0
       '@supabase/realtime-js': 2.6.0
       '@supabase/storage-js': 2.3.0
@@ -1096,6 +1098,10 @@ packages:
     resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
     engines: {node: '>=6'}
     dev: true
+
+  /color-contrast-checker/2.1.0:
+    resolution: {integrity: sha512-6Y0aIEej3pwZTVlicIqVzhO6T4izDWouaIXnYoDdTuFFAMQ9nnN0dgHNP9J94jRnH6asjPq1/wzUKxwoNbWtRQ==}
+    dev: false
 
   /color-convert/2.0.1:
     resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}
@@ -1954,8 +1960,8 @@ packages:
     resolution: {integrity: sha512-MhLuK+2gUcnZe8ZHlaaINnQLl0xRIGRfcGk2yl8xoQAfHrSsL3rYu6FCmBdkdbhc9EPlwyGHewaRsvwRMJtAlA==}
     dev: true
 
-  /framer-motion/9.0.2_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-n7ZdIUBrT1xklowQNRQ6/h54+3ysmz422CP0rrhjE1X2tshiJy0WWQ7tv6y/fcOSQd23htNA9vvbUFLYMQ5lEQ==}
+  /framer-motion/9.0.3_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-QcMWXcwvBmInzFpkIgtLx8VQ/+H9+EhiHVgnx6zsOWTGmcvzFqkrw6SLTZn5fKejCaf3RznqkshhxXipBpe9ig==}
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0
@@ -3210,10 +3216,11 @@ packages:
       fast-diff: 1.2.0
     dev: true
 
-  /prettier-plugin-tailwindcss/0.2.2_prettier@2.8.4:
-    resolution: {integrity: sha512-5RjUbWRe305pUpc48MosoIp6uxZvZxrM6GyOgsbGLTce+ehePKNm7ziW2dLG2air9aXbGuXlHVSQQw4Lbosq3w==}
+  /prettier-plugin-tailwindcss/0.2.3_prettier@2.8.4:
+    resolution: {integrity: sha512-s2N5Dh7Ao5KTV1mao5ZBnn8EKtUcDPJEkGViZIjI0Ij9TTI5zgTz4IHOxW33jOdjHKa8CSjM88scelUiC5TNRQ==}
     engines: {node: '>=12.17.0'}
     peerDependencies:
+      '@ianvs/prettier-plugin-sort-imports': '*'
       '@prettier/plugin-php': '*'
       '@prettier/plugin-pug': '*'
       '@shopify/prettier-plugin-liquid': '*'
@@ -3230,6 +3237,8 @@ packages:
       prettier-plugin-svelte: '*'
       prettier-plugin-twig-melody: '*'
     peerDependenciesMeta:
+      '@ianvs/prettier-plugin-sort-imports':
+        optional: true
       '@prettier/plugin-php':
         optional: true
       '@prettier/plugin-pug':
