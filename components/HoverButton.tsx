@@ -10,6 +10,7 @@ import {
   useAnimationControls,
 } from 'framer-motion'
 import Image from 'next/image'
+import { usePlausible } from 'next-plausible'
 
 import pdfPreview from '@/public/resume_thumbnail.png'
 
@@ -108,6 +109,7 @@ export default function HoverButton({
     }
   }
 
+  const plausible = usePlausible()
   return (
     <>
       <div ref={unstickyRef}>
@@ -125,6 +127,9 @@ export default function HoverButton({
           <div className="relative mx-auto py-4 md:max-w-2xl">
             <a
               href={resumeUrl}
+              onClick={() => {
+                plausible('resume_download', { props: { name } })
+              }}
               className="card flex items-center justify-items-stretch rounded-md border border-slate-300 bg-white p-3 shadow-inner"
               target="_blank"
               rel="noopener noreferrer">

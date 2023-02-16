@@ -32,7 +32,7 @@ specifiers:
   eslint-plugin-simple-import-sort: ^10.0.0
   eslint-plugin-sort-keys-fix: ^1.1.2
   eslint-plugin-unused-imports: 2.0.0
-  framer-motion: ^9.0.3
+  framer-motion: ^9.0.4
   next: 13.1.6
   next-plausible: ^3.7.2
   openai: ^3.1.0
@@ -58,7 +58,7 @@ dependencies:
   '@trpc/react-query': 10.11.1_2pugaexxlcekgcbbhj75jqmiqi
   '@trpc/server': 10.11.1
   color-contrast-checker: 2.1.0
-  framer-motion: 9.0.3_biqbaboplfbrettd7655fr4n2y
+  framer-motion: 9.0.4_biqbaboplfbrettd7655fr4n2y
   next: 13.1.6_biqbaboplfbrettd7655fr4n2y
   next-plausible: 3.7.2_3vryta7zmbcsw4rrqf4axjqggm
   openai: 3.1.0
@@ -1960,8 +1960,8 @@ packages:
     resolution: {integrity: sha512-MhLuK+2gUcnZe8ZHlaaINnQLl0xRIGRfcGk2yl8xoQAfHrSsL3rYu6FCmBdkdbhc9EPlwyGHewaRsvwRMJtAlA==}
     dev: true
 
-  /framer-motion/9.0.3_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-QcMWXcwvBmInzFpkIgtLx8VQ/+H9+EhiHVgnx6zsOWTGmcvzFqkrw6SLTZn5fKejCaf3RznqkshhxXipBpe9ig==}
+  /framer-motion/9.0.4_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-lZ1+2/WBn8iYRYmeEFpu/X2fI1GNwJL+X21EpnWwKP3vkJsnWBXZF5kHF29wIPk9sBU2xDIpDm9SAVo206bp9A==}
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0
