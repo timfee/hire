@@ -19,6 +19,7 @@ export const Inter = localFont({
 
 export const Tiempos = localFont({
   display: 'swap',
+  variable: '--serif',
   preload: true,
   src: [
     {
@@ -57,6 +58,7 @@ export const Tiempos = localFont({
 export const Soehne = localFont({
   display: 'swap',
   preload: true,
+  variable: '--sans-serif',
   src: [
     {
       path: '../styles/fonts/soehne-buch.woff2',

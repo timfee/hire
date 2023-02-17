@@ -1,6 +1,4 @@
-import { type NextPage } from 'next'
-
-const Home: NextPage = () => {
+export default function RootPage() {
   return (
     <>
       <main className="mx-auto mt-10 max-w-xl">
@@ -38,5 +36,3 @@ const Home: NextPage = () => {
     </>
   )
 }
-
-export default Home

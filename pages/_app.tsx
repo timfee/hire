@@ -27,15 +27,15 @@ const MyApp: AppType<{
         supabaseClient={supabase}
         initialSession={pageProps.initialSession}>
         <Component {...pageProps} />
-        <style
-          jsx
-          global>{`
-          :root {
-            --sans-serif: ${Soehne.style.fontFamily};
-            --serif: ${Tiempos.style.fontFamily};
-          }
-        `}</style>
       </SessionContextProvider>
+      <style
+        jsx
+        global>{`
+        :root {
+          --sans-serif: ${Soehne.style.fontFamily};
+          --serif: ${Tiempos.style.fontFamily};
+        }
+      `}</style>
     </PlausibleProvider>
   )
 }
