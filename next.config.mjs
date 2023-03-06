@@ -7,6 +7,7 @@ const config = {
     domains: ['jxtzqpuzyqbwtwcwvmln.supabase.co'],
   },
   experimental: {
+    serverComponentsExternalPackages: ['pdfkit', 'markdown-it'],
     swcMinify: true,
     appDir: true,
   },

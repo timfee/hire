@@ -1,7 +1,7 @@
 import 'server-only'
 
 import '@/styles/globals.css'
-import { Soehne, Tiempos } from '@/utils/fonts'
+import { Sans, Serif } from '@/utils/fonts'
 
 export default function RootLayout({
   children,
@@ -11,7 +11,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${Soehne.variable} ${Tiempos.variable}`}>
+      className={`${Sans.variable} ${Serif.variable}`}>
       <body>{children}</body>
     </html>
   )
