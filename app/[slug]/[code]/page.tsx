@@ -61,7 +61,7 @@ export default async function Page({ params }: CompanyPageParams) {
           alt={`${name} logo`}
           originalHeight={logoHeight}
           originalWidth={logoWidth}
-          className="mb-0"
+          className="mb-6"
         />
         <ReactMarkdown>{websiteMessage}</ReactMarkdown>
         <Signoff />
