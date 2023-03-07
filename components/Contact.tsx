@@ -1,6 +1,10 @@
 import clsx from 'clsx'
 
-export function Contact() {
+const A_STYLE =
+  'text-slate-600 hover:text-indigo-600 flex items-center space-x-1.5 opacity-50 transition-opacity hover:opacity-100'
+const SVG_STYLE = 'h-4 w-4 text-slate-400'
+
+export default function Contact() {
   return (
     <div className="not-prose mt-6 mb-4 flex flex-row items-center space-x-8 sm:mt-2 sm:text-sm">
       <Email />
@@ -10,9 +14,7 @@ export function Contact() {
     </div>
   )
 }
-const A_STYLE =
-  'text-slate-600 hover:text-indigo-600 flex items-center space-x-1.5 opacity-50 transition-opacity hover:opacity-100'
-const SVG_STYLE = 'h-4 w-4 text-slate-400'
+
 function Email() {
   return (
     <a

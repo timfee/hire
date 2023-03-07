@@ -68,7 +68,49 @@ const Input = <C extends ElementType = 'div'>({
         />
       </div>
       {withAi && (
-        <div className="mt-2 text-right">
+        <div className="mt-4 flex flex-row-reverse space-x-6">
+          <button
+            className="ml-4 inline-flex items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-20"
+            disabled={state.status === 'busy'}
+            onClick={(e) => {
+              e.preventDefault()
+              const client = createTRPCProxyClient<AppRouter>({
+                links: [
+                  httpBatchLink({
+                    url: '/api/trpc',
+                  }),
+                ],
+                transformer: superjson,
+              })
+
+              if (!state.company.name) {
+                return
+              }
+
+              dispatch({ payload: 'busy', type: 'update_status' })
+
+              client.human.get
+                .query({
+                  company: state.company.name,
+                  field: fieldLeafNode,
+                  role: state.lookup.role ?? '',
+                })
+                .then((result) => {
+                  dispatch({
+                    payload: { [fieldLeafNode]: result },
+                    type: 'update_company',
+                  })
+                })
+                .catch((e) => {
+                  alert('error generating AI, check console')
+                  console.error("Couldn't generate AI", e)
+                })
+                .finally(() => {
+                  dispatch({ payload: 'ready', type: 'update_status' })
+                })
+            }}>
+            Human
+          </button>
           <button
             className="inline-flex items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-20"
             disabled={state.status === 'busy'}
@@ -109,7 +151,7 @@ const Input = <C extends ElementType = 'div'>({
                   dispatch({ payload: 'ready', type: 'update_status' })
                 })
             }}>
-            Generate
+            Robot
           </button>
         </div>
       )}

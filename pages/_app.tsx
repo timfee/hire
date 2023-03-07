@@ -8,7 +8,7 @@ import { SessionContextProvider } from '@supabase/auth-helpers-react'
 import type { AppType } from 'next/app'
 import PlausibleProvider from 'next-plausible'
 
-import { Soehne, Tiempos } from '@/utils/fonts'
+import { Sans, Serif } from '@/utils/fonts'
 import type { Database } from 'types/supabase'
 
 import { api } from '../utils/api'
@@ -27,15 +27,15 @@ const MyApp: AppType<{
         supabaseClient={supabase}
         initialSession={pageProps.initialSession}>
         <Component {...pageProps} />
-        <style
-          jsx
-          global>{`
-          :root {
-            --sans-serif: ${Soehne.style.fontFamily};
-            --serif: ${Tiempos.style.fontFamily};
-          }
-        `}</style>
       </SessionContextProvider>
+      <style
+        jsx
+        global>{`
+        :root {
+          --font-sans: ${Sans.style.fontFamily};
+          --font-serif: ${Serif.style.fontFamily};
+        }
+      `}</style>
     </PlausibleProvider>
   )
 }

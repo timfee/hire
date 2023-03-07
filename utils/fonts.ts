@@ -1,102 +1,87 @@
-import localFont from '@next/font/local'
+import localFont from 'next/font/local'
 
-export const Inter = localFont({
+export const Serif = localFont({
   display: 'swap',
   preload: true,
+  variable: '--font-serif',
   src: [
     {
-      path: '../styles/fonts/Inter-roman.var.woff2',
+      path: '../styles/fonts/serif-regular.woff2',
+      weight: '400',
       style: 'normal',
-      weight: '100 900',
     },
     {
-      path: '../styles/fonts/Inter-italic.var.woff2',
+      path: '../styles/fonts/serif-regular-italic.woff2',
+      weight: '400',
       style: 'italic',
-      weight: '100 900',
+    },
+    {
+      path: '../styles/fonts/serif-bold.woff2',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../styles/fonts/serif-bold-italic.woff2',
+      weight: '600',
+      style: 'italic',
     },
   ],
 })
 
-export const Tiempos = localFont({
+export const Sans = localFont({
   display: 'swap',
   preload: true,
+  variable: '--font-sans',
   src: [
     {
-      path: '../styles/fonts/tiempos-text-web-regular.woff2',
-      style: 'normal',
+      path: '../styles/fonts/sans-regular.woff2',
       weight: '400',
+      style: 'normal',
     },
     {
-      path: '../styles/fonts/tiempos-text-web-regular-italic.woff2',
-      style: 'italic',
+      path: '../styles/fonts/sans-regular-italic.woff2',
       weight: '400',
+      style: 'italic',
     },
     {
-      path: '../styles/fonts/tiempos-text-web-medium.woff2',
-      style: 'normal',
+      path: '../styles/fonts/sans-medium.woff2',
       weight: '500',
+      style: 'normal',
     },
     {
-      path: '../styles/fonts/tiempos-text-web-medium-italic.woff2',
-      style: 'italic',
+      path: '../styles/fonts/sans-medium-italic.woff2',
       weight: '500',
-    },
-    {
-      path: '../styles/fonts/tiempos-text-web-semibold.woff2',
-      style: 'normal',
-      weight: '600',
-    },
-    {
-      path: '../styles/fonts/tiempos-text-web-semibold-italic.woff2',
       style: 'italic',
+    },
+    {
+      path: '../styles/fonts/sans-semibold.woff2',
       weight: '600',
-    },
-  ],
-})
-
-export const Soehne = localFont({
-  display: 'swap',
-  preload: true,
-  src: [
-    {
-      path: '../styles/fonts/soehne-buch.woff2',
       style: 'normal',
-      weight: '400',
     },
     {
-      path: '../styles/fonts/soehne-buch-kursiv.woff2',
-      style: 'italic',
-      weight: '400',
-    },
-    {
-      path: '../styles/fonts/soehne-kraftig.woff2',
-      style: 'normal',
-      weight: '500',
-    },
-    {
-      path: '../styles/fonts/soehne-kraftig-kursiv.woff2',
-      style: 'italic',
-      weight: '500',
-    },
-    {
-      path: '../styles/fonts/soehne-halbfett.woff2',
-      style: 'normal',
+      path: '../styles/fonts/sans-semibold-italic.woff2',
       weight: '600',
-    },
-    {
-      path: '../styles/fonts/soehne-halbfett-kursiv.woff2',
       style: 'italic',
-      weight: '600',
     },
     {
-      path: '../styles/fonts/soehne-dreiviertelfett.woff2',
-      style: 'normal',
+      path: '../styles/fonts/sans-bold.woff2',
       weight: '700',
+      style: 'normal',
     },
     {
-      path: '../styles/fonts/soehne-dreiviertelfett-kursiv.woff2',
-      style: 'italic',
+      path: '../styles/fonts/sans-bold-italic.woff2',
       weight: '700',
+      style: 'italic',
+    },
+    {
+      path: '../styles/fonts/sans-black.woff2',
+      weight: '800',
+      style: 'normal',
+    },
+    {
+      path: '../styles/fonts/sans-black-italic.woff2',
+      weight: '800',
+      style: 'italic',
     },
   ],
 })

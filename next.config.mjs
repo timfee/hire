@@ -1,11 +1,5 @@
 import { withPlausibleProxy } from 'next-plausible'
 
-/**
- * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
- * This is especially useful for Docker builds.
- */
-!process.env.SKIP_ENV_VALIDATION && (await import('./env.mjs'))
-
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
@@ -13,7 +7,9 @@ const config = {
     domains: ['jxtzqpuzyqbwtwcwvmln.supabase.co'],
   },
   experimental: {
+    serverComponentsExternalPackages: ['pdfkit', 'markdown-it'],
     swcMinify: true,
+    appDir: true,
   },
 }
 export default withPlausibleProxy()(config)

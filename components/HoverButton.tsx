@@ -1,4 +1,5 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
+'use client'
+
 import { type CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
 
 import { ArrowDownCircleIcon } from '@heroicons/react/24/outline'
@@ -45,25 +46,24 @@ export default function HoverButton({
 
     if (!inView && unstickyRef.current.getBoundingClientRect().bottom < 40) {
       setPosition((oldPosition) => {
-        animateFunction(oldPosition, 'top')
+        void animateFunction(oldPosition, 'top')
         return 'top'
       })
     } else if (!inView && y + height < stickyYthreshold) {
       setPosition((oldPosition) => {
-        animateFunction(oldPosition, 'bottom')
+        void animateFunction(oldPosition, 'bottom')
         return 'bottom'
       })
     } else {
       setPosition((oldPosition) => {
-        animateFunction(oldPosition, 'inline')
+        void animateFunction(oldPosition, 'inline')
         return 'inline'
       })
     }
   }
 
-  // Only bother re-rending the button if its
-  // visibility in the current viewport has
-  // changed
+  // Only bother re-rending the button if its visibility in the current
+  // viewport has changed
   useEffect(() => {
     updateStickiness()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -73,8 +73,9 @@ export default function HoverButton({
   useEffect(() => {
     if (unstickyRef.current && stickyRef.current) {
       unstickyRef.current.style.height = `${stickyRef.current.clientHeight}px`
+      updateStickiness()
+      unstickyRef.current.style.visibility = 'visible'
     }
-    updateStickiness()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -117,12 +118,13 @@ export default function HoverButton({
           data-position={position}
           animate={controls}
           ref={stickyRef}
-          className={clsx('not-prose h-fit w-full', {
+          className={clsx('not-prose h-fit w-full transition-opacity', {
             'border-top fixed bottom-0 left-0 right-0 border-t border-slate-300':
               position === 'bottom',
             'border-bottom fixed top-0 left-0 right-0 z-10 border-b  border-slate-300':
               position === 'top',
-            'bg-slate-200 px-4': position !== 'inline',
+            'bg-slate-200 px-4': position === 'top' || position === 'bottom',
+            'opacity-0': position === '',
           })}>
           <div className="relative mx-auto py-4 md:max-w-2xl">
             <a

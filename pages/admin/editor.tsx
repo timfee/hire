@@ -109,18 +109,17 @@ const Editor: FC<EditorProps> = ({ company: originalCompany }) => {
               <a
                 href={`/${originalCompany.slug}/${originalCompany.code}`}
                 target="_blank"
-                className="text-blue-500 underline"
+                className=" focus:slate-indigo-500 mr-2 rounded-md border border-transparent bg-lime-800 px-1 py-0.5 text-sm font-medium text-white shadow-sm hover:bg-lime-700 focus:outline-none focus:ring-2 focus:ring-offset-2"
                 rel="noreferrer">
                 View site
-              </a>{' '}
-              •{' '}
+              </a>
               {(originalCompany.resumeUrl && (
                 <a
                   target="_blank"
                   href={originalCompany.resumeUrl}
-                  className="text-blue-500 underline"
+                  className=" focus:slate-indigo-500 mr-2 rounded-md border border-transparent bg-lime-800 px-1 py-0.5 text-sm font-medium text-white shadow-sm hover:bg-lime-700 focus:outline-none focus:ring-2 focus:ring-offset-2"
                   rel="noreferrer">
-                  Resume{' '}
+                  Resume
                 </a>
               )) ||
                 'No resume was '}
@@ -149,6 +148,7 @@ const Editor: FC<EditorProps> = ({ company: originalCompany }) => {
               <>Never</>
             )}
             <button
+              className=" ml-5 rounded-md border border-transparent bg-slate-600 px-2 py-1 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               onClick={() => {
                 client.company.regenerate
                   .query({
@@ -172,7 +172,7 @@ const Editor: FC<EditorProps> = ({ company: originalCompany }) => {
         )}
         <button
           type="submit"
-          className="mx-auto flex w-fit items-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+          className="mx-auto mt-5 flex w-fit items-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
           Submit
         </button>
       </form>
