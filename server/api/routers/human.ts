@@ -27,6 +27,7 @@ From creating delightful experiences to leading teams, I understand how to foste
 
 I’d be thrilled to introduce my skillset to your team and join a mission like ${company}’s.`
       } else {
+
         return `I’m Tim—a PM & UX leader with two decades of experience developing high-performing teams and delivering impactful products used by billions of people, and I’m excited to share my resume with you for the ${
           role ?? 'open PM'
         } role.

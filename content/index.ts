@@ -3,7 +3,6 @@ import { cwd } from 'process'
 
 import Pdf from 'pdfkit'
 
-import { env } from '@/env.mjs'
 import { Company, createSupabaseServerClient } from '@/utils/supabase'
 
 import generateEducation from './blocks/education'
@@ -12,6 +11,9 @@ import generateExperience from './blocks/experience'
 import generateHeader from './blocks/header'
 import generateIntroduction from './blocks/introduction'
 import addPagination from './blocks/pagination'
+
+
+import { env } from '@/env.mjs'
 
 const generateResumePacket = async ({ company }: { company: Company }) => {
   if (!company) {
@@ -134,6 +136,7 @@ const uploadResume = async ({
       upsert: true,
     })
 
+  console.log(data)
   if (!data) {
     console.error(data, error)
     throw new Error('missing data')
