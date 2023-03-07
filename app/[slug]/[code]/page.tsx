@@ -1,10 +1,10 @@
 import { CSSProperties } from 'react'
 
 import { createClient } from '@supabase/supabase-js'
+import ColorContrastChecker from 'color-contrast-checker'
 import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
-import ColorContrastChecker from 'color-contrast-checker'
 
 import {
   Contact,
@@ -34,7 +34,7 @@ export default async function Page({ params }: CompanyPageParams) {
     new ColorContrastChecker().hexToLuminance('#ffffff'),
     new ColorContrastChecker().hexToLuminance(companyData.color)
   )
-  console.log(contrastRatio)
+
   const {
     name,
     logoUrl,
