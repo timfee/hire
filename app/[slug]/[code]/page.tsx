@@ -34,7 +34,7 @@ export default async function Page({ params }: CompanyPageParams) {
     new ColorContrastChecker().hexToLuminance('#ffffff'),
     new ColorContrastChecker().hexToLuminance(companyData.color)
   )
-  console.log(contrastRatio)
+
   const {
     name,
     logoUrl,

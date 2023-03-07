@@ -11,6 +11,8 @@ import generateExperience from './blocks/experience'
 import generateHeader from './blocks/header'
 import generateIntroduction from './blocks/introduction'
 import addPagination from './blocks/pagination'
+
+
 import { env } from '@/env.mjs'
 
 const generateResumePacket = async ({ company }: { company: Company }) => {
