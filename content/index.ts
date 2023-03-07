@@ -134,6 +134,7 @@ const uploadResume = async ({
       upsert: true,
     })
 
+  console.log(data)
   if (!data) {
     console.error(data, error)
     throw new Error('missing data')

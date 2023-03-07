@@ -4,6 +4,7 @@ import { createClient } from '@supabase/supabase-js'
 import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
+import ColorContrastChecker from 'color-contrast-checker'
 
 import {
   Contact,
@@ -29,6 +30,11 @@ export default async function Page({ params }: CompanyPageParams) {
 
   const references = await getReferences()
 
+  const contrastRatio = new ColorContrastChecker().getContrastRatio(
+    new ColorContrastChecker().hexToLuminance('#ffffff'),
+    new ColorContrastChecker().hexToLuminance(companyData.color)
+  )
+  console.log(contrastRatio)
   const {
     name,
     logoUrl,
@@ -43,7 +49,12 @@ export default async function Page({ params }: CompanyPageParams) {
     <>
       <main
         className="prose prose-indigo mx-auto  mt-4 py-4 px-4 sm:px-0 md:max-w-2xl "
-        style={{ '--tw-prose-headings': companyData.color } as CSSProperties}>
+        style={
+          {
+            '--tw-prose-headings':
+              contrastRatio < 4 ? 'black' : companyData.color,
+          } as CSSProperties
+        }>
         <SmartImage
           src={logoUrl}
           height={40}
@@ -58,7 +69,7 @@ export default async function Page({ params }: CompanyPageParams) {
         {resumeUrl && (
           <HoverButton
             color={color}
-            contrastRatio={5}
+            contrastRatio={contrastRatio}
             resumeUrl={resumeUrl}
             name={name}
           />
